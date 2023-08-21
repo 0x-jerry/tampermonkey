@@ -2,7 +2,9 @@
 // @name         No Redirect
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  try to save the time!
+// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
+// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
+// @description  Try to save the time, skip redirect in search result page, current only support google.
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.google.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com

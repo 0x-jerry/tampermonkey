@@ -1,0 +1,12 @@
+{
+  "name": "tampermonkey",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "repository": "https://github.com/0x-jerry/tampermonkey.git",
+  "author": "Jerry Wang <x.jerry.wang@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "gen": "node ./scripts/gen-readme.js"
+  }
+}
