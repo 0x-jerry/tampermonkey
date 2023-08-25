@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         No Redirect
 // @namespace    http://tampermonkey.net/
-// @version      1.1.0
+// @version      1.2.0
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
 // @description  Try to save the time, skip redirect in search result page, current only support google.
@@ -9,9 +9,11 @@
 // @match        https://*.google.com/*
 // @match        https://*.bing.com/*
 // @match        https://*.zhihu.com/*
+// @match        https://blog.csdn.net/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=bing.com
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=zhihu.com
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=csdn.net
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
@@ -31,6 +33,10 @@ const configs = [
   {
     matcher: /zhihu\.com/,
     handler: handleZhihuLinks,
+  },
+  {
+    matcher: /csdn\.net/,
+    handler: handleCsdnLinks,
   },
 ]
 
@@ -55,6 +61,21 @@ function getHandler() {
   }
 }
 
+function handleCsdnLinks() {
+  doWithSelectorAll('article a', (el) => {
+    const url = el.href
+    if (!url) return
+
+    const u = new URL(url)
+
+    // skip csdn it self
+    if (u.host.endsWith('csdn.net')) return
+
+    const realUrl = u.toString()
+
+    overrideLinkClick(el, realUrl)
+  })
+}
 function handleZhihuLinks() {
   doWithSelectorAll('a', (el) => {
     const url = el.href
