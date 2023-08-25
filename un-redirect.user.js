@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         No Redirect
 // @namespace    http://tampermonkey.net/
-// @version      1.2.0
+// @version      1.2.1
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
 // @description  Try to save the time, skip redirect in search result page, current only support google.
@@ -61,7 +61,9 @@ function getHandler() {
   }
 }
 
-function handleCsdnLinks() {
+async function handleCsdnLinks() {
+  await sleep(100)
+
   doWithSelectorAll('article a', (el) => {
     const url = el.href
     if (!url) return
@@ -159,4 +161,8 @@ function doWithSelectorAll(selector, fn) {
       console.debug('error', error)
     }
   })
+}
+
+function sleep(ts = 100) {
+  return new Promise((resolve) => setTimeout(resolve, ts))
 }
