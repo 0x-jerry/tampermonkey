@@ -94,21 +94,31 @@ function handleZhihuLinks() {
 }
 
 function handleBingSearchResult() {
-  doWithSelectorAll('#b_results .b_title a', (el) => {
+  doWithSelectorAll('#b_results a', (el) => {
+    // https://www.bing.com/ck/a?!&&p=f3a402544cfb2e9aJmltdHM9MTY5MjgzNTIwMCZpZ3VpZD0wN2EwMTc0Yi0wMGRkLTYxYjctMzBhZC0wNDE5MDFiYjYwYjgmaW5zaWQ9NTU0OQ&ptn=3&hsh=3&fclid=07a0174b-00dd-61b7-30ad-041901bb60b8&psq=hello&u=a1aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g_dj1tSE9OTmNaYndEWQ&ntb=1
     const url = el.href
     if (!url) return
 
-    const dataEl = el.parentElement.parentElement.querySelector('[data-sc-metadata]')
-    if (!dataEl) return
+    const u = new URL(url)
 
-    // {&quot;scenarios&quot;:&quot;6&quot;,&quot;url&quot;:&quot;https://learn.microsoft.com/zh-cn/rest/api/cognitiveservices-bingsearch/bing-web-api-v5-reference&quot;,&quot;agi5qv&quot;:&quot;agi5qv2022986592589413866&quot;}
-    const str = dataEl.getAttribute('data-sc-metadata').replaceAll('&quot;', '"')
+    const shouldSkip = u.host.endsWith('bing.com') && u.pathname === '/ck/a'
 
-    const data = JSON.parse(str)
+    if (!shouldSkip) {
+      return
+    }
 
-    const realUrl = data.url
+    const matcher = /var u = "[^"]+"/m
 
-    overrideLinkClick(el, realUrl)
+    overrideLinkClick(el, async () => {
+      const resp = await fetch(url)
+
+      // should match the next line url
+      // var u = "https://www.youtube.com/watch?v=mHONNcZbwDY";
+      const html = await resp.text()
+      const _matchedUrl = html.match(matcher).at(0)
+
+      return _matchedUrl?.slice('var u = "'.length, -1)
+    })
   })
 }
 
@@ -131,20 +141,24 @@ function handleGoogleSearchResult() {
 /**
  *
  * @param {HTMLLinkElement} el
- * @param {string | undefined} realUrl
+ * @param {string | (() => Promise<string> | string) | undefined} realUrl
  */
 function overrideLinkClick(el, realUrl) {
   if (!realUrl) return
 
-  console.debug('match real url', realUrl)
+  const isFn = typeof realUrl === 'function'
 
-  el.onclick = (e) => {
+  el.onclick = async (e) => {
     e.preventDefault()
 
-    window.open(realUrl, '_blank')
+    const _realUrl = isFn ? await realUrl() : realUrl
+
+    if (!_realUrl) return
+
+    window.open(_realUrl, '_blank')
   }
 
-  el.setAttribute('data-real-url', realUrl)
+  el.setAttribute('data-real-url', isFn ? 'fn' : realUrl)
 }
 
 /**
