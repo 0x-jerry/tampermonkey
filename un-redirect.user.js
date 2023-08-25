@@ -1,15 +1,17 @@
 // ==UserScript==
 // @name         No Redirect
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.1.0
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
 // @description  Try to save the time, skip redirect in search result page, current only support google.
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.google.com/*
 // @match        https://*.bing.com/*
+// @match        https://*.zhihu.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=bing.com
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=zhihu.com
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
@@ -25,6 +27,10 @@ const configs = [
   {
     matcher: /bing\.com/,
     handler: handleBingSearchResult,
+  },
+  {
+    matcher: /zhihu\.com/,
+    handler: handleZhihuLinks,
   },
 ]
 
@@ -49,64 +55,87 @@ function getHandler() {
   }
 }
 
+function handleZhihuLinks() {
+  doWithSelectorAll('a', (el) => {
+    const url = el.href
+    if (!url) return
+
+    const u = new URL(url)
+
+    if (u.host !== 'link.zhihu.com') return
+
+    const realUrl = u.searchParams.get('target')
+
+    overrideLinkClick(el, realUrl)
+  })
+}
+
 function handleBingSearchResult() {
-  document.querySelectorAll('#b_results .b_title a').forEach((el) => {
-    try {
-      const url = el.href
-      if (!url) return
+  doWithSelectorAll('#b_results .b_title a', (el) => {
+    const url = el.href
+    if (!url) return
 
-      const dataEl = el.parentElement.parentElement.querySelector('[data-sc-metadata]')
-      if (!dataEl) return
+    const dataEl = el.parentElement.parentElement.querySelector('[data-sc-metadata]')
+    if (!dataEl) return
 
-      // {&quot;scenarios&quot;:&quot;6&quot;,&quot;url&quot;:&quot;https://learn.microsoft.com/zh-cn/rest/api/cognitiveservices-bingsearch/bing-web-api-v5-reference&quot;,&quot;agi5qv&quot;:&quot;agi5qv2022986592589413866&quot;}
-      const str = dataEl.getAttribute('data-sc-metadata').replaceAll('&quot;', '"')
+    // {&quot;scenarios&quot;:&quot;6&quot;,&quot;url&quot;:&quot;https://learn.microsoft.com/zh-cn/rest/api/cognitiveservices-bingsearch/bing-web-api-v5-reference&quot;,&quot;agi5qv&quot;:&quot;agi5qv2022986592589413866&quot;}
+    const str = dataEl.getAttribute('data-sc-metadata').replaceAll('&quot;', '"')
 
-      const data = JSON.parse(str)
+    const data = JSON.parse(str)
 
-      const realUrl = data.url
+    const realUrl = data.url
 
-      if (!realUrl) return
-
-      console.debug('match real url', realUrl)
-
-      el.onclick = (e) => {
-        e.preventDefault()
-
-        window.open(realUrl, '_blank')
-      }
-
-      el.setAttribute('data-real-url', realUrl)
-    } catch (error) {
-      // ignore
-      console.debug(error)
-    }
+    overrideLinkClick(el, realUrl)
   })
 }
 
 function handleGoogleSearchResult() {
-  document.querySelectorAll('a').forEach((el) => {
+  doWithSelectorAll('a', (el) => {
+    const url = el.href
+
+    if (!url) return
+
+    const u = new URL(url)
+
+    const realUrl = url.startsWith('http') ? url : u.searchParams.get('url')
+
+    overrideLinkClick(el, realUrl)
+  })
+}
+
+// ---------- utils ---------
+
+/**
+ *
+ * @param {HTMLLinkElement} el
+ * @param {string | undefined} realUrl
+ */
+function overrideLinkClick(el, realUrl) {
+  if (!realUrl) return
+
+  console.debug('match real url', realUrl)
+
+  el.onclick = (e) => {
+    e.preventDefault()
+
+    window.open(realUrl, '_blank')
+  }
+
+  el.setAttribute('data-real-url', realUrl)
+}
+
+/**
+ *
+ * @param {string} selector
+ * @param {(el: HTMLElement) => any} fn
+ */
+function doWithSelectorAll(selector, fn) {
+  document.querySelectorAll(selector).forEach(async (el) => {
     try {
-      const url = el.href
-      if (!url) return
-
-      const u = new URL(url)
-
-      const realUrl = url.startsWith("http") ? url : u.searchParams.get('url')
-
-      if (!realUrl) return
-
-      console.debug('match real url', realUrl)
-
-      el.onclick = (e) => {
-        e.preventDefault()
-
-        window.open(realUrl, '_blank')
-      }
-
-      el.setAttribute('data-real-url', realUrl)
+      await fn(el)
     } catch (error) {
       // ignore
-      console.debug(error)
+      console.debug('error', error)
     }
   })
 }
