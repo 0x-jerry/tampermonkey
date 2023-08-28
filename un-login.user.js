@@ -4,7 +4,7 @@
 // @version      1.0.0
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/un-login.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/un-login.user.js
-// @description  Try to save the time, auto close login dialog at some site, support zhihu.
+// @description  Auto close login dialog at some site, support zhihu.
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.zhihu.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=zhihu.com

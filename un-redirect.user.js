@@ -4,7 +4,7 @@
 // @version      1.2.3
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
-// @description  Try to save the time, skip redirect in search result page, support google/bing/zhihu/csdn.
+// @description  Skip redirect at some search result page, support google/bing/zhihu/csdn.
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.google.com/*
 // @match        https://*.bing.com/*
