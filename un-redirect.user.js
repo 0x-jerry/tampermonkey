@@ -144,9 +144,9 @@ function handleGoogleSearchResult() {
 /**
  *
  * @param {string | ((el: HTMLElement) => boolean) } filter filter with tagname or use a custom function
- * @param {(el: HTMLElement) => string | undefined | {matched: boolean, getUrl: () => Promise<string>}} getMatchResult
+ * @param {(el: HTMLElement) => string | undefined | {matched: boolean, getUrl: () => Promise<string>}} getMatchedResult
  */
-function captureRedirectLinks(filter, getMatchResult) {
+function captureRedirectLinks(filter, getMatchedResult) {
   const selectorFilter =
     typeof filter === 'string' ? (el) => el.tagName === filter.toUpperCase() : filter
 
@@ -155,7 +155,7 @@ function captureRedirectLinks(filter, getMatchResult) {
 
     for (const link of links) {
       try {
-        const result = getMatchResult(link)
+        const result = getMatchedResult(link)
 
         if (typeof result === 'object') {
           if (result?.matched) {
