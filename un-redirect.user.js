@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name         No Redirect
+// @name         Un Redirect
 // @namespace    http://tampermonkey.net/
-// @version      1.2.2
+// @version      1.2.3
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
-// @description  Try to save the time, skip redirect in search result page, current only support google.
+// @description  Try to save the time, skip redirect in search result page, support google/bing/zhihu/csdn.
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.google.com/*
 // @match        https://*.bing.com/*

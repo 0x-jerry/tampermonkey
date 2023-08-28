@@ -2,4 +2,4 @@
 
 **Scripts:**
 
-- No Redirect: Try to save the time, skip redirect in search result page, current only support google. [install](https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js)
+- Un Redirect: Try to save the time, skip redirect in search result page, support google/bing/zhihu/csdn. [install](https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js)
