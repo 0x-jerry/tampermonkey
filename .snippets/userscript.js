@@ -1,9 +1,11 @@
 const initScript = `// ==UserScript==
 // @name         Name
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      1.0.0
+// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/un-login.user.js
+// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/un-login.user.js
 // @description  try to save the world!
-// @author       Me
+// @author       x.jerry.wang@gmail.com
 // @match        https://*.google.com
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @require      ./utils.js

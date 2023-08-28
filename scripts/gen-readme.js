@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url'
 
 const jsDir = fileURLToPath(path.join(import.meta.url, '../..'))
 
-const jsFiles = (await readdir(jsDir)).filter((n) => n.endsWith('.js'))
+const jsFiles = (await readdir(jsDir)).filter((n) => n.endsWith('.user.js'))
 
 const matches = {
   name: /@name (.+)$/m,
