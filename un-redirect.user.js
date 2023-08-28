@@ -19,8 +19,7 @@
 // @grant        none
 // ==/UserScript==
 
-;(async function () {
-  'use strict'
+$u.run(async () => {
   console.debug('Un redirect loaded!')
 
   $u.stringMatcher(location.href, [
@@ -192,4 +191,4 @@
       }
     })
   }
-})()
+})

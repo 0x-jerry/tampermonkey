@@ -13,9 +13,7 @@
 // @grant        none
 // ==/UserScript==
 
-;(async function () {
-  'use strict'
-
+$u.run(() => {
   $u.stringMatcher(location.href, [
     {
       test: /zhihu\.com/,
@@ -35,4 +33,4 @@
 
     console.debug('close login dialog successfully')
   }
-})()
+})

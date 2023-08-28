@@ -48,4 +48,11 @@ globalThis.$u = {
 
     return hit?.handler()
   },
+
+  /**
+   * @param {() => any} fn 
+   */
+  run(fn) {
+    fn()
+  }
 }

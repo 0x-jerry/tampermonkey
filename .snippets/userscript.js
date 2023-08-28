@@ -6,14 +6,16 @@ const initScript = `// ==UserScript==
 // @author       Me
 // @match        https://*.google.com
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
+// @require      ./utils.js
+// @run-at       document-end
 // @grant        none
 // ==/UserScript==
 
-;(function () {
+$u.run(async () => {
   'use strict'
 
   // Your code here...
-})()
+})
 `
 
 export default {
