@@ -48,39 +48,23 @@ $u.run(async () => {
 
   function boom() {
     console.debug('Boom!!!')
+
     /**
-     * @type {HTMLCanvasElement}
+     * 
+     * @param {number} min 
+     * @param {number} max 
+     * @returns 
      */
-    let canvas = document.querySelector('#confetti')
-
-    if (!canvas) {
-      canvas = document.createElement('canvas')
-      canvas.id = 'confetti'
-      canvas.style.position = 'fixed'
-
-      // canvas.style.top = '50%'
-      // canvas.style.left = '50%'
-      // canvas.style.transform = 'translate(-50%, -50%)'
-
-      canvas.style.top = '0'
-      canvas.style.left = '0'
-
-      canvas.style.width = '100vw'
-      canvas.style.height = '100vh'
-
-      canvas.style.zIndex = '9999999'
-      canvas.style.pointerEvents = 'none'
-      document.body.appendChild(canvas)
+    function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
     }
-
+    
     // @ts-ignore
-    const confetti = window.confetti.create(canvas, {
-      resize: true,
-    })
-
     confetti({
-      particleCount: 100,
-      spread: 160,
-    })
+      angle: randomInRange(55, 125),
+      spread: randomInRange(50, 70),
+      particleCount: randomInRange(50, 100),
+      origin: { y: 0.6 }
+    });
   }
 })
