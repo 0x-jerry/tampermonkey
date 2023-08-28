@@ -32,7 +32,7 @@ const configs = [
   },
   {
     matcher: /zhihu\.com/,
-    handler: handleZhihuLinks,
+    handler: handleZhihuLogin,
   },
   {
     matcher: /csdn\.net/,
@@ -78,7 +78,7 @@ async function handleCsdnLinks() {
   })
 }
 
-function handleZhihuLinks() {
+function handleZhihuLogin() {
   captureRedirectLinks('A', (el) => {
     const url = el.href
     if (!url) return
