@@ -28,7 +28,7 @@ const descriptions = await Promise.all(p)
 
 const headers = [
   //
-  `# 一些 TamperMonkey 脚本`,
+  `# Some Useful TamperMonkey Scripts`,
   '',
   `**Scripts:**`,
   '',
@@ -36,5 +36,5 @@ const headers = [
 
 await writeFile(
   path.join(jsDir, 'README.md'),
-  [...headers, ...descriptions.filter(Boolean)].join('\n'),
+  [...headers, ...descriptions.filter(Boolean), ''].join('\n'),
 )
