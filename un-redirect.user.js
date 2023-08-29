@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Un Redirect
 // @namespace    http://tampermonkey.net/
-// @version      1.2.3
+// @version      1.2.4
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
 // @description  Skip redirect at some search result page, support google/bing/zhihu/csdn.
@@ -134,6 +134,11 @@ $u.run(async () => {
         if (!url) return
 
         const u = new URL(url)
+
+        // https://colab.research.google.com/corgiredirector?site=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FAutomatic_differentiation
+        if (u.host === 'colab.research.google.com' && u.pathname === '/corgiredirector') {
+          return u.searchParams.get('site')
+        }
 
         const realUrl = url.startsWith('http') ? url : u.searchParams.get('url')
 
