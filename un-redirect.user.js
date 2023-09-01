@@ -1,19 +1,21 @@
 // ==UserScript==
 // @name         Un Redirect
 // @namespace    http://tampermonkey.net/
-// @version      1.2.4
+// @version      1.2.5
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
-// @description  Skip redirect at some search result page, support google/bing/zhihu/csdn.
+// @description  Skip redirect at some search result page, support google/bing/zhihu/csdn/sspai.
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.google.com/*
 // @match        https://*.bing.com/*
 // @match        https://*.zhihu.com/*
+// @match        https://sspai.com/*
 // @match        https://blog.csdn.net/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=bing.com
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=zhihu.com
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=csdn.net
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=sspai.com
 // @require      ./utils.js
 // @run-at       document-end
 // @grant        none
@@ -39,7 +41,34 @@ $u.run(async () => {
       test: /csdn\.net/,
       handler: handleCsdnLinks,
     },
+    {
+      test: /sspai\.com/,
+      handler: handleSspaiLinks,
+    },
   ])
+
+  function handleSspaiLinks() {
+    captureRedirectLinks(
+      'A',
+      /**
+       * @param {HTMLLinkElement} el
+       */
+      (el) => {
+        // https://sspai.com/link?target=https%3A%2F%2Fshop.fairphone.com%2Ffairphone-5
+        const url = el.href
+        if (!url) return
+
+        const u = new URL(url)
+
+        const matched = u.host === 'sspai.com' && u.pathname === '/link'
+        if (!matched) return
+
+        const realUrl = u.searchParams.get('target')
+
+        return realUrl
+      },
+    )
+  }
 
   async function handleCsdnLinks() {
     captureRedirectLinks(
