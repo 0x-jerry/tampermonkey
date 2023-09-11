@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Un Redirect
 // @namespace    http://tampermonkey.net/
-// @version      1.2.5
+// @version      1.2.6
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/un-redirect.user.js
 // @description  Skip redirect at some search result page, support google/bing/zhihu/csdn/sspai.
@@ -135,6 +135,17 @@ $u.run(async () => {
         return {
           matched: shouldSkip,
           getUrl: async () => {
+            try {
+              /**
+               * @type {HTMLElement}
+               */
+              const div = el.parentElement.nextElementSibling.querySelector('div:nth-child(2)')
+              const data = div.dataset.scMetadata
+              return JSON.parse(data).url
+            } catch (error) {
+              // ignore
+            }
+
             const matcher = /var u = "[^"]+"/m
 
             const resp = await fetch(url)
@@ -187,42 +198,53 @@ $u.run(async () => {
     const selectorFilter =
       typeof filter === 'string' ? (el) => el.tagName === filter.toUpperCase() : filter
 
-    document.addEventListener('click', async (ev) => {
-      /**
-       * @type {HTMLElement[]}
-       */
-      // @ts-ignore
-      const links = ev.composedPath().filter(selectorFilter)
+    document.addEventListener(
+      'click',
+      async (ev) => {
+        /**
+         * @type {HTMLElement[]}
+         */
+        // @ts-ignore
+        const links = ev.composedPath().filter(selectorFilter)
 
-      for (const link of links) {
-        try {
-          const result = getMatchedResult(link)
+        for (const link of links) {
+          try {
+            const result = getMatchedResult(link)
 
-          if (typeof result === 'object') {
-            if (result?.matched) {
-              ev.preventDefault()
-              const realUrl = await result.getUrl()
-              if (!realUrl) continue
+            if (typeof result === 'object') {
+              if (result?.matched) {
+                preventDefault()
+                const realUrl = await result.getUrl()
+                if (!realUrl) continue
 
-              console.debug(`matched redirect link`, result, link)
-              window.open(realUrl, '_blank')
-              return
+                console.debug(`matched redirect link`, result, link)
+                window.open(realUrl, '_blank')
+                return
+              }
+
+              continue
             }
 
-            continue
-          }
+            if (result) {
+              console.debug(`matched redirect link`, result, link)
 
-          if (result) {
-            console.debug(`matched redirect link`, result, link)
-
-            ev.preventDefault()
-            window.open(result, '_blank')
-            return
+              preventDefault()
+              window.open(result, '_blank')
+              return
+            }
+          } catch (error) {
+            console.debug('error', error)
           }
-        } catch (error) {
-          console.debug('error', error)
         }
-      }
-    })
+
+        function preventDefault() {
+          ev.preventDefault()
+          ev.stopPropagation()
+        }
+      },
+      {
+        capture: true,
+      },
+    )
   }
 })
