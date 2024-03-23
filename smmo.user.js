@@ -72,15 +72,26 @@ $u.run(async () => {
   const currentPage = new URL(location.href)
 
   /**
+   * 
+   * @param {HTMLElement} el 
+   */
+  function isVisible(el) {
+    const rect = el.getBoundingClientRect()
+    return rect.width > 0 && rect.height > 0
+  }
+
+  /**
    *
    * @param {string} text
    * @param {string} type
-   * @returns
+   * @returns {HTMLElement | undefined}
    */
   const getElByContent = (text, type) => {
     const elements = Array.from(document.querySelectorAll(type))
-    return elements.find((n) => n.textContent.trim() === text)
+    // @ts-ignore
+    return elements.find((n) => isVisible(n) && n.textContent.trim() === text)
   }
+
 
   /**
    *
@@ -133,13 +144,15 @@ $u.run(async () => {
       name,
       priority,
       check() {
-        return btnTexts.some((content) => getButtonByContent(content))
+        return btnTexts.some(
+          (content) => getButtonByContent(content) || getElByContent(content, 'a'),
+        )
       },
       action() {
-        btnTexts.some((content) => {
-          const btn = getButtonByContent(content)
-          btn?.click()
-          return btn
+        return btnTexts.some((content) => {
+          const el = getButtonByContent(content) || getElByContent(content, 'a')
+          el?.click()
+          return el
         })
       },
     }
