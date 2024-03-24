@@ -252,9 +252,16 @@ $u.run(async () => {
       },
       action() {
         const el = getActionEl()
+
+        if (!el) {
+          return
+        }
+
+        const rect = el?.getBoundingClientRect()
+
         const fakeEvent = new MouseEvent('click', {
-          clientX: Math.round($u.random(300, 500)),
-          clientY: Math.round($u.random(500, 800)),
+          clientX: Math.round($u.random(rect.x, rect.x + rect.width)),
+          clientY: Math.round($u.random(rect.y, rect.y + rect.height)),
         })
         el?.dispatchEvent(fakeEvent)
       },
