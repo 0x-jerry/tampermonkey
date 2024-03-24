@@ -51,14 +51,14 @@ $u.run(async () => {
       const thinkChanceList = [
         {
           chance: 5,
-          data: { min: 200, max: 500 },
+          data: { min: 300, max: 800 },
         },
         {
-          chance: 40,
-          data: { min: 500, max: 1000 },
+          chance: 20,
+          data: { min: 500, max: 2000 },
         },
         {
-          chance: 40,
+          chance: 60,
           data: { min: 1000, max: 2000 },
         },
         {
@@ -217,7 +217,7 @@ $u.run(async () => {
       },
     },
     takeStep: createAction('Step', 99, ['Take a step']),
-    craft: createAction('Craft', 999, ['Salvage', 'Catch', 'Grab', 'Attack', 'Mine']),
+    craft: createAction('Craft', 999, ['Salvage', 'Catch', 'Grab', 'Attack', 'Mine', 'Chop']),
 
     gather: createAction('Gather', 99, ['Gather', 'Press here to gather']),
     endGather: createAction('End gather', 999, ['Press here to close']),
