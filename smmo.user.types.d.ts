@@ -16,5 +16,7 @@ export interface Action {
    */
   check(): boolean
 
-  action(): any
+  highlight?: () => void
+
+  action(): void
 }

@@ -31,10 +31,10 @@ $u.run(async () => {
     #handler = -1
 
     detectAction() {
-      const actions = this.actions.filter((n) => n.check())
+      const actions = this.actions.filter((action) => action.check())
       if (!actions.length) return null
 
-      const action = actions.reduce((pre, cur) => (cur.priority > pre.priority ? cur : pre))
+      const action = actions.reduce((prev, cur) => (cur.priority > prev.priority ? cur : prev))
 
       return action
     }
@@ -63,7 +63,7 @@ $u.run(async () => {
         },
       ]
 
-      const data = this.throwTheDice(thinkChanceList)
+      const data = this.throwDice(thinkChanceList)
 
       await $u.sleepRandom(data.min, data.max)
     }
@@ -73,7 +73,7 @@ $u.run(async () => {
      * @template T
      * @param {{chance: number, data: T}[]} chanceList
      */
-    throwTheDice(chanceList) {
+    throwDice(chanceList) {
       let value = 0
       const chances = chanceList.map((n) => {
         value = +n.chance
@@ -97,11 +97,13 @@ $u.run(async () => {
       this.#handler = window.setTimeout(async () => {
         const action = this.detectAction()
         if (action) {
+          action.highlight?.()
+
           await this.doze()
           const ts = new Date().toLocaleTimeString()
           try {
             console.debug(ts, 'Execute action:', action.name)
-            await action.action()
+            action.action()
           } catch (error) {
             console.debug(ts, 'Something wrong when execute action:', action.name, error)
           }
@@ -127,7 +129,21 @@ $u.run(async () => {
    */
   function isVisible(el) {
     const rect = el.getBoundingClientRect()
-    return rect.width > 0 && rect.height > 0
+    
+    return rect.width > 0 && rect.height > 0 && _checkVisibility()
+
+    function _checkVisibility() {
+      let p = el
+      while (p) {
+        if (p.style.opacity == '0') return false
+        if (p.style.display == 'none') return false
+        
+        // @ts-ignore
+        p = p.parentElement
+      }
+      
+      return true
+    }
   }
 
   /**
@@ -139,7 +155,7 @@ $u.run(async () => {
   const getElByContent = (text, type) => {
     const elements = Array.from(document.querySelectorAll(type))
     // @ts-ignore
-    return elements.find((n) => isVisible(n) && n.textContent.trim() === text)
+    return elements.find((el) => isVisible(el) && el.textContent.trim() === text)
   }
 
   /**
@@ -161,16 +177,7 @@ $u.run(async () => {
         throw new Error('Detected verify action, stopped!')
       },
     },
-    takeStep: {
-      name: 'Take A Step',
-      priority: 99,
-      check() {
-        return getButtonByContent('Take a step')?.disabled !== true
-      },
-      action() {
-        return getButtonByContent('Take a step')?.click()
-      },
-    },
+    takeStep: createAction('Step', 99, ['Take a step']),
     craft: createAction('Craft', 999, ['Salvage', 'Catch', 'Grab', 'Attack', 'Mine']),
 
     gather: createAction('Gather', 99, ['Gather', 'Press here to gather']),
@@ -186,6 +193,23 @@ $u.run(async () => {
    * @param {string} name
    */
   function createAction(name, priority, btnTexts) {
+    function getActionEl() {
+      for (const content of btnTexts) {
+        let el
+        const btn = getButtonByContent(content)
+        if (btn && btn) {
+          el = btn.disabled ? null : btn
+        } else {
+          const link = getElByContent(content, 'a')
+          el = link
+        }
+
+        if (el) {
+          return el
+        }
+      }
+    }
+
     /**
      * @type { import('./smmo.user.types').Action}
      */
@@ -193,19 +217,17 @@ $u.run(async () => {
       name,
       priority,
       check() {
-        return btnTexts.some((content) => {
-          const btn = getButtonByContent(content)
-          const link = getElByContent(content, 'a')
-
-          return btn ? btn.disabled !== true : link
-        })
+        return !!getActionEl()
+      },
+      highlight() {
+        const el = getActionEl()
+        if (el) {
+          el.style.border = '2px solid red'
+        }
       },
       action() {
-        return btnTexts.some((content) => {
-          const el = getButtonByContent(content) || getElByContent(content, 'a')
-          el?.click()
-          return el
-        })
+        const el = getActionEl()
+        el?.click()
       },
     }
 
