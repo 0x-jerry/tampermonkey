@@ -16,9 +16,8 @@
 $u.run(async () => {
   'use strict'
 
-  class RandomInterval {
-    min = 100
-    max = 10 * 1000
+  class AwaitedInterval {
+    timeout = 100
 
     #playing = false
 
@@ -34,7 +33,8 @@ $u.run(async () => {
     /**
      * @param {() => any} fn
      */
-    constructor(fn) {
+    constructor(fn, timeout = 100) {
+      this.timeout = timeout
       this.#fn = fn
     }
 
@@ -45,20 +45,15 @@ $u.run(async () => {
 
       clearTimeout(this.#handler)
 
-      this.#handler = window.setTimeout(() => {
+      this.#handler = window.setTimeout(async () => {
         try {
-          this.#fn()
+          await this.#fn()
           this.start()
         } catch (error) {
           console.error(error)
           this.stop()
         }
-      }, this.#getTimeout())
-    }
-
-    #getTimeout() {
-      const range = this.max - this.min
-      return this.min + Math.random() * range
+      }, this.timeout)
     }
 
     stop() {
@@ -72,8 +67,8 @@ $u.run(async () => {
   const currentPage = new URL(location.href)
 
   /**
-   * 
-   * @param {HTMLElement} el 
+   *
+   * @param {HTMLElement} el
    */
   function isVisible(el) {
     const rect = el.getBoundingClientRect()
@@ -91,7 +86,6 @@ $u.run(async () => {
     // @ts-ignore
     return elements.find((n) => isVisible(n) && n.textContent.trim() === text)
   }
-
 
   /**
    *
@@ -132,9 +126,9 @@ $u.run(async () => {
   }
 
   /**
-   *
    * @param {number} priority
    * @param {string[]} btnTexts
+   * @param {string} name
    */
   function createAction(name, priority, btnTexts) {
     /**
@@ -144,9 +138,12 @@ $u.run(async () => {
       name,
       priority,
       check() {
-        return btnTexts.some(
-          (content) => getButtonByContent(content) || getElByContent(content, 'a'),
-        )
+        return btnTexts.some((content) => {
+          const btn = getButtonByContent(content)
+          const link = getElByContent(content, 'a')
+
+          return btn ? btn.disabled !== true : link
+        })
       },
       action() {
         return btnTexts.some((content) => {
@@ -197,7 +194,7 @@ $u.run(async () => {
     return
   }
 
-  const timer = new RandomInterval(() => {
+  async function checkLoop() {
     const availableActions = page.actions.filter((n) => n.check())
 
     if (!availableActions.length) return
@@ -207,12 +204,37 @@ $u.run(async () => {
       availableActions[0],
     )
 
+    await $u.sleepRandom(500, 1200)
     action.action()
 
     console.log('exec action:', action.name)
-  })
+  }
 
-  timer.max = 4000
+  const timer = new AwaitedInterval(checkLoop)
 
   timer.start()
+
+  // ---- ui
+  const $c = document.createElement('div')
+  $c.style.position = 'fixed'
+  $c.style.top = '50%'
+  $c.style.right = '0'
+  $c.style.transform = 'translate(0, -50%)'
+  $c.style.background = 'white'
+  $c.style.border = '1px solid #eee'
+  $c.style.padding = '20px'
+  document.body.append($c)
+
+  const $enableBtn = document.createElement('button')
+  $c.append($enableBtn)
+  $enableBtn.textContent = 'Enabled'
+  $enableBtn.onclick = () => {
+    if (timer.playing) {
+      timer.stop()
+      $enableBtn.textContent = 'Disabled'
+    } else {
+      timer.start()
+      $enableBtn.textContent = 'Enabled'
+    }
+  }
 })
