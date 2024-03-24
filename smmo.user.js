@@ -10,11 +10,19 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=simple-mmo.com
 // @require      ./utils.js
 // @run-at       document-end
-// @grant        none
+// @grant        GM_addStyle
 // ==/UserScript==
 
 $u.run(async () => {
   'use strict'
+
+  // @ts-ignore
+  GM_addStyle(`
+    .agent-action {
+      border: 1px solid red;
+    }
+  `)
+  // ---------
 
   class MimicAgent {
     #playing = false
@@ -87,9 +95,7 @@ $u.run(async () => {
       return chanceList[idx].data
     }
 
-    start() {
-      this.#playing = true
-
+    continue() {
       clearTimeout(this.#handler)
 
       const checkGap = $u.random(300, 1000)
@@ -97,7 +103,7 @@ $u.run(async () => {
       this.#handler = window.setTimeout(async () => {
         const action = this.detectAction()
         if (action) {
-          action.highlight?.()
+          this.highlight(action.check())
 
           await this.doze()
           const ts = new Date().toLocaleTimeString()
@@ -109,11 +115,44 @@ $u.run(async () => {
           }
         }
 
-        this.start()
+        this.continue()
       }, checkGap)
     }
 
+    #enabledStateKey = 'agent:enabled'
+    init() {
+      const enabled = localStorage.getItem(this.#enabledStateKey)
+      if (enabled) {
+        this.start()
+      }
+    }
+
+    start() {
+      localStorage.setItem(this.#enabledStateKey, 'true')
+      this.#playing = true
+      this.continue()
+    }
+
+    /**
+     * @type {HTMLElement | undefined}
+     */
+    #actionEl
+
+    /**
+     * @param {HTMLElement | undefined} el
+     */
+    highlight(el) {
+      const cls = 'agent-action'
+      if (this.#actionEl) {
+        this.#actionEl?.classList.remove(cls)
+      }
+
+      this.#actionEl = el
+      this.#actionEl?.classList.add(cls)
+    }
+
     stop() {
+      localStorage.removeItem(this.#enabledStateKey)
       this.#playing = false
       clearTimeout(this.#handler)
     }
@@ -129,7 +168,7 @@ $u.run(async () => {
    */
   function isVisible(el) {
     const rect = el.getBoundingClientRect()
-    
+
     return rect.width > 0 && rect.height > 0 && _checkVisibility()
 
     function _checkVisibility() {
@@ -137,11 +176,11 @@ $u.run(async () => {
       while (p) {
         if (p.style.opacity == '0') return false
         if (p.style.display == 'none') return false
-        
+
         // @ts-ignore
         p = p.parentElement
       }
-      
+
       return true
     }
   }
@@ -171,7 +210,7 @@ $u.run(async () => {
       name: 'Verify',
       priority: Infinity,
       check() {
-        return !!getElByContent("I'm a person! Promise!", 'a')
+        return getElByContent("I'm a person! Promise!", 'a')
       },
       action() {
         throw new Error('Detected verify action, stopped!')
@@ -217,13 +256,7 @@ $u.run(async () => {
       name,
       priority,
       check() {
-        return !!getActionEl()
-      },
-      highlight() {
-        const el = getActionEl()
-        if (el) {
-          el.style.border = '2px solid red'
-        }
+        return getActionEl()
       },
       action() {
         const el = getActionEl()
@@ -274,7 +307,7 @@ $u.run(async () => {
   const agent = new MimicAgent()
   agent.actions = page.actions
 
-  agent.start()
+  agent.init()
 
   // ---- ui
   const $c = document.createElement('div')
@@ -289,14 +322,16 @@ $u.run(async () => {
 
   const $enableBtn = document.createElement('button')
   $c.append($enableBtn)
-  $enableBtn.textContent = 'Enabled'
+
+  const updateBtnText = () => ($enableBtn.textContent = agent.playing ? 'Enabled' : 'Disabled')
+  updateBtnText()
+
   $enableBtn.onclick = () => {
     if (agent.playing) {
       agent.stop()
-      $enableBtn.textContent = 'Disabled'
     } else {
       agent.start()
-      $enableBtn.textContent = 'Enabled'
     }
+    updateBtnText()
   }
 })

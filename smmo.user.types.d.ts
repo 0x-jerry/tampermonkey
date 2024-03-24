@@ -14,9 +14,7 @@ export interface Action {
   /**
    * Is this action should be executed
    */
-  check(): boolean
-
-  highlight?: () => void
+  check(): HTMLElement | undefined
 
   action(): void
 }
