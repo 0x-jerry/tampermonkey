@@ -16,9 +16,7 @@
 $u.run(async () => {
   'use strict'
 
-  class AwaitedInterval {
-    timeout = 100
-
+  class MimicAgent {
     #playing = false
 
     get playing() {
@@ -26,34 +24,91 @@ $u.run(async () => {
     }
 
     /**
-     * @type {() => any}
+     * @type {import('./smmo.user.types').Action[]}
      */
-    #fn
-
-    /**
-     * @param {() => any} fn
-     */
-    constructor(fn, timeout = 100) {
-      this.timeout = timeout
-      this.#fn = fn
-    }
+    actions = []
 
     #handler = -1
+
+    detectAction() {
+      const actions = this.actions.filter((n) => n.check())
+      if (!actions.length) return null
+
+      const action = actions.reduce((pre, cur) => (cur.priority > pre.priority ? cur : pre))
+
+      return action
+    }
+
+    async doze() {
+      const thinkChanceList = [
+        {
+          chance: 5,
+          data: { min: 200, max: 500 },
+        },
+        {
+          chance: 40,
+          data: { min: 500, max: 1000 },
+        },
+        {
+          chance: 40,
+          data: { min: 1000, max: 2000 },
+        },
+        {
+          chance: 10,
+          data: { min: 2000, max: 4000 },
+        },
+        {
+          chance: 5,
+          data: { min: 4000, max: 10000 },
+        },
+      ]
+
+      const data = this.throwTheDice(thinkChanceList)
+
+      await $u.sleepRandom(data.min, data.max)
+    }
+
+    /**
+     *
+     * @template T
+     * @param {{chance: number, data: T}[]} chanceList
+     */
+    throwTheDice(chanceList) {
+      let value = 0
+      const chances = chanceList.map((n) => {
+        value = +n.chance
+        return value
+      })
+
+      const total = value
+      const randomValue = $u.random(0, total)
+      const idx = chances.findIndex((chanceLevel) => randomValue < chanceLevel)
+
+      return chanceList[idx].data
+    }
 
     start() {
       this.#playing = true
 
       clearTimeout(this.#handler)
 
+      const checkGap = $u.random(300, 1000)
+
       this.#handler = window.setTimeout(async () => {
-        try {
-          await this.#fn()
-          this.start()
-        } catch (error) {
-          console.error(error)
-          this.stop()
+        const action = this.detectAction()
+        if (action) {
+          await this.doze()
+          const ts = new Date().toLocaleTimeString()
+          try {
+            console.debug(ts, 'Execute action:', action.name)
+            await action.action()
+          } catch (error) {
+            console.debug(ts, 'Something wrong when execute action:', action.name, error)
+          }
         }
-      }, this.timeout)
+
+        this.start()
+      }, checkGap)
     }
 
     stop() {
@@ -194,25 +249,10 @@ $u.run(async () => {
     return
   }
 
-  async function checkLoop() {
-    const availableActions = page.actions.filter((n) => n.check())
+  const agent = new MimicAgent()
+  agent.actions = page.actions
 
-    if (!availableActions.length) return
-
-    const action = availableActions.reduce(
-      (prev, cur) => (cur.priority > prev.priority ? cur : prev),
-      availableActions[0],
-    )
-
-    await $u.sleepRandom(500, 1200)
-    action.action()
-
-    console.log('exec action:', action.name)
-  }
-
-  const timer = new AwaitedInterval(checkLoop)
-
-  timer.start()
+  agent.start()
 
   // ---- ui
   const $c = document.createElement('div')
@@ -229,11 +269,11 @@ $u.run(async () => {
   $c.append($enableBtn)
   $enableBtn.textContent = 'Enabled'
   $enableBtn.onclick = () => {
-    if (timer.playing) {
-      timer.stop()
+    if (agent.playing) {
+      agent.stop()
       $enableBtn.textContent = 'Disabled'
     } else {
-      timer.start()
+      agent.start()
       $enableBtn.textContent = 'Enabled'
     }
   }
