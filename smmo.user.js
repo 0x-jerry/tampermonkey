@@ -51,23 +51,15 @@ $u.run(async () => {
       const thinkChanceList = [
         {
           chance: 60,
-          data: { min: 1000, max: 2000 },
+          data: { min: 800, max: 2000 },
         },
         {
-          chance: 20,
+          chance: 30,
           data: { min: 2000, max: 4000 },
         },
         {
           chance: 10,
-          data: { min: 4000, max: 10000 },
-        },
-        {
-          chance: 5,
-          data: { min: 500, max: 1000 },
-        },
-        {
-          chance: 5,
-          data: { min: 300, max: 500 },
+          data: { min: 4000, max: 6000 },
         },
       ]
 
