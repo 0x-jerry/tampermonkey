@@ -50,24 +50,24 @@ $u.run(async () => {
     async doze() {
       const thinkChanceList = [
         {
-          chance: 5,
-          data: { min: 300, max: 800 },
-        },
-        {
-          chance: 20,
-          data: { min: 500, max: 2000 },
-        },
-        {
           chance: 60,
           data: { min: 1000, max: 2000 },
         },
         {
-          chance: 10,
+          chance: 20,
           data: { min: 2000, max: 4000 },
         },
         {
-          chance: 5,
+          chance: 10,
           data: { min: 4000, max: 10000 },
+        },
+        {
+          chance: 5,
+          data: { min: 500, max: 1000 },
+        },
+        {
+          chance: 5,
+          data: { min: 300, max: 500 },
         },
       ]
 
@@ -260,7 +260,11 @@ $u.run(async () => {
       },
       action() {
         const el = getActionEl()
-        el?.click()
+        const fakeEvent = new MouseEvent('click', {
+          clientX: Math.round($u.random(300, 500)),
+          clientY: Math.round($u.random(500, 800)),
+        })
+        el?.dispatchEvent(fakeEvent)
       },
     }
 
