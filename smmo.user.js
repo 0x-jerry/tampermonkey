@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Simple MMO
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.0.1
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/smmo.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/smmo.user.js
 // @description  try to save the simple mmo world!
@@ -89,6 +89,10 @@ $u.run(async () => {
 
     continue() {
       clearTimeout(this.#handler)
+
+      if (!this.playing) {
+        return
+      }
 
       const checkGap = $u.random(300, 1000)
 
