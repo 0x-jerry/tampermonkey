@@ -192,7 +192,7 @@ $u.run(async () => {
   /**
    *
    * @param {string | ((el: HTMLElement) => boolean) } filter filter with tagname or use a custom function
-   * @param {(el: HTMLElement) => string | undefined | {matched: boolean, getUrl: () => Promise<string>}} getMatchedResult
+   * @param {(el: HTMLElement) => string | undefined | null | {matched: boolean, getUrl: () => Promise<string>}} getMatchedResult
    */
   function captureRedirectLinks(filter, getMatchedResult) {
     const selectorFilter =
@@ -210,6 +210,8 @@ $u.run(async () => {
         for (const link of links) {
           try {
             const result = getMatchedResult(link)
+
+            if (!result) continue
 
             if (typeof result === 'object') {
               if (result?.matched) {
