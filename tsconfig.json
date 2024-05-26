@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "None",
+    "module": "Preserve",
     "strict": true,
     "outDir": "out"
   },
