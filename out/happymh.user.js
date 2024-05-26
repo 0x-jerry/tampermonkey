@@ -21,13 +21,17 @@ $u.run(async () => {
     <button>下一话</button>
   `;
     container.style.position = 'fixed';
-    container.style.top = '50%';
+    container.style.top = '40%';
     container.style.right = '0';
-    container.style.transform = `translate(0, -50%0)`;
     container.style.display = 'flex';
     container.style.flexDirection = 'column';
+    container.style.gap = '4px';
     const btn1 = container.children.item(0);
+    btn1.style.fontSize = '18px';
+    btn1.style.cursor = 'pointer';
     const btn2 = container.children.item(1);
+    btn2.style.fontSize = '18px';
+    btn2.style.cursor = 'pointer';
     await $u.when(() => document.body);
     document.body.append(container);
     btn1.addEventListener('click', async () => {

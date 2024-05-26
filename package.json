@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "tsc -w -p .",
-    "build": "tsc -p .",
+    "build": "npm run gen && tsc -p .",
     "gen": "node ./scripts/gen-readme.js"
   },
   "devDependencies": {
