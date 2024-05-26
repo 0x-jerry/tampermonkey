@@ -2,8 +2,8 @@
 // @name         Un Login
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/un-login.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/un-login.user.js
+// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/un-login.user.js
+// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/un-login.user.js
 // @description  Auto close login dialog at some site, support zhihu.
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.zhihu.com/*
@@ -24,12 +24,9 @@ $u.run(() => {
   async function handleZhihuLogin() {
     const el = await $u.waitElement('.signFlowModal')
 
-    /**
-     * @type {HTMLElement}
-     */
-    const btn = el.querySelector('.Modal-closeButton')
+    const btn = el.querySelector<HTMLButtonElement>('.Modal-closeButton')
 
-    btn.click()
+    btn?.click()
 
     console.debug('close login dialog successfully')
   }

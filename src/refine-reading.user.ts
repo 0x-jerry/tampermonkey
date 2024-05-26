@@ -2,8 +2,8 @@
 // @name         Refine Reading
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/refine-reading.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/refine-reading.user.js
+// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/refine-reading.user.js
+// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/refine-reading.user.js
 // @description  Refine style of hetushu.com
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.hetushu.com/*

@@ -1,7 +1,16 @@
 console.debug('Utils loaded!')
 
-globalThis.$u = (() => {
+export interface MatcherConfig {
+  test: RegExp
+  handler: () => any
+}
+
+const $u = (() => {
   class Xorshift {
+    x = 1
+    y = 0
+    z = 0
+    w = 0
     constructor(seed = Date.now()) {
       this.x = seed
       this.y = 362436069
@@ -42,13 +51,8 @@ globalThis.$u = (() => {
       return $u.sleep(random(min, max))
     },
 
-    /**
-     *
-     * @param {string} selector
-     * @returns {Promise<HTMLElement>}
-     */
-    async waitElement(selector) {
-      return $u.when(() => document.querySelector(selector))
+    async waitElement(selector: string): Promise<HTMLElement> {
+      return $u.when(() => document.querySelector(selector)!)
     },
 
     /**
@@ -58,7 +62,7 @@ globalThis.$u = (() => {
      * @param {number} timeout  default is 10 * 1000 (10s).
      * @returns {Promise<T>}
      */
-    async when(checker, timeout = 10 * 1000) {
+    async when<T>(checker: () => T, timeout: number = 10 * 1000): Promise<T> {
       const start = Date.now()
 
       while (Date.now() - start < timeout) {
@@ -73,15 +77,10 @@ globalThis.$u = (() => {
     },
 
     /**
-     *
-     * @typedef MatcherConfig
-     * @prop {RegExp} test
-     * @prop {() => any} handler
-     *
      * @param {MatcherConfig[]} configs
      * @param {string} str
      */
-    stringMatcher(str, configs) {
+    stringMatcher(str: string, configs: MatcherConfig[]) {
       const hit = configs.find((n) => n.test.test(str))
 
       return hit?.handler()
@@ -90,10 +89,18 @@ globalThis.$u = (() => {
     /**
      * @param {() => any} fn
      */
-    run(fn) {
+    run(fn: () => any) {
       fn()
     },
   }
 
   return $u
 })()
+
+globalThis.$u = $u
+
+type GlobalUtils = typeof $u
+
+declare global {
+  export var $u: GlobalUtils;
+}

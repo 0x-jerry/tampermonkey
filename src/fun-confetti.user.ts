@@ -2,8 +2,8 @@
 // @name         Confetti Skill
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/fun-confetti.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/fun-confetti.user.js
+// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/fun-confetti.user.js
+// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/fun-confetti.user.js
 // @description  Use this `↑↑↓↓←→←→` sequence to trigger a confetti explosion.
 // @author       x.jerry.wang@gmail.com
 // @match        https://*/*
@@ -19,16 +19,16 @@ $u.run(async () => {
 
   const triggerLength = triggerSequences.length
 
-  const codeMapper = {
+  const codeMapper: Record<string, string> = {
     ArrowUp: '↑',
     ArrowDown: '↓',
     ArrowLeft: '←',
     ArrowRight: '→',
   }
 
-  let keySequence = []
+  let keySequence: string[] = []
 
-  let clearSequenceHandler
+  let clearSequenceHandler: number
 
   document.addEventListener('keydown', (ev) => {
     clearTimeout(clearSequenceHandler)
@@ -49,22 +49,16 @@ $u.run(async () => {
   function boom() {
     console.debug('Boom!!!')
 
-    /**
-     * 
-     * @param {number} min 
-     * @param {number} max 
-     * @returns 
-     */
-    function randomInRange(min, max) {
-      return Math.random() * (max - min) + min;
+    function randomInRange(min: number, max: number) {
+      return Math.random() * (max - min) + min
     }
-    
+
     // @ts-ignore
     confetti({
       angle: randomInRange(55, 125),
       spread: randomInRange(50, 70),
       particleCount: randomInRange(50, 100),
-      origin: { y: 0.6 }
-    });
+      origin: { y: 0.6 },
+    })
   }
 })

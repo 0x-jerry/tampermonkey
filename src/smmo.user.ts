@@ -2,8 +2,8 @@
 // @name         Simple MMO
 // @namespace    http://tampermonkey.net/
 // @version      1.0.1
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/smmo.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/smmo.user.js
+// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/smmo.user.js
+// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/smmo.user.js
 // @description  try to save the simple mmo world!
 // @author       x.jerry.wang@gmail.com
 // @match        https://web.simple-mmo.com/*
@@ -31,10 +31,7 @@ $u.run(async () => {
       return this.#playing
     }
 
-    /**
-     * @type {import('./smmo.user.types').Action[]}
-     */
-    actions = []
+    actions: Action[] = []
 
     #handler = -1
 
@@ -73,7 +70,7 @@ $u.run(async () => {
      * @template T
      * @param {{chance: number, data: T}[]} chanceList
      */
-    throwDice(chanceList) {
+    throwDice<T>(chanceList: { chance: number; data: T }[]) {
       let value = 0
       const chances = chanceList.map((n) => {
         value = +n.chance
@@ -129,15 +126,9 @@ $u.run(async () => {
       this.continue()
     }
 
-    /**
-     * @type {HTMLElement | undefined}
-     */
-    #actionEl
+    #actionEl?: HTMLElement
 
-    /**
-     * @param {HTMLElement | undefined} el
-     */
-    highlight(el) {
+    highlight(el?: HTMLElement) {
       const cls = 'agent-action'
       if (this.#actionEl) {
         this.#actionEl?.classList.remove(cls)
@@ -158,11 +149,7 @@ $u.run(async () => {
 
   const currentPage = new URL(location.href)
 
-  /**
-   *
-   * @param {HTMLElement} el
-   */
-  function isVisible(el) {
+  function isVisible(el: HTMLElement) {
     const rect = el.getBoundingClientRect()
 
     return rect.width > 0 && rect.height > 0 && _checkVisibility()
@@ -181,25 +168,14 @@ $u.run(async () => {
     }
   }
 
-  /**
-   *
-   * @param {string} text
-   * @param {string} type
-   * @returns {HTMLElement | undefined}
-   */
-  const getElByContent = (text, type) => {
-    const elements = Array.from(document.querySelectorAll(type))
-    // @ts-ignore
-    return elements.find((el) => isVisible(el) && el.textContent.trim() === text)
+  function getElByContent<T extends HTMLElement>(text: string, type: string): T | undefined {
+    const elements = Array.from(document.querySelectorAll<T>(type))
+    return elements.find((el) => isVisible(el) && el.textContent?.trim() === text)
   }
 
-  /**
-   *
-   * @param {string} text
-   * @returns  {HTMLButtonElement | undefined}
-   */
-  // @ts-ignore
-  const getButtonByContent = (text) => getElByContent(text, 'button')
+  function getButtonByContent(text: string): HTMLButtonElement | undefined {
+    return getElByContent(text, 'button')
+  }
 
   const actions = {
     verify: {
@@ -222,12 +198,7 @@ $u.run(async () => {
     endAttack: createAction('End Attack', 999, ['End Battle']),
   }
 
-  /**
-   * @param {number} priority
-   * @param {string[]} btnTexts
-   * @param {string} name
-   */
-  function createAction(name, priority, btnTexts) {
+  function createAction(name: string, priority: number, btnTexts: string[]) {
     function getActionEl() {
       for (const content of btnTexts) {
         let el
@@ -245,10 +216,7 @@ $u.run(async () => {
       }
     }
 
-    /**
-     * @type { import('./smmo.user.types').Action}
-     */
-    const action = {
+    const action: Action = {
       name,
       priority,
       check() {
@@ -274,30 +242,21 @@ $u.run(async () => {
     return action
   }
 
-  /**
-   * @type {import('./smmo.user.types').Page}
-   */
-  const travelPage = {
+  const travelPage: Page = {
     check() {
       return currentPage.pathname === '/travel'
     },
     actions: [actions.verify, actions.takeStep, actions.craft],
   }
 
-  /**
-   * @type {import('./smmo.user.types').Page}
-   */
-  const attackPage = {
+  const attackPage: Page = {
     check() {
       return currentPage.pathname.startsWith('/npcs/attack/')
     },
     actions: [actions.verify, actions.attack, actions.endAttack],
   }
 
-  /**
-   * @type {import('./smmo.user.types').Page}
-   */
-  const craftItemPage = {
+  const craftItemPage: Page = {
     check() {
       return currentPage.pathname.startsWith('/crafting/material/gather/')
     },
@@ -342,3 +301,23 @@ $u.run(async () => {
     updateBtnText()
   }
 })
+
+interface Page {
+  /**
+   * Check if in this page.
+   */
+  check(): boolean
+  actions: Action[]
+}
+
+interface Action {
+  name: string
+  priority: number
+
+  /**
+   * Is this action should be executed
+   */
+  check(): HTMLElement | undefined
+
+  action(): void
+}

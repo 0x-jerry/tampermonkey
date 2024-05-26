@@ -7,6 +7,11 @@
   "author": "Jerry Wang <x.jerry.wang@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "dev": "tsc -w -p .",
+    "build": "tsc -p .",
     "gen": "node ./scripts/gen-readme.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
   }
 }

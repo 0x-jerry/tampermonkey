@@ -2,9 +2,9 @@ import { readFile, readdir, writeFile } from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-const jsDir = fileURLToPath(path.join(import.meta.url, '../..'))
+const sourceDir = fileURLToPath(path.join(import.meta.url, '../../src'))
 
-const jsFiles = (await readdir(jsDir)).filter((n) => n.endsWith('.user.js'))
+const files = (await readdir(sourceDir)).filter((n) => n.endsWith('.user.ts'))
 
 const matches = {
   name: /@name (.+)$/m,
@@ -12,8 +12,8 @@ const matches = {
   url: /@updateURL (.+)$/m,
 }
 
-const p = jsFiles.map(async (file) => {
-  const filePath = path.join(jsDir, file)
+const p = files.map(async (file) => {
+  const filePath = path.join(sourceDir, file)
 
   const content = await readFile(filePath, { encoding: 'utf-8' })
 
@@ -35,6 +35,6 @@ const headers = [
 ]
 
 await writeFile(
-  path.join(jsDir, 'README.md'),
+  path.join(sourceDir, '../README.md'),
   [...headers, ...descriptions.filter(Boolean), ''].join('\n'),
 )

@@ -2,8 +2,8 @@ const initScript = `// ==UserScript==
 // @name         Name
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/un-login.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/un-login.user.js
+// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/x.user.js
+// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/x.user.js
 // @description  try to save the world!
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.google.com
