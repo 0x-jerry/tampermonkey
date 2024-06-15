@@ -1,4 +1,4 @@
-const initScript = `// ==UserScript==
+// ==UserScript==
 // @name         Name
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
@@ -13,17 +13,8 @@ const initScript = `// ==UserScript==
 // @grant        none
 // ==/UserScript==
 
-\\$u.run(async () => {
+$u.run(async () => {
   'use strict'
 
   // Your code here...
 })
-`
-
-export default {
-  Init: {
-    prefix: 'GM_init',
-    description: "Initialize GM script.",
-    body: [initScript],
-  },
-}
