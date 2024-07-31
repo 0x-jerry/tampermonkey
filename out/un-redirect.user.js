@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         Un Redirect
 // @namespace    http://tampermonkey.net/
-// @version      1.3.0
+// @version      1.3.1
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js
 // @description  Skip redirect at some search result page, support google/bing/zhihu/csdn/sspai.
@@ -13,12 +13,7 @@
 // @match        https://sspai.com/*
 // @match        https://blog.csdn.net/*
 // @match        https://x.com/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=x.com
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=bing.com
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=zhihu.com
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=csdn.net
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=sspai.com
 // @require      ./utils.js
 // @run-at       document-end
 // @grant        none
