@@ -6,7 +6,7 @@
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js
 // @description  Skip redirect at some search result page, support google/bing/zhihu/csdn/sspai.
 // @author       x.jerry.wang@gmail.com
-// @match        https://*.google.com/*
+// @match        https://www.google.com/*
 // @match        https://*.bing.com/*
 // @match        https://*.zhihu.com/*
 // @match        https://sspai.com/*
@@ -26,7 +26,7 @@ $u.run(async () => {
 
   $u.stringMatcher(location.href, [
     {
-      test: /google\.com/,
+      test: /www\.google\.com/,
       handler: handleGoogleSearchResult,
     },
     {
@@ -138,6 +138,10 @@ $u.run(async () => {
   }
 
   function handleGoogleSearchResult() {
+    if (document.getElementsByTagName('title').item(0)?.textContent?.trim().endsWith('- Google Search')) {
+      return
+    }
+
     captureRedirectLinks<HTMLLinkElement>('A', (el) => {
       const url = el.href
 
