@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Un Redirect
 // @namespace    http://tampermonkey.net/
-// @version      1.2.6
+// @version      1.3.0
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js
 // @description  Skip redirect at some search result page, support google/bing/zhihu/csdn/sspai.
@@ -11,6 +11,8 @@
 // @match        https://*.zhihu.com/*
 // @match        https://sspai.com/*
 // @match        https://blog.csdn.net/*
+// @match        https://x.com/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=x.com
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=bing.com
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=zhihu.com
@@ -28,6 +30,10 @@ $u.run(async () => {
     {
       test: /www\.google\.com/,
       handler: handleGoogleSearchResult,
+    },
+    {
+      test: /x\.com/,
+      handler: handleTwitterLinks,
     },
     {
       test: /bing\.com/,
@@ -137,8 +143,23 @@ $u.run(async () => {
     })
   }
 
+  function handleTwitterLinks() {
+    captureRedirectLinks<HTMLLinkElement>('A', (el) => {
+      const textContent = el.textContent?.trim()?.replace('…', '')
+      if (textContent?.startsWith('http')) {
+        return textContent
+      }
+    })
+  }
+
   function handleGoogleSearchResult() {
-    if (document.getElementsByTagName('title').item(0)?.textContent?.trim().endsWith('- Google Search')) {
+    if (
+      document
+        .getElementsByTagName('title')
+        .item(0)
+        ?.textContent?.trim()
+        .endsWith('- Google Search')
+    ) {
       return
     }
 
