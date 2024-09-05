@@ -40,12 +40,39 @@ const $u = (() => {
 
   const random = Random(Date.now())
 
+  const storagePrefix = '_0x_monkey:'
+
+  const storage = {
+    get<T>(key: string, defaultValue?: T) {
+      const _key = storagePrefix + key
+
+      let v = defaultValue
+
+      try {
+        const s = localStorage.getItem(_key)
+        if (s) {
+          v = JSON.parse(s)
+        }
+      } catch (error) {
+        console.warn(`Parse storage ${_key} failed`, error)
+      }
+
+      return v
+    },
+    set<T>(key: string, value?: T) {
+      const _key = storagePrefix + key
+      const v = JSON.stringify(value)
+      localStorage.setItem(_key, v)
+    },
+  }
+
   const $u = {
     sleep(ts = 100) {
       return new Promise((resolve) => setTimeout(resolve, ts))
     },
 
     random,
+    storage,
 
     sleepRandom(min = 100, max = 1000) {
       return $u.sleep(random(min, max))
@@ -102,5 +129,5 @@ globalThis.$u = $u
 type GlobalUtils = typeof $u
 
 declare global {
-  export var $u: GlobalUtils;
+  export var $u: GlobalUtils
 }
