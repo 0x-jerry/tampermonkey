@@ -51,6 +51,7 @@ $u.run(async () => {
       }
 
       html img,
+      html iframe,
       html canvas,
       html svg {
         filter: invert(1);
