@@ -1,6 +1,6 @@
 "use strict";
 // ==UserScript==
-// @name         weread-theme
+// @name         WeRead Solarized Theme
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/weread.user.js

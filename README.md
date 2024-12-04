@@ -10,4 +10,5 @@
 - Toggle Theme: Very lightweight solution to toggle dark/light theme. [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/toggle-theme.user.js)
 - Un Login: Auto close login dialog at some site, support zhihu. [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/un-login.user.js)
 - Un Redirect: Skip redirect at some search result page, support google/bing/zhihu/csdn/sspai. [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js)
+- WeRead Solarized Theme: Change the theme of WeRead [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/weread.user.js)
 - Save the world: try to save the world! [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/yunpan1.user.js)
