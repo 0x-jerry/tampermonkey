@@ -119,6 +119,12 @@ const $u = (() => {
     run(fn: () => any) {
       fn()
     },
+
+    addStyle(style: string) {
+      const $style = document.createElement('style')
+      $style.innerText = style
+      document.head.appendChild($style)
+    },
   }
 
   return $u

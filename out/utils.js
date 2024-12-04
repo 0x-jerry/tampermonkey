@@ -93,6 +93,11 @@ const $u = (() => {
         run(fn) {
             fn();
         },
+        addStyle(style) {
+            const $style = document.createElement('style');
+            $style.innerText = style;
+            document.head.appendChild($style);
+        },
     };
     return $u;
 })();
