@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quick Nav
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.0.1
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js
 // @description  Add convenient buttons to switch chapters
@@ -15,6 +15,8 @@
 
 $u.run(async () => {
   'use strict'
+
+  await $u.when(() => document.body)
 
   const container = document.createElement('div')
   container.innerHTML = `
@@ -36,16 +38,28 @@ $u.run(async () => {
   btn2.style.fontSize = '18px'
   btn2.style.cursor = 'pointer'
 
-  await $u.when(() => document.body)
-
-  document.body.append(container)
-
   btn1.addEventListener('click', async () => {
     ;(await findButton('下一话'))?.click()
   })
 
   btn2.addEventListener('click', async () => {
     ;(await findButton('下一话'))?.click()
+  })
+
+  document.body.append(container)
+
+  window.addEventListener('keydown', async (e) => {
+    switch (e.key) {
+      case 'ArrowRight':
+        ;(await findButton('下一话'))?.click()
+        break
+      case 'ArrowLeft':
+        ;(await findButton('上一话'))?.click()
+        break
+
+      default:
+        break
+    }
   })
 
   function findButton(text: string) {
