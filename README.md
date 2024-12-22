@@ -3,8 +3,9 @@
 **Scripts:**
 
 - No redirect: try to save the world! [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/acgbox.user.js)
+- ColaManga Quick Nav: Add convenient buttons to switch chapters [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/colamanga.user.js)
 - Confetti Skill: Use this `↑↑↓↓←→←→` sequence to trigger a confetti explosion. [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/fun-confetti.user.js)
-- Quick Nav: Add convenient buttons to switch chapters [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js)
+- Happymh Quick Nav: Add convenient buttons to switch chapters [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js)
 - Refine Reading: Refine style of hetushu.com [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/refine-reading.user.js)
 - Simple MMO: try to save the simple mmo world! [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/smmo.user.js)
 - Toggle Theme: Very lightweight solution to toggle dark/light theme. [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/toggle-theme.user.js)

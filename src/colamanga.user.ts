@@ -1,13 +1,13 @@
 // ==UserScript==
-// @name         Happymh Quick Nav
+// @name         ColaManga Quick Nav
 // @namespace    http://tampermonkey.net/
-// @version      1.0.2
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js
+// @version      1.0.0
+// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/colamanga.user.js
+// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/colamanga.user.js
 // @description  Add convenient buttons to switch chapters
 // @author       x.jerry.wang@gmail.com
-// @match        https://m.happymh.com/**
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=m.happymh.com
+// @match        https://www.colamanga.com/**
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=colamanga.com
 // @require      ./utils.js
 // @run-at       document-end
 // @grant        none
@@ -39,11 +39,11 @@ $u.run(async () => {
   btn2.style.cursor = 'pointer'
 
   btn1.addEventListener('click', async () => {
-    previousChapter()
+    await previousChapter()
   })
 
   btn2.addEventListener('click', async () => {
-    nextChapter()
+    await nextChapter()
   })
 
   document.body.append(container)
@@ -51,10 +51,10 @@ $u.run(async () => {
   window.addEventListener('keydown', async (e) => {
     switch (e.key) {
       case 'ArrowRight':
-        nextChapter()
+        await nextChapter()
         break
       case 'ArrowLeft':
-        previousChapter()
+        await previousChapter()
         break
 
       default:
@@ -63,16 +63,14 @@ $u.run(async () => {
   })
 
   async function nextChapter() {
-    ;(await findButton('上一话'))?.click()
+    const els = Array.from(document.querySelectorAll('.mh_readend .read_page_link'))
+
+    ;(els.at(2) as HTMLLinkElement)?.click()
   }
 
   async function previousChapter() {
-    ;(await findButton('下一话'))?.click()
-  }
+    const els = Array.from(document.querySelectorAll('.mh_readend .read_page_link'))
 
-  function findButton(text: string) {
-    return $u.when(() =>
-      Array.from(document.querySelectorAll('a')).find((el) => el.textContent?.trim() === text),
-    )
+    ;(els.at(0) as HTMLLinkElement)?.click()
   }
 })
