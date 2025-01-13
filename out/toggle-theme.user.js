@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         Toggle Theme
 // @namespace    http://tampermonkey.net/
-// @version      1.1.1
+// @version      1.1.2
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/toggle-theme.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/toggle-theme.user.js
 // @description  Very lightweight solution to toggle dark/light theme.
@@ -44,6 +44,7 @@ $u.run(async () => {
       html img,
       html iframe,
       html canvas,
+      html video,
       html svg {
         filter: invert(1);
       }
