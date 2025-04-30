@@ -24,7 +24,8 @@
         "noForEach": "off"
       },
       "suspicious": {
-        "noRedundantUseStrict": "off"
+        "noRedundantUseStrict": "off",
+        "noExplicitAny": "info"
       }
     }
   },

@@ -1,11 +1,11 @@
 "use strict";
 // ==UserScript==
-// @name         Eruda devtool for mobile browser
+// @name         Eruda devtool
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.0.1
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/eruda.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/eruda.user.js
-// @description  Mobile devtool
+// @description  Eruda devtool for mobile browser
 // @author       x.jerry.wang@gmail.com
 // @match        https://*/*
 // @require      ./utils.js
