@@ -116,8 +116,12 @@ const $u = (() => {
     /**
      * @param {() => any} fn
      */
-    run(fn: () => any) {
-      fn()
+    async run(fn: () => any) {
+      try {
+        await fn()
+      } catch (error) {
+        console.error('Running error', error)
+      }
     },
 
     addStyle(style: string) {
@@ -128,7 +132,7 @@ const $u = (() => {
 
     tag<Key extends keyof HTMLElementTagNameMap>(
       name: Key,
-      attrs: Partial<HTMLElementTagNameMap[Key]>,
+      attrs: Partial<HTMLElementTagNameMap[Key]> = {},
     ): HTMLElementTagNameMap[Key] {
       const $el = document.createElement(name)
 

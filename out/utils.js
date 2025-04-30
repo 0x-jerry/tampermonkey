@@ -90,15 +90,20 @@ const $u = (() => {
         /**
          * @param {() => any} fn
          */
-        run(fn) {
-            fn();
+        async run(fn) {
+            try {
+                await fn();
+            }
+            catch (error) {
+                console.error('Running error', error);
+            }
         },
         addStyle(style) {
             const $style = document.createElement('style');
             $style.innerText = style;
             document.head.appendChild($style);
         },
-        tag(name, attrs) {
+        tag(name, attrs = {}) {
             const $el = document.createElement(name);
             for (const [key, value] of Object.entries(attrs)) {
                 $el.setAttribute(key, value);
