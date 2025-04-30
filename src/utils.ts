@@ -19,7 +19,7 @@ const $u = (() => {
     }
 
     next() {
-      let t = this.x ^ (this.x << 11)
+      const t = this.x ^ (this.x << 11)
       this.x = this.y
       this.y = this.z
       this.z = this.w
@@ -79,7 +79,7 @@ const $u = (() => {
     },
 
     async waitElement(selector: string): Promise<HTMLElement> {
-      return $u.when(() => document.querySelector(selector)!)
+      return $u.when(() => document.querySelector(selector))
     },
 
     /**
@@ -89,7 +89,7 @@ const $u = (() => {
      * @param {number} timeout  default is 10 * 1000 (10s).
      * @returns {Promise<T>}
      */
-    async when<T>(checker: () => T, timeout: number = 10 * 1000): Promise<T> {
+    async when<T>(checker: () => T, timeout: number = 10 * 1000): Promise<NonNullable<T>> {
       const start = Date.now()
 
       while (Date.now() - start < timeout) {
@@ -143,10 +143,12 @@ const $u = (() => {
   return $u
 })()
 
+// biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: <explanation>
 globalThis.$u = $u
 
 type GlobalUtils = typeof $u
 
 declare global {
+  // biome-ignore lint/suspicious/noRedeclare: <explanation>
   export var $u: GlobalUtils
 }

@@ -12,7 +12,7 @@ const $u = (() => {
             this.w = 88675121;
         }
         next() {
-            let t = this.x ^ (this.x << 11);
+            const t = this.x ^ (this.x << 11);
             this.x = this.y;
             this.y = this.z;
             this.z = this.w;
@@ -108,4 +108,5 @@ const $u = (() => {
     };
     return $u;
 })();
+// biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: <explanation>
 globalThis.$u = $u;
