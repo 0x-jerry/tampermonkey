@@ -1,5 +1,6 @@
 {
   "remote-snippets.js": [
     ".snippets/userscript.js"
-  ]
+  ],
+  "editor.defaultFormatter": "biomejs.biome"
 }

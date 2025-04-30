@@ -12,6 +12,7 @@
     "gen": "node ./scripts/gen-readme.js"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "typescript": "^5.4.5"
   }
 }
