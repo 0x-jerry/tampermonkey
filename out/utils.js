@@ -98,6 +98,13 @@ const $u = (() => {
             $style.innerText = style;
             document.head.appendChild($style);
         },
+        tag(name, attrs) {
+            const $el = document.createElement(name);
+            for (const [key, value] of Object.entries(attrs)) {
+                $el.setAttribute(key, value);
+            }
+            return $el;
+        },
     };
     return $u;
 })();

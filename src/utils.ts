@@ -125,6 +125,19 @@ const $u = (() => {
       $style.innerText = style
       document.head.appendChild($style)
     },
+
+    tag<Key extends keyof HTMLElementTagNameMap>(
+      name: Key,
+      attrs: Partial<HTMLElementTagNameMap[Key]>,
+    ): HTMLElementTagNameMap[Key] {
+      const $el = document.createElement(name)
+
+      for (const [key, value] of Object.entries(attrs)) {
+        $el.setAttribute(key, value)
+      }
+
+      return $el
+    },
   }
 
   return $u

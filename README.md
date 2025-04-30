@@ -4,6 +4,7 @@
 
 - No redirect: try to save the world! [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/acgbox.user.js)
 - ColaManga Quick Nav: Add convenient buttons to switch chapters [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/colamanga.user.js)
+- Eruda devtool for mobile browser: Mobile devtool [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/acgbox.user.js)
 - Confetti Skill: Use this `↑↑↓↓←→←→` sequence to trigger a confetti explosion. [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/fun-confetti.user.js)
 - Happymh Quick Nav: Add convenient buttons to switch chapters [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js)
 - Refine Reading: Refine style of hetushu.com [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/refine-reading.user.js)

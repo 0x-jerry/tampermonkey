@@ -9,6 +9,7 @@
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.youtube.com/*
 // @match        https://*.youtube-nocookie.com/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @require      ./utils.js
 // @run-at       document-end
 // @grant        none
