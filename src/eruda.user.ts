@@ -2,8 +2,8 @@
 // @name         Eruda devtool for mobile browser
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/acgbox.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/acgbox.user.js
+// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/eruda.user.js
+// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/eruda.user.js
 // @description  Mobile devtool
 // @author       x.jerry.wang@gmail.com
 // @match        https://*/*
