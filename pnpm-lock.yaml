@@ -11,6 +11,9 @@ importers:
       '@biomejs/biome':
         specifier: ^1.9.4
         version: 1.9.4
+      eruda:
+        specifier: ^3.4.1
+        version: 3.4.1
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -70,6 +73,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  eruda@3.4.1:
+    resolution: {integrity: sha512-RmaO5yD97URY/9Q0lye3cmmNPoXNKreeePIw7c/zllbscR92CjGFZFuQ70+0fLIvLcKW3Xha8DS8NFhmeNbEBQ==}
+
   typescript@5.4.5:
     resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
     engines: {node: '>=14.17'}
@@ -111,5 +117,7 @@ snapshots:
 
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
+
+  eruda@3.4.1: {}
 
   typescript@5.4.5: {}

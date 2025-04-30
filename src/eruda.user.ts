@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Eruda devtool
 // @namespace    http://tampermonkey.net/
-// @version      1.0.2
+// @version      1.0.3
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/eruda.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/eruda.user.js
 // @description  Eruda devtool for mobile browser
@@ -16,6 +16,10 @@
 $u.run(async () => {
   'use strict'
 
-  const eruda = await $u.when(() => (window as any).eruda, 10 * 1000)
-  eruda.init();
+  const eruda: import('eruda').Eruda = await $u.when(() => (window as any).eruda, 10 * 1000)
+
+  eruda.init({
+    useShadowDom: true,
+    tool: ['console', 'elements', 'info'],
+  })
 })
