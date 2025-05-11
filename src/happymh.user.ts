@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Happymh Quick Nav
 // @namespace    http://tampermonkey.net/
-// @version      1.0.2
+// @version      1.0.3
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js
 // @description  Add convenient buttons to switch chapters
@@ -63,11 +63,11 @@ $u.run(async () => {
   })
 
   async function nextChapter() {
-    ;(await findButton('上一话'))?.click()
+    ;(await findButton('下一话'))?.click()
   }
 
   async function previousChapter() {
-    ;(await findButton('下一话'))?.click()
+    ;(await findButton('上一话'))?.click()
   }
 
   function findButton(text: string) {

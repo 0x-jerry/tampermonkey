@@ -2,7 +2,7 @@ import { readFile, readdir, writeFile } from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-const sourceDir = fileURLToPath(path.join(import.meta.url, '../../src'))
+const sourceDir = path.join(fileURLToPath(import.meta.url), '../../src')
 
 const files = (await readdir(sourceDir)).filter((n) => n.endsWith('.user.ts'))
 
