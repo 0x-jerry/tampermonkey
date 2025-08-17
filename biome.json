@@ -26,6 +26,9 @@
       "suspicious": {
         "noRedundantUseStrict": "off",
         "noExplicitAny": "info"
+      },
+      "style": {
+        "noNonNullAssertion": "off"
       }
     }
   },
