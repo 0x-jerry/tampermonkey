@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WeRead Solarized Theme
 // @namespace    http://tampermonkey.net/
-// @version      1.0.5
+// @version      1.0.6
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/weread.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/weread.user.js
 // @description  Change the theme of WeRead
@@ -52,8 +52,12 @@ $u.run(async () => {
   background-color: var(--s-base2) !important;
 }
 
-.reader_floatReviewsPanel_content_arrow {
-  border-color: var(--s-base2) !important;
+.reader_floatReviewsPanel_content_arrow.reader_floatReviewsPanel_content_arrow_left {
+  border-right-color: var(--s-base2) !important;
+}
+
+.reader_floatReviewsPanel_content_arrow.reader_floatReviewsPanel_content_arrow_right {
+  border-left-color: var(--s-base2) !important;
 }
 
 .wr_reader_note_panel_header_cell,
