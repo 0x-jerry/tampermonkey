@@ -1,5 +1,6 @@
 console.debug('Utils loaded!');
-const $u = (() => {
+// use var to avoid debug local file cause syntax error.
+var _$my_utils = (() => {
     class Xorshift {
         x = 1;
         y = 0;
@@ -113,5 +114,4 @@ const $u = (() => {
     };
     return $u;
 })();
-// biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: <explanation>
-globalThis.$u = $u;
+globalThis.$u = globalThis.$u || _$my_utils;
