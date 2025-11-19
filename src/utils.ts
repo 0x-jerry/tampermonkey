@@ -5,7 +5,8 @@ export interface MatcherConfig {
   handler: () => any
 }
 
-const $u = (() => {
+// use var to avoid debug local file cause syntax error.
+var _$my_utils = (() => {
   class Xorshift {
     x = 1
     y = 0
@@ -89,7 +90,10 @@ const $u = (() => {
      * @param {number} timeout  default is 10 * 1000 (10s).
      * @returns {Promise<T>}
      */
-    async when<T>(checker: () => T, timeout: number = 10 * 1000): Promise<NonNullable<T>> {
+    async when<T>(
+      checker: () => T,
+      timeout: number = 10 * 1000,
+    ): Promise<NonNullable<T>> {
       const start = Date.now()
 
       while (Date.now() - start < timeout) {
@@ -147,12 +151,10 @@ const $u = (() => {
   return $u
 })()
 
-// biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: <explanation>
-globalThis.$u = $u
+globalThis.$u = globalThis.$u || _$my_utils
 
-type GlobalUtils = typeof $u
+type GlobalUtils = typeof _$my_utils
 
 declare global {
-  // biome-ignore lint/suspicious/noRedeclare: <explanation>
   export var $u: GlobalUtils
 }
