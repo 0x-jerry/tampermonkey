@@ -27,16 +27,21 @@ export async function generateReadme() {
 
   const descriptions = await Promise.all(p)
 
-  const headers = [
-    //
-    `# Some Useful TamperMonkey Scripts`,
-    '',
-    `**Scripts:**`,
-    '',
-  ]
+  const generatedContent = descriptions.filter(Boolean).join('\n')
 
-  await writeFile(
-    path.join(sourceDir, '../README.md'),
-    [...headers, ...descriptions.filter(Boolean), ''].join('\n'),
-  )
+  const content = await renderWithData({
+    GENERATED_CONTENT: generatedContent,
+  })
+
+  await writeFile(path.join(sourceDir, '../README.md'), content)
+}
+
+async function renderWithData(data: Record<string, string>) {
+  let outputContent = await readFile('readme.tpl.md', 'utf8')
+
+  Object.entries(data).forEach(([key, value]) => {
+    outputContent = outputContent.replaceAll(`<!--${key}-->`, value)
+  })
+
+  return outputContent
 }

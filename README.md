@@ -1,11 +1,17 @@
 # Some Useful TamperMonkey Scripts
 
+## Development
+
+```sh
+# replace xxx with the script that need to debug
+npm run dev -- src/xxx.user.ts
+```
+
 **Scripts:**
 
 - No redirect: try to save the world! [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/acgbox.user.js)
 - ColaManga Quick Nav: Add convenient buttons to switch chapters [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/colamanga.user.js)
 - Eruda devtool: Eruda devtool for mobile browser [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/eruda.user.js)
-- Confetti Skill: Use this `↑↑↓↓←→←→` sequence to trigger a confetti explosion. [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/fun-confetti.user.js)
 - Happymh Quick Nav: Add convenient buttons to switch chapters [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js)
 - Refine Reading: Refine style of hetushu.com [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/refine-reading.user.js)
 - Simple MMO: try to save the simple mmo world! [install](https://github.com/0x-jerry/tampermonkey/raw/main/out/smmo.user.js)
