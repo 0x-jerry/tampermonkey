@@ -23,7 +23,7 @@ export async function buildSingleFile(file: string, opt?: { dev?: boolean }) {
 function extractBannerConfig(file: string) {
   const content = readFileSync(file, { encoding: 'utf8' })
 
-  const BANNER_RE = /\/\/ ==UserScript==(.|\n)+\/\/ ==\/UserScript==/
+  const BANNER_RE = /\/\/ ==UserScript==(.|\n|\r\n)+\/\/ ==\/UserScript==/
 
   const banner = content.match(BANNER_RE)?.at(0)
 
