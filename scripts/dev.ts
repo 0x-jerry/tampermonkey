@@ -6,4 +6,4 @@ if (!file) {
   throw new Error(`Please pass a file`)
 }
 
-buildSingleFile(file, { watch: true })
+buildSingleFile(file, { dev: true })

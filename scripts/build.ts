@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { build, type InlineConfig } from 'tsdown'
 
-export async function buildSingleFile(file: string, opt?: { watch?: boolean }) {
+export async function buildSingleFile(file: string, opt?: { dev?: boolean }) {
   const outputFile = path.join('out', `${path.basename(file, '.ts')}.js`)
 
   const conf: InlineConfig = {
@@ -12,8 +12,9 @@ export async function buildSingleFile(file: string, opt?: { watch?: boolean }) {
     },
     clean: false,
     format: 'iife',
-    watch: opt?.watch ? [file] : false,
+    watch: opt?.dev ? [file] : false,
     banner: () => extractBannerConfig(file),
+    logLevel: opt?.dev ? 'info' : 'error',
   }
 
   await build(conf)

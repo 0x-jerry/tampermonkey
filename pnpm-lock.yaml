@@ -26,6 +26,9 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+      yocto-spinner:
+        specifier: ^1.0.0
+        version: 1.0.0
 
 packages:
 
@@ -667,6 +670,14 @@ packages:
       synckit:
         optional: true
 
+  yocto-spinner@1.0.0:
+    resolution: {integrity: sha512-VPX8P/+Z2Fnpx8PC/JELbxp3QRrBxjAekio6yulGtA5gKt9YyRc5ycCb+NHgZCbZ0kx9KxwZp7gC6UlrCcCdSQ==}
+    engines: {node: '>=18.19'}
+
+  yoctocolors@2.1.2:
+    resolution: {integrity: sha512-CzhO+pFNo8ajLM2d2IW/R93ipy99LWjtwblvC1RsoSUMZgyLbYFr221TnSNT7GjGdYui6P459mw9JH/g/zW2ug==}
+    engines: {node: '>=18'}
+
 snapshots:
 
   '@babel/generator@7.28.5':
@@ -1151,3 +1162,9 @@ snapshots:
     dependencies:
       '@oxc-project/runtime': 0.96.0
       rolldown: 1.0.0-beta.51
+
+  yocto-spinner@1.0.0:
+    dependencies:
+      yoctocolors: 2.1.2
+
+  yoctocolors@2.1.2: {}
