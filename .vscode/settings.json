@@ -2,5 +2,8 @@
   "remote-snippets.js": [
     ".snippets/userscript.js"
   ],
-  "editor.defaultFormatter": "biomejs.biome"
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "always"
+  }
 }

@@ -7,9 +7,8 @@
   "author": "Jerry Wang <x.jerry.wang@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "tsc -w -p .",
-    "build": "tsx scripts/buildAll.ts",
-    "gen": "node ./scripts/gen-readme.js"
+    "dev": "tsx scripts/dev.ts",
+    "build": "tsx scripts/buildAll.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.6",
