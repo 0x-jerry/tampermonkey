@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Un Redirect
 // @namespace    http://tampermonkey.net/
-// @version      1.3.1
+// @version      1.3.2
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js
 // @description  Skip redirect at some search result page, support google/bing/zhihu/csdn/sspai.

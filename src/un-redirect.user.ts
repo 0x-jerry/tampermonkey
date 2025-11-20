@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Un Redirect
 // @namespace    http://tampermonkey.net/
-// @version      1.3.1
+// @version      1.3.2
 // @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js
 // @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js
 // @description  Skip redirect at some search result page, support google/bing/zhihu/csdn/sspai.
@@ -17,7 +17,7 @@
 // @grant        none
 // ==/UserScript==
 
-import { run, stringMatcher } from "./utils"
+import { run, stringMatcher } from './utils'
 
 run(async () => {
   console.debug('Un redirect loaded!')
@@ -167,7 +167,10 @@ run(async () => {
       const u = new URL(url)
 
       // https://colab.research.google.com/corgiredirector?site=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FAutomatic_differentiation
-      if (u.host === 'colab.research.google.com' && u.pathname === '/corgiredirector') {
+      if (
+        u.host === 'colab.research.google.com' &&
+        u.pathname === '/corgiredirector'
+      ) {
         return u.searchParams.get('site')
       }
 
@@ -188,15 +191,21 @@ run(async () => {
     filter: string | ((el: T) => boolean),
     getMatchedResult: (
       el: T,
-    ) => string | undefined | null | { matched: boolean; getUrl: () => Promise<string> },
+    ) =>
+      | string
+      | undefined
+      | null
+      | { matched: boolean; getUrl: () => Promise<string> },
   ) {
     const selectorFilter =
-      typeof filter === 'string' ? (el: HTMLElement) => el.tagName === filter.toUpperCase() : filter
+      typeof filter === 'string'
+        ? (el: HTMLElement) => el.tagName === filter.toUpperCase()
+        : filter
 
     document.addEventListener(
       'click',
       async (ev) => {
-        // @ts-ignore
+        // @ts-expect-error
         const links: HTMLElement[] = ev.composedPath().filter(selectorFilter)
 
         for (const link of links) {
