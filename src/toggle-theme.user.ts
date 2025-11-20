@@ -13,7 +13,7 @@
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
-import { run, storage } from "./utils"
+import { run, storage } from './utils'
 
 run(async () => {
   'use strict'
@@ -21,7 +21,6 @@ run(async () => {
   const storageKey = 'toggle-theme:enabled'
   let styleElement: HTMLElement | null = null
 
-  // @ts-expect-error
   GM_registerMenuCommand('Toggle Theme', () => {
     toggleTheme()
   })
@@ -45,7 +44,6 @@ run(async () => {
       return
     }
 
-    // @ts-expect-error
     styleElement = GM_addStyle(`
       html {
         filter: invert(1);

@@ -14,7 +14,6 @@
 import { run } from './utils'
 
 run(async () => {
-
   const eruda = (await import('eruda')).default
 
   eruda.init({

@@ -12,11 +12,9 @@
 // @grant        GM_addStyle
 // ==/UserScript==
 
-import { random, run, sleepRandom } from "./utils"
+import { random, run, sleepRandom } from './utils'
 
 run(async () => {
-
-  // @ts-expect-error
   GM_addStyle(`
     .agent-action {
       border: 1px solid red;
@@ -39,7 +37,9 @@ run(async () => {
       const actions = this.actions.filter((action) => action.check())
       if (!actions.length) return null
 
-      const action = actions.reduce((prev, cur) => (cur.priority > prev.priority ? cur : prev))
+      const action = actions.reduce((prev, cur) =>
+        cur.priority > prev.priority ? cur : prev,
+      )
 
       return action
     }
@@ -104,7 +104,12 @@ run(async () => {
             console.debug(ts, 'Execute action:', action.name)
             action.action()
           } catch (error) {
-            console.debug(ts, 'Something wrong when execute action:', action.name, error)
+            console.debug(
+              ts,
+              'Something wrong when execute action:',
+              action.name,
+              error,
+            )
           }
         }
 
@@ -167,9 +172,14 @@ run(async () => {
     }
   }
 
-  function getElByContent<T extends HTMLElement>(text: string, type: string): T | undefined {
+  function getElByContent<T extends HTMLElement>(
+    text: string,
+    type: string,
+  ): T | undefined {
     const elements = Array.from(document.querySelectorAll<T>(type))
-    return elements.find((el) => isVisible(el) && el.textContent?.trim() === text)
+    return elements.find(
+      (el) => isVisible(el) && el.textContent?.trim() === text,
+    )
   }
 
   function getButtonByContent(text: string): HTMLButtonElement | undefined {
@@ -188,7 +198,14 @@ run(async () => {
       },
     },
     takeStep: createAction('Step', 99, ['Take a step']),
-    craft: createAction('Craft', 999, ['Salvage', 'Catch', 'Grab', 'Attack', 'Mine', 'Chop']),
+    craft: createAction('Craft', 999, [
+      'Salvage',
+      'Catch',
+      'Grab',
+      'Attack',
+      'Mine',
+      'Chop',
+    ]),
 
     gather: createAction('Gather', 99, ['Gather', 'Press here to gather']),
     endGather: createAction('End gather', 999, ['Press here to close']),

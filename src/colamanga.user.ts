@@ -15,7 +15,6 @@
 import { run, when } from './utils'
 
 run(async () => {
-
   await when(() => document.body)
 
   const container = document.createElement('div')

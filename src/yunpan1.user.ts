@@ -12,7 +12,7 @@
 // @grant        none
 // ==/UserScript==
 
-import { run } from "./utils"
+import { run } from './utils'
 
 run(async () => {
   const el = document.getElementById('secretCode')

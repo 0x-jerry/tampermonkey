@@ -13,10 +13,9 @@
 // @grant        none
 // ==/UserScript==
 
-import { run } from "./utils"
+import { run } from './utils'
 
 run(async () => {
-
   const IS_YOUTUBE =
     window.location.hostname.search(/(?:^|.+\.)youtube\.com/) > -1 ||
     window.location.hostname.search(/(?:^|.+\.)youtube-nocookie\.com/) > -1
@@ -34,11 +33,19 @@ run(async () => {
     })
   }
 
-  window.addEventListener('visibilitychange', (evt) => evt.stopImmediatePropagation(), true)
+  window.addEventListener(
+    'visibilitychange',
+    (evt) => evt.stopImmediatePropagation(),
+    true,
+  )
 
   // Fullscreen API
   if (IS_VIMEO) {
-    window.addEventListener('fullscreenchange', (evt) => evt.stopImmediatePropagation(), true)
+    window.addEventListener(
+      'fullscreenchange',
+      (evt) => evt.stopImmediatePropagation(),
+      true,
+    )
   }
 
   // User activity tracking

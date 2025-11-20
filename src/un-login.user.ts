@@ -12,7 +12,7 @@
 // @grant        none
 // ==/UserScript==
 
-import { run, stringMatcher, waitElement } from "./utils"
+import { run, stringMatcher, waitElement } from './utils'
 
 run(() => {
   stringMatcher(location.href, [

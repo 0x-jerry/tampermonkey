@@ -12,10 +12,9 @@
 // @grant        none
 // ==/UserScript==
 
-import { run, when } from "./utils"
+import { run, when } from './utils'
 
 run(async () => {
-
   await when(() => document.body)
 
   const container = document.createElement('div')
@@ -72,7 +71,9 @@ run(async () => {
 
   function findButton(text: string) {
     return when(() =>
-      Array.from(document.querySelectorAll('button')).find((el) => el.textContent?.trim() === text),
+      Array.from(document.querySelectorAll('button')).find(
+        (el) => el.textContent?.trim() === text,
+      ),
     )
   }
 })

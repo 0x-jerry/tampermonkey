@@ -12,7 +12,7 @@
 // @grant        none
 // ==/UserScript==
 
-import { addStyle, run } from "./utils"
+import { addStyle, run } from './utils'
 
 run(async () => {
   'use strict'

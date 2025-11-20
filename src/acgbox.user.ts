@@ -12,18 +12,19 @@
 // @grant        none
 // ==/UserScript==
 
-import { run } from "./utils"
+import { run } from './utils'
 
 run(async () => {
-
-  document.querySelectorAll<HTMLAnchorElement>('a[data-url]').forEach((anchor) => {
-    anchor.addEventListener('click', (evt) => {
-      const url = anchor.dataset.url
-      if (!url) {
-        return
-      }
-      evt.preventDefault()
-      window.open(url, '_blank')
+  document
+    .querySelectorAll<HTMLAnchorElement>('a[data-url]')
+    .forEach((anchor) => {
+      anchor.addEventListener('click', (evt) => {
+        const url = anchor.dataset.url
+        if (!url) {
+          return
+        }
+        evt.preventDefault()
+        window.open(url, '_blank')
+      })
     })
-  })
 })
