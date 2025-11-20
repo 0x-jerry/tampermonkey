@@ -1,4 +1,3 @@
-"use strict";
 // ==UserScript==
 // @name         Refine Reading
 // @namespace    http://tampermonkey.net/
@@ -9,21 +8,41 @@
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.hetushu.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=hetushu.com
-// @require      ./utils.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
-$u.run(() => {
-    $u.stringMatcher(location.href, [
-        {
-            test: /hetushu\.com/,
-            handler: injectStyle,
-        },
-    ]);
-    async function injectStyle() {
-        const $style = document.createElement('style');
-        const css = String.raw;
-        $style.innerHTML = css `
+(function() {
+
+
+//#region src/utils/utils.ts
+/**
+	* @param {MatcherConfig[]} configs
+	* @param {string} str
+	*/
+	function stringMatcher(str, configs) {
+		return configs.find((n) => n.test.test(str))?.handler();
+	}
+	/**
+	* @param {() => any} fn
+	*/
+	async function run(fn) {
+		try {
+			await fn();
+		} catch (error) {
+			console.error("Running error", error);
+		}
+	}
+
+//#endregion
+//#region src/refine-reading.user.ts
+	run(() => {
+		stringMatcher(location.href, [{
+			test: /hetushu\.com/,
+			handler: injectStyle
+		}]);
+		async function injectStyle() {
+			const $style = document.createElement("style");
+			$style.innerHTML = String.raw`
       body {
         display: flex;
       }
@@ -51,6 +70,9 @@ $u.run(() => {
         flex: 1;
       }
     `;
-        document.body.append($style);
-    }
-});
+			document.body.append($style);
+		}
+	});
+
+//#endregion
+})();

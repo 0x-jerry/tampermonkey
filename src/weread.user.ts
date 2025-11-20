@@ -8,15 +8,16 @@
 // @author       x.jerry.wang@gmail.com
 // @match        https://weread.qq.com/**
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=weread.qq.com
-// @require      ./utils.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
 
-$u.run(async () => {
+import { addStyle, run } from "./utils"
+
+run(async () => {
   'use strict'
 
-  $u.addStyle(`
+  addStyle(`
 /* https://www.wikiwand.com/en/articles/Solarized#Colors */
 :root {
   --s-base03: #002b36;

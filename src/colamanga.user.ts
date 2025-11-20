@@ -8,15 +8,15 @@
 // @author       x.jerry.wang@gmail.com
 // @match        https://www.colamanga.com/**
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=colamanga.com
-// @require      ./utils.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
 
-$u.run(async () => {
-  'use strict'
+import { run, when } from './utils'
 
-  await $u.when(() => document.body)
+run(async () => {
+
+  await when(() => document.body)
 
   const container = document.createElement('div')
   container.innerHTML = `
@@ -63,13 +63,17 @@ $u.run(async () => {
   })
 
   async function nextChapter() {
-    const els = Array.from(document.querySelectorAll('.mh_readend .read_page_link'))
+    const els = Array.from(
+      document.querySelectorAll('.mh_readend .read_page_link'),
+    )
 
     ;(els.at(2) as HTMLLinkElement)?.click()
   }
 
   async function previousChapter() {
-    const els = Array.from(document.querySelectorAll('.mh_readend .read_page_link'))
+    const els = Array.from(
+      document.querySelectorAll('.mh_readend .read_page_link'),
+    )
 
     ;(els.at(0) as HTMLLinkElement)?.click()
   }

@@ -8,13 +8,14 @@
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.zhihu.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=zhihu.com
-// @require      ./utils.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
 
-$u.run(() => {
-  $u.stringMatcher(location.href, [
+import { run, stringMatcher, waitElement } from "./utils"
+
+run(() => {
+  stringMatcher(location.href, [
     {
       test: /zhihu\.com/,
       handler: handleZhihuLogin,
@@ -22,7 +23,7 @@ $u.run(() => {
   ])
 
   async function handleZhihuLogin() {
-    const el = await $u.waitElement('.signFlowModal')
+    const el = await waitElement('.signFlowModal')
 
     const btn = el.querySelector<HTMLButtonElement>('.Modal-closeButton')
 

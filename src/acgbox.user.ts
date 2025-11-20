@@ -8,13 +8,13 @@
 // @author       x.jerry.wang@gmail.com
 // @match        https://www.acgbox.link/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=acgbox.link
-// @require      ./utils.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
 
-$u.run(async () => {
-  'use strict'
+import { run } from "./utils"
+
+run(async () => {
 
   document.querySelectorAll<HTMLAnchorElement>('a[data-url]').forEach((anchor) => {
     anchor.addEventListener('click', (evt) => {

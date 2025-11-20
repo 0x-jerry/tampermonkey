@@ -13,15 +13,16 @@
 // @match        https://blog.csdn.net/*
 // @match        https://x.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
-// @require      ./utils.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
 
-$u.run(async () => {
+import { run, stringMatcher } from "./utils"
+
+run(async () => {
   console.debug('Un redirect loaded!')
 
-  $u.stringMatcher(location.href, [
+  stringMatcher(location.href, [
     {
       test: /www\.google\.com/,
       handler: handleGoogleSearchResult,

@@ -8,13 +8,13 @@
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.yunpan1.cc/**
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=yunpan1.cc
-// @require      ./utils.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
 
-$u.run(async () => {
-  'use strict'
+import { run } from "./utils"
+
+run(async () => {
   const el = document.getElementById('secretCode')
   const container = el?.parentElement?.parentElement
 

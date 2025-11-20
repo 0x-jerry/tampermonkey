@@ -8,15 +8,15 @@
 // @author       x.jerry.wang@gmail.com
 // @match        https://web.simple-mmo.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=simple-mmo.com
-// @require      ./utils.js
 // @run-at       document-end
 // @grant        GM_addStyle
 // ==/UserScript==
 
-$u.run(async () => {
-  'use strict'
+import { random, run, sleepRandom } from "./utils"
 
-  // @ts-ignore
+run(async () => {
+
+  // @ts-expect-error
   GM_addStyle(`
     .agent-action {
       border: 1px solid red;
@@ -62,7 +62,7 @@ $u.run(async () => {
 
       const data = this.throwDice(thinkChanceList)
 
-      await $u.sleepRandom(data.min, data.max)
+      await sleepRandom(data.min, data.max)
     }
 
     /**
@@ -78,7 +78,7 @@ $u.run(async () => {
       })
 
       const total = value
-      const randomValue = $u.random(0, total)
+      const randomValue = random(0, total)
       const idx = chances.findIndex((chanceLevel) => randomValue < chanceLevel)
 
       return chanceList[idx].data
@@ -91,7 +91,7 @@ $u.run(async () => {
         return
       }
 
-      const checkGap = $u.random(300, 1000)
+      const checkGap = random(300, 1000)
 
       this.#handler = window.setTimeout(async () => {
         const action = this.detectAction()
@@ -155,12 +155,11 @@ $u.run(async () => {
     return rect.width > 0 && rect.height > 0 && _checkVisibility()
 
     function _checkVisibility() {
-      let p = el
+      let p: HTMLElement | null = el
       while (p) {
-        if (p.style.opacity == '0') return false
-        if (p.style.display == 'none') return false
+        if (p.style.opacity === '0') return false
+        if (p.style.display === 'none') return false
 
-        // @ts-ignore
         p = p.parentElement
       }
 
@@ -201,7 +200,7 @@ $u.run(async () => {
   function createAction(name: string, priority: number, btnTexts: string[]) {
     function getActionEl() {
       for (const content of btnTexts) {
-        let el
+        let el: HTMLElement | null | undefined
         const btn = getButtonByContent(content)
         if (btn && btn) {
           el = btn.disabled ? null : btn
@@ -232,8 +231,8 @@ $u.run(async () => {
         const rect = el?.getBoundingClientRect()
 
         const fakeEvent = new MouseEvent('click', {
-          clientX: Math.round($u.random(rect.x, rect.x + rect.width)),
-          clientY: Math.round($u.random(rect.y, rect.y + rect.height)),
+          clientX: Math.round(random(rect.x, rect.x + rect.width)),
+          clientY: Math.round(random(rect.y, rect.y + rect.height)),
         })
         el?.dispatchEvent(fakeEvent)
       },
@@ -289,7 +288,9 @@ $u.run(async () => {
   const $enableBtn = document.createElement('button')
   $c.append($enableBtn)
 
-  const updateBtnText = () => ($enableBtn.textContent = agent.playing ? 'Enabled' : 'Disabled')
+  const updateBtnText = () => {
+    $enableBtn.textContent = agent.playing ? 'Enabled' : 'Disabled'
+  }
   updateBtnText()
 
   $enableBtn.onclick = () => {

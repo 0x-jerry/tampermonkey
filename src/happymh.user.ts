@@ -8,15 +8,15 @@
 // @author       x.jerry.wang@gmail.com
 // @match        https://m.happymh.com/**
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=m.happymh.com
-// @require      ./utils.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
 
-$u.run(async () => {
-  'use strict'
+import { run, when } from "./utils"
 
-  await $u.when(() => document.body)
+run(async () => {
+
+  await when(() => document.body)
 
   const container = document.createElement('div')
   container.innerHTML = `
@@ -71,7 +71,7 @@ $u.run(async () => {
   }
 
   function findButton(text: string) {
-    return $u.when(() =>
+    return when(() =>
       Array.from(document.querySelectorAll('button')).find((el) => el.textContent?.trim() === text),
     )
   }

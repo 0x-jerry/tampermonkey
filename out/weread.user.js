@@ -1,4 +1,3 @@
-"use strict";
 // ==UserScript==
 // @name         WeRead Solarized Theme
 // @namespace    http://tampermonkey.net/
@@ -9,13 +8,33 @@
 // @author       x.jerry.wang@gmail.com
 // @match        https://weread.qq.com/**
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=weread.qq.com
-// @require      ./utils.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
-$u.run(async () => {
-    'use strict';
-    $u.addStyle(`
+(function() {
+
+
+//#region src/utils/utils.ts
+/**
+	* @param {() => any} fn
+	*/
+	async function run(fn) {
+		try {
+			await fn();
+		} catch (error) {
+			console.error("Running error", error);
+		}
+	}
+	function addStyle(style) {
+		const $style = document.createElement("style");
+		$style.innerText = style;
+		document.head.appendChild($style);
+	}
+
+//#endregion
+//#region src/weread.user.ts
+	run(async () => {
+		addStyle(`
 /* https://www.wikiwand.com/en/articles/Solarized#Colors */
 :root {
   --s-base03: #002b36;
@@ -72,4 +91,7 @@ $u.run(async () => {
   background-color: var(--s-base3) !important;
 }
  `);
-});
+	});
+
+//#endregion
+})();

@@ -8,19 +8,20 @@
 // @author       x.jerry.wang@gmail.com
 // @match        https://*/**
 // @match        http://*/**
-// @require      ./utils.js
 // @run-at       document-end
 // @grant        GM_addStyle
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
-$u.run(async () => {
+import { run, storage } from "./utils"
+
+run(async () => {
   'use strict'
 
   const storageKey = 'toggle-theme:enabled'
   let styleElement: HTMLElement | null = null
 
-  // @ts-ignore
+  // @ts-expect-error
   GM_registerMenuCommand('Toggle Theme', () => {
     toggleTheme()
   })
@@ -28,14 +29,14 @@ $u.run(async () => {
   doEffect()
 
   function toggleTheme() {
-    const enabled = $u.storage.get(storageKey, false)
-    $u.storage.set(storageKey, !enabled)
+    const enabled = storage.get(storageKey, false)
+    storage.set(storageKey, !enabled)
 
     doEffect()
   }
 
   function doEffect() {
-    const enabled = $u.storage.get(storageKey, false)
+    const enabled = storage.get(storageKey, false)
 
     styleElement?.remove()
     styleElement = null
@@ -44,7 +45,7 @@ $u.run(async () => {
       return
     }
 
-    // @ts-ignore
+    // @ts-expect-error
     styleElement = GM_addStyle(`
       html {
         filter: invert(1);

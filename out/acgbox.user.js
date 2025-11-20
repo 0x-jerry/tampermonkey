@@ -1,4 +1,3 @@
-"use strict";
 // ==UserScript==
 // @name         No redirect
 // @namespace    http://tampermonkey.net/
@@ -9,20 +8,36 @@
 // @author       x.jerry.wang@gmail.com
 // @match        https://www.acgbox.link/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=acgbox.link
-// @require      ./utils.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
-$u.run(async () => {
-    'use strict';
-    document.querySelectorAll('a[data-url]').forEach((anchor) => {
-        anchor.addEventListener('click', (evt) => {
-            const url = anchor.dataset.url;
-            if (!url) {
-                return;
-            }
-            evt.preventDefault();
-            window.open(url, '_blank');
-        });
-    });
-});
+(function() {
+
+
+//#region src/utils/utils.ts
+/**
+	* @param {() => any} fn
+	*/
+	async function run(fn) {
+		try {
+			await fn();
+		} catch (error) {
+			console.error("Running error", error);
+		}
+	}
+
+//#endregion
+//#region src/acgbox.user.ts
+	run(async () => {
+		document.querySelectorAll("a[data-url]").forEach((anchor) => {
+			anchor.addEventListener("click", (evt) => {
+				const url = anchor.dataset.url;
+				if (!url) return;
+				evt.preventDefault();
+				window.open(url, "_blank");
+			});
+		});
+	});
+
+//#endregion
+})();

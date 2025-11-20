@@ -7,16 +7,15 @@
 // @description  Eruda devtool for mobile browser
 // @author       x.jerry.wang@gmail.com
 // @match        https://*/*
-// @require      ./utils.js
-// @require      ../libs/eruda-v3.4.1.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
 
-$u.run(async () => {
-  'use strict'
+import { run } from './utils'
 
-  const eruda: import('eruda').Eruda = await $u.when(() => (window as any).eruda, 10 * 1000)
+run(async () => {
+
+  const eruda = (await import('eruda')).default
 
   eruda.init({
     useShadowDom: true,
