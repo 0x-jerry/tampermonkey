@@ -33,9 +33,15 @@
 	}
 
 //#endregion
+//#region src/utils/index.ts
+	function css(template, ...substitutions) {
+		return String.raw(template, ...substitutions);
+	}
+
+//#endregion
 //#region src/weread.user.ts
 	run(async () => {
-		injectStyle(`
+		injectStyle(css`
 /* https://www.wikiwand.com/en/articles/Solarized#Colors */
 :root {
   --s-base03: #002b36;

@@ -12,10 +12,10 @@
 // @grant        none
 // ==/UserScript==
 
-import { injectStyle, run } from './utils'
+import { css, injectStyle, run } from './utils'
 
 run(async () => {
-  injectStyle(`
+  injectStyle(css`
     * {
       user-select: auto !important;
     }

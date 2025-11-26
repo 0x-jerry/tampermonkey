@@ -33,9 +33,15 @@
 	}
 
 //#endregion
+//#region src/utils/index.ts
+	function css(template, ...substitutions) {
+		return String.raw(template, ...substitutions);
+	}
+
+//#endregion
 //#region src/unlock-selection.user.ts
 	run(async () => {
-		injectStyle(`
+		injectStyle(css`
     * {
       user-select: auto !important;
     }
