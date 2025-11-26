@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         Un Login
 // @namespace    0x-jerry
-// @description  Auto close login dialog at some site, support zhihu.
-// @version      1.0.2
+// @description  Auto close login dialog at some site.
+// @version      1.0.3
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/un-login.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/un-login.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\un-login.user.ts
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=zhihu.com
 // @match        https://*.zhihu.com/*
+// @match        https://*.yunpan1.*/**
 // @run-at       document-end
 // ==/UserScript==
 (function(exports) {
@@ -69,21 +70,25 @@
 //#region src/un-login.user.ts
 	const config = defineHeader({
 		name: "Un Login",
-		version: "1.0.2",
-		description: "Auto close login dialog at some site, support zhihu.",
-		matches: ["https://*.zhihu.com/*"],
+		version: "1.0.3",
+		description: "Auto close login dialog at some site.",
+		matches: ["https://*.zhihu.com/*", "https://*.yunpan1.*/**"],
 		icon: "https://www.google.com/s2/favicons?sz=64&domain=zhihu.com",
 		runAt: "document-end"
 	});
 	run(() => {
 		stringMatcher(location.href, [{
 			test: /zhihu\.com/,
-			handler: handleZhihuLogin
+			async handler() {
+				(await waitElement(".signFlowModal")).querySelector(".Modal-closeButton")?.click();
+			}
+		}, {
+			test: /yunpan1\./,
+			async handler() {
+				const container = (await waitElement("#secretCode")).parentElement?.parentElement;
+				if (container) container.style.display = "none";
+			}
 		}]);
-		async function handleZhihuLogin() {
-			(await waitElement(".signFlowModal")).querySelector(".Modal-closeButton")?.click();
-			console.debug("close login dialog successfully");
-		}
 	});
 
 //#endregion
