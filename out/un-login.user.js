@@ -2,11 +2,10 @@
 // @name         Un Login
 // @namespace    0x-jerry
 // @description  Auto close login dialog at some site.
-// @version      1.0.3
+// @version      1.0.4
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/un-login.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/un-login.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\un-login.user.ts
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=zhihu.com
 // @match        https://*.zhihu.com/*
 // @match        https://*.yunpan1.*/**
 // @run-at       document-end
@@ -70,10 +69,9 @@
 //#region src/un-login.user.ts
 	const config = defineHeader({
 		name: "Un Login",
-		version: "1.0.3",
+		version: "1.0.4",
 		description: "Auto close login dialog at some site.",
 		matches: ["https://*.zhihu.com/*", "https://*.yunpan1.*/**"],
-		icon: "https://www.google.com/s2/favicons?sz=64&domain=zhihu.com",
 		runAt: "document-end"
 	});
 	run(() => {
