@@ -120,10 +120,13 @@ export async function run(fn: () => any) {
   }
 }
 
-export function addStyle(style: string) {
+export function injectStyle(style: string) {
   const $style = document.createElement('style')
   $style.innerText = style
+
   document.head.appendChild($style)
+
+  return $style
 }
 
 export function tag<Key extends keyof HTMLElementTagNameMap>(

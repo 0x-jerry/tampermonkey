@@ -8,14 +8,13 @@ const initScript = `// ==UserScript==
 // @author       x.jerry.wang@gmail.com
 // @match        https://*.google.com/**
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
-// @require      ./utils.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
 
-\\$u.run(async () => {
-  'use strict'
+import { run } from './utils'
 
+run(async () => {
   // Your code here...
 })
 `

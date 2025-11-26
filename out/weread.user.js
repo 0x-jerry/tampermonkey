@@ -25,16 +25,17 @@
 			console.error("Running error", error);
 		}
 	}
-	function addStyle(style) {
+	function injectStyle(style) {
 		const $style = document.createElement("style");
 		$style.innerText = style;
 		document.head.appendChild($style);
+		return $style;
 	}
 
 //#endregion
 //#region src/weread.user.ts
 	run(async () => {
-		addStyle(`
+		injectStyle(`
 /* https://www.wikiwand.com/en/articles/Solarized#Colors */
 :root {
   --s-base03: #002b36;

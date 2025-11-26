@@ -12,12 +12,12 @@
 // @grant        none
 // ==/UserScript==
 
-import { addStyle, run } from './utils'
+import { injectStyle, run } from './utils'
 
 run(async () => {
   'use strict'
 
-  addStyle(`
+  injectStyle(`
 /* https://www.wikiwand.com/en/articles/Solarized#Colors */
 :root {
   --s-base03: #002b36;
