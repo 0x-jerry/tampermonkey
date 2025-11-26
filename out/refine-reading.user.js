@@ -2,7 +2,7 @@
 // @name         Refine Reading
 // @namespace    0x-jerry
 // @description  Refine style of hetushu.com
-// @version      1.0.0
+// @version      1.0.1
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/refine-reading.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/refine-reading.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\refine-reading.user.ts
@@ -47,7 +47,7 @@
 //#region src/refine-reading.user.ts
 	const config = defineHeader({
 		name: "Refine Reading",
-		version: "1.0.0",
+		version: "1.0.1",
 		description: "Refine style of hetushu.com",
 		matches: ["https://*.hetushu.com/*"],
 		icon: "https://www.google.com/s2/favicons?sz=64&domain=hetushu.com",

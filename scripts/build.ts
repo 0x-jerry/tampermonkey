@@ -1,7 +1,7 @@
 import path from 'node:path'
-import { pathToFileURL } from 'node:url'
 import { build, type InlineConfig } from 'tsdown'
 import type { ITamperMonkeyHeader } from '../types'
+import { getScriptHeaderConfig } from './utils'
 
 export async function buildSingleFile(file: string, opt?: { dev?: boolean }) {
   const outputFile = path.join('out', `${path.basename(file, '.ts')}.js`)
@@ -27,13 +27,9 @@ export async function buildSingleFile(file: string, opt?: { dev?: boolean }) {
 }
 
 async function extractBannerConfig(file: string) {
-  globalThis._ENV_DISABLE_RUN_ = true
-
   const filepath = path.resolve(file)
 
-  const config: ITamperMonkeyHeader = (
-    await import(pathToFileURL(filepath).toString())
-  ).config
+  const config = await getScriptHeaderConfig(filepath)
 
   if (!config) {
     throw new Error(`No config found in ${file}`)

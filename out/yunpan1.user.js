@@ -2,7 +2,7 @@
 // @name         Save the world
 // @namespace    0x-jerry
 // @description  try to save the world!
-// @version      1.0.0
+// @version      1.0.1
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/yunpan1.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/yunpan1.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\yunpan1.user.ts
@@ -40,7 +40,7 @@
 //#region src/yunpan1.user.ts
 	const config = defineHeader({
 		name: "Save the world",
-		version: "1.0.0",
+		version: "1.0.1",
 		description: "try to save the world!",
 		matches: ["https://*.yunpan1.cc/**"],
 		icon: "https://www.google.com/s2/favicons?sz=64&domain=yunpan1.cc"

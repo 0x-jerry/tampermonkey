@@ -2,7 +2,7 @@
 // @name         No redirect
 // @namespace    0x-jerry
 // @description  No redirect
-// @version      1.0.0
+// @version      1.0.1
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/acgbox.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/acgbox.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\acgbox.user.ts
@@ -40,7 +40,7 @@
 //#region src/acgbox.user.ts
 	const config = defineHeader({
 		name: "No redirect",
-		version: "1.0.0",
+		version: "1.0.1",
 		description: "No redirect",
 		matches: ["https://www.acgbox.link/*"],
 		icon: "https://www.google.com/s2/favicons?sz=64&domain=acgbox.link",

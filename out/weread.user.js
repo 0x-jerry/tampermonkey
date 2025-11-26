@@ -2,7 +2,7 @@
 // @name         WeRead Solarized Theme
 // @namespace    0x-jerry
 // @description  Change the theme of WeRead
-// @version      1.0.6
+// @version      1.0.7
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/weread.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/weread.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\weread.user.ts
@@ -52,7 +52,7 @@
 //#region src/weread.user.ts
 	const config = defineHeader({
 		name: "WeRead Solarized Theme",
-		version: "1.0.6",
+		version: "1.0.7",
 		description: "Change the theme of WeRead",
 		icon: "https://www.google.com/s2/favicons?sz=64&domain=weread.qq.com",
 		matches: ["https://weread.qq.com/**"]

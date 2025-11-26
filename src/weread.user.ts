@@ -2,7 +2,7 @@ import { css, defineHeader, injectStyle, run } from './utils'
 
 export const config = defineHeader({
   name: 'WeRead Solarized Theme',
-  version: '1.0.6',
+  version: '1.0.7',
   description: 'Change the theme of WeRead',
   icon: 'https://www.google.com/s2/favicons?sz=64&domain=weread.qq.com',
   matches: ['https://weread.qq.com/**'],

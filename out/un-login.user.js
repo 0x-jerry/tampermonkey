@@ -2,7 +2,7 @@
 // @name         Un Login
 // @namespace    0x-jerry
 // @description  Auto close login dialog at some site, support zhihu.
-// @version      1.0.1
+// @version      1.0.2
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/un-login.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/un-login.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\un-login.user.ts
@@ -69,7 +69,7 @@
 //#region src/un-login.user.ts
 	const config = defineHeader({
 		name: "Un Login",
-		version: "1.0.1",
+		version: "1.0.2",
 		description: "Auto close login dialog at some site, support zhihu.",
 		matches: ["https://*.zhihu.com/*"],
 		icon: "https://www.google.com/s2/favicons?sz=64&domain=zhihu.com",

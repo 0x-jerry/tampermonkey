@@ -2,7 +2,7 @@ import { defineHeader, random, run, sleepRandom } from './utils'
 
 export const config = defineHeader({
   name: 'Simple MMO',
-  version: '1.0.1',
+  version: '1.0.2',
   description: 'Try to save the simple mmo world!',
   matches: ['https://web.simple-mmo.com/*'],
   icon: 'https://www.google.com/s2/favicons?sz=64&domain=simple-mmo.com',

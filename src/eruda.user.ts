@@ -2,7 +2,7 @@ import { defineHeader, run } from './utils'
 
 export const config = defineHeader({
   name: 'Eruda',
-  version: '1.0.3',
+  version: '1.0.4',
   description: 'Eruda devtool for mobile browser',
   matches: ['https://*/*'],
   runAt: 'document-end',

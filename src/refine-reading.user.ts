@@ -2,7 +2,7 @@ import { defineHeader, run, stringMatcher } from './utils'
 
 export const config = defineHeader({
   name: 'Refine Reading',
-  version: '1.0.0',
+  version: '1.0.1',
   description: 'Refine style of hetushu.com',
   matches: ['https://*.hetushu.com/*'],
   icon: 'https://www.google.com/s2/favicons?sz=64&domain=hetushu.com',

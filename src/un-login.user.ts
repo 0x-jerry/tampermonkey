@@ -2,7 +2,7 @@ import { defineHeader, run, stringMatcher, waitElement } from './utils'
 
 export const config = defineHeader({
   name: 'Un Login',
-  version: '1.0.1',
+  version: '1.0.2',
   description: 'Auto close login dialog at some site, support zhihu.',
   matches: ['https://*.zhihu.com/*'],
   icon: 'https://www.google.com/s2/favicons?sz=64&domain=zhihu.com',

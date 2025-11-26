@@ -2,7 +2,7 @@
 // @name         Youtube Background
 // @namespace    0x-jerry
 // @description  Youtube background player, port from [Youtube-Background](https://github.com/alkisqwe/Youtube-Background)
-// @version      1.0.0
+// @version      1.0.1
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/ytb-bg.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/ytb-bg.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\ytb-bg.user.ts
@@ -41,7 +41,7 @@
 //#region src/ytb-bg.user.ts
 	const config = defineHeader({
 		name: "Youtube Background",
-		version: "1.0.0",
+		version: "1.0.1",
 		description: "Youtube background player, port from [Youtube-Background](https://github.com/alkisqwe/Youtube-Background)",
 		matches: ["https://*.youtube.com/*", "https://*.youtube-nocookie.com/*"],
 		icon: "https://www.google.com/s2/favicons?sz=64&domain=youtube.com"

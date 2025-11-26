@@ -2,7 +2,7 @@
 // @name         ColaManga Quick Nav
 // @namespace    0x-jerry
 // @description  Add convenient buttons to switch chapters
-// @version      1.0.0
+// @version      1.0.1
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/colamanga.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/colamanga.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\colamanga.user.ts
@@ -59,7 +59,7 @@
 //#region src/colamanga.user.ts
 	const config = defineHeader({
 		name: "ColaManga Quick Nav",
-		version: "1.0.0",
+		version: "1.0.1",
 		description: "Add convenient buttons to switch chapters",
 		matches: ["https://www.colamanga.com/*"],
 		runAt: "document-end",

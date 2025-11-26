@@ -2,7 +2,7 @@
 // @name         Simple MMO
 // @namespace    0x-jerry
 // @description  Try to save the simple mmo world!
-// @version      1.0.1
+// @version      1.0.2
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/smmo.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/smmo.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\smmo.user.ts
@@ -75,7 +75,7 @@
 //#region src/smmo.user.ts
 	const config = defineHeader({
 		name: "Simple MMO",
-		version: "1.0.1",
+		version: "1.0.2",
 		description: "Try to save the simple mmo world!",
 		matches: ["https://web.simple-mmo.com/*"],
 		icon: "https://www.google.com/s2/favicons?sz=64&domain=simple-mmo.com",

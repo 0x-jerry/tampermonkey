@@ -2,7 +2,7 @@
 // @name         Eruda
 // @namespace    0x-jerry
 // @description  Eruda devtool for mobile browser
-// @version      1.0.3
+// @version      1.0.4
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/eruda.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/eruda.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\eruda.user.ts
@@ -15480,7 +15480,7 @@
 //#region src/eruda.user.ts
 	const config = defineHeader({
 		name: "Eruda",
-		version: "1.0.3",
+		version: "1.0.4",
 		description: "Eruda devtool for mobile browser",
 		matches: ["https://*/*"],
 		runAt: "document-end"

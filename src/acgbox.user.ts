@@ -2,7 +2,7 @@ import { defineHeader, run } from './utils'
 
 export const config = defineHeader({
   name: 'No redirect',
-  version: '1.0.0',
+  version: '1.0.1',
   description: 'No redirect',
   matches: ['https://www.acgbox.link/*'],
   icon: 'https://www.google.com/s2/favicons?sz=64&domain=acgbox.link',

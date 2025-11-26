@@ -2,7 +2,7 @@ import { defineHeader, run } from './utils'
 
 export const config = defineHeader({
   name: 'Youtube Background',
-  version: '1.0.0',
+  version: '1.0.1',
   description:
     'Youtube background player, port from [Youtube-Background](https://github.com/alkisqwe/Youtube-Background)',
   matches: ['https://*.youtube.com/*', 'https://*.youtube-nocookie.com/*'],

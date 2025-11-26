@@ -2,7 +2,7 @@
 // @name         Unlock Selection
 // @namespace    0x-jerry
 // @description  Unlock text selection
-// @version      1.0.1
+// @version      1.0.2
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/unlock-selection.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/unlock-selection.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\unlock-selection.user.ts
@@ -52,7 +52,7 @@
 //#region src/unlock-selection.user.ts
 	const config = defineHeader({
 		name: "Unlock Selection",
-		version: "1.0.1",
+		version: "1.0.2",
 		description: "Unlock text selection",
 		matches: ["https://*/*", "http://*/*"]
 	});

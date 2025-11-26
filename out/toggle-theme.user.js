@@ -2,7 +2,7 @@
 // @name         Toggle Theme
 // @namespace    0x-jerry
 // @description  Very lightweight solution to toggle dark/light theme.
-// @version      1.1.3
+// @version      1.1.4
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/toggle-theme.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/toggle-theme.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\toggle-theme.user.ts
@@ -61,7 +61,7 @@
 //#region src/toggle-theme.user.ts
 	const config = defineHeader({
 		name: "Toggle Theme",
-		version: "1.1.3",
+		version: "1.1.4",
 		description: "Very lightweight solution to toggle dark/light theme.",
 		matches: ["https://*/**", "http://*/**"],
 		grants: ["GM_addStyle", "GM_registerMenuCommand"],

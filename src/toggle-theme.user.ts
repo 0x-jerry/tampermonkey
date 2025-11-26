@@ -2,7 +2,7 @@ import { defineHeader, run, storage } from './utils'
 
 export const config = defineHeader({
   name: 'Toggle Theme',
-  version: '1.1.3',
+  version: '1.1.4',
   description: 'Very lightweight solution to toggle dark/light theme.',
   matches: ['https://*/**', 'http://*/**'],
   grants: ['GM_addStyle', 'GM_registerMenuCommand'],

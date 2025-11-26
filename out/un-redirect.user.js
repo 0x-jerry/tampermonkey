@@ -2,7 +2,7 @@
 // @name         Un Redirect
 // @namespace    0x-jerry
 // @description  Skip redirect at some search result page.
-// @version      1.3.2
+// @version      1.3.3
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/un-redirect.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/un-redirect.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\un-redirect.user.ts
@@ -52,7 +52,7 @@
 //#region src/un-redirect.user.ts
 	const config = defineHeader({
 		name: "Un Redirect",
-		version: "1.3.2",
+		version: "1.3.3",
 		description: "Skip redirect at some search result page.",
 		matches: [
 			"https://www.google.com/*",

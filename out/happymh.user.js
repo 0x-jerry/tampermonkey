@@ -2,7 +2,7 @@
 // @name         Happymh Quick Nav
 // @namespace    0x-jerry
 // @description  Add convenient buttons to switch chapters
-// @version      1.0.4
+// @version      1.0.5
 // @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/happymh.user.js
 // @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/happymh.user.js
 // @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\happymh.user.ts
@@ -59,7 +59,7 @@
 //#region src/happymh.user.ts
 	const config = defineHeader({
 		name: "Happymh Quick Nav",
-		version: "1.0.4",
+		version: "1.0.5",
 		description: "Add convenient buttons to switch chapters",
 		matches: ["https://m.happymh.com/*"],
 		icon: "https://www.google.com/s2/favicons?sz=64&domain=m.happymh.com",
