@@ -1,19 +1,29 @@
 // ==UserScript==
 // @name         ColaManga Quick Nav
-// @namespace    http://tampermonkey.net/
-// @version      1.0.0
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/colamanga.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/colamanga.user.js
+// @namespace    0x-jerry
 // @description  Add convenient buttons to switch chapters
-// @author       x.jerry.wang@gmail.com
-// @match        https://www.colamanga.com/**
+// @version      1.0.0
+// @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/colamanga.user.js
+// @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/colamanga.user.js
+// @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\colamanga.user.ts
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=colamanga.com
+// @match        https://www.colamanga.com/*
 // @run-at       document-end
-// @grant        none
 // ==/UserScript==
-(function() {
+(function(exports) {
 
 
+//#region src/utils/config.ts
+/**
+	* Define tamper monkey headers, only used by build process
+	* @param config
+	* @returns
+	*/
+	function defineHeader(config$1) {
+		return config$1;
+	}
+
+//#endregion
 //#region src/utils/utils.ts
 	function sleep(ts = 100) {
 		return new Promise((resolve) => setTimeout(resolve, ts));
@@ -47,6 +57,14 @@
 
 //#endregion
 //#region src/colamanga.user.ts
+	const config = defineHeader({
+		name: "ColaManga Quick Nav",
+		version: "1.0.0",
+		description: "Add convenient buttons to switch chapters",
+		matches: ["https://www.colamanga.com/*"],
+		runAt: "document-end",
+		icon: "https://www.google.com/s2/favicons?sz=64&domain=colamanga.com"
+	});
 	run(async () => {
 		await when(() => document.body);
 		const container = document.createElement("div");
@@ -93,4 +111,6 @@
 	});
 
 //#endregion
-})();
+exports.config = config;
+return exports;
+})({});

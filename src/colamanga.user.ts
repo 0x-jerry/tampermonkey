@@ -1,18 +1,13 @@
-// ==UserScript==
-// @name         ColaManga Quick Nav
-// @namespace    http://tampermonkey.net/
-// @version      1.0.0
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/colamanga.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/colamanga.user.js
-// @description  Add convenient buttons to switch chapters
-// @author       x.jerry.wang@gmail.com
-// @match        https://www.colamanga.com/**
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=colamanga.com
-// @run-at       document-end
-// @grant        none
-// ==/UserScript==
+import { defineHeader, run, when } from './utils'
 
-import { run, when } from './utils'
+export const config = defineHeader({
+  name: 'ColaManga Quick Nav',
+  version: '1.0.0',
+  description: 'Add convenient buttons to switch chapters',
+  matches: ['https://www.colamanga.com/*'],
+  runAt: 'document-end',
+  icon: 'https://www.google.com/s2/favicons?sz=64&domain=colamanga.com',
+})
 
 run(async () => {
   await when(() => document.body)

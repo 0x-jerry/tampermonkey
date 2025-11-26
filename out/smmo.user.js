@@ -1,19 +1,30 @@
 // ==UserScript==
 // @name         Simple MMO
-// @namespace    http://tampermonkey.net/
+// @namespace    0x-jerry
+// @description  Try to save the simple mmo world!
 // @version      1.0.1
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/smmo.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/smmo.user.js
-// @description  try to save the simple mmo world!
-// @author       x.jerry.wang@gmail.com
-// @match        https://web.simple-mmo.com/*
+// @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/smmo.user.js
+// @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/smmo.user.js
+// @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\smmo.user.ts
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=simple-mmo.com
+// @match        https://web.simple-mmo.com/*
 // @run-at       document-end
 // @grant        GM_addStyle
 // ==/UserScript==
-(function() {
+(function(exports) {
 
 
+//#region src/utils/config.ts
+/**
+	* Define tamper monkey headers, only used by build process
+	* @param config
+	* @returns
+	*/
+	function defineHeader(config$1) {
+		return config$1;
+	}
+
+//#endregion
 //#region src/utils/utils.ts
 	var Xorshift = class {
 		x = 1;
@@ -62,6 +73,15 @@
 
 //#endregion
 //#region src/smmo.user.ts
+	const config = defineHeader({
+		name: "Simple MMO",
+		version: "1.0.1",
+		description: "Try to save the simple mmo world!",
+		matches: ["https://web.simple-mmo.com/*"],
+		icon: "https://www.google.com/s2/favicons?sz=64&domain=simple-mmo.com",
+		runAt: "document-end",
+		grants: ["GM_addStyle"]
+	});
 	run(async () => {
 		GM_addStyle(`
     .agent-action {
@@ -294,4 +314,6 @@
 	});
 
 //#endregion
-})();
+exports.config = config;
+return exports;
+})({});

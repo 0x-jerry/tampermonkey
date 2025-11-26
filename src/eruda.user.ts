@@ -1,17 +1,12 @@
-// ==UserScript==
-// @name         Eruda devtool
-// @namespace    http://tampermonkey.net/
-// @version      1.0.3
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/eruda.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/eruda.user.js
-// @description  Eruda devtool for mobile browser
-// @author       x.jerry.wang@gmail.com
-// @match        https://*/*
-// @run-at       document-end
-// @grant        none
-// ==/UserScript==
+import { defineHeader, run } from './utils'
 
-import { run } from './utils'
+export const config = defineHeader({
+  name: 'Eruda',
+  version: '1.0.3',
+  description: 'Eruda devtool for mobile browser',
+  matches: ['https://*/*'],
+  runAt: 'document-end',
+})
 
 run(async () => {
   const eruda = (await import('eruda')).default

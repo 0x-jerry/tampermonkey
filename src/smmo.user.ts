@@ -1,18 +1,14 @@
-// ==UserScript==
-// @name         Simple MMO
-// @namespace    http://tampermonkey.net/
-// @version      1.0.1
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/smmo.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/smmo.user.js
-// @description  try to save the simple mmo world!
-// @author       x.jerry.wang@gmail.com
-// @match        https://web.simple-mmo.com/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=simple-mmo.com
-// @run-at       document-end
-// @grant        GM_addStyle
-// ==/UserScript==
+import { defineHeader, random, run, sleepRandom } from './utils'
 
-import { random, run, sleepRandom } from './utils'
+export const config = defineHeader({
+  name: 'Simple MMO',
+  version: '1.0.1',
+  description: 'Try to save the simple mmo world!',
+  matches: ['https://web.simple-mmo.com/*'],
+  icon: 'https://www.google.com/s2/favicons?sz=64&domain=simple-mmo.com',
+  runAt: 'document-end',
+  grants: ['GM_addStyle'],
+})
 
 run(async () => {
   GM_addStyle(`

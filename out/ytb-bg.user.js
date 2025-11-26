@@ -1,20 +1,30 @@
 // ==UserScript==
 // @name         Youtube Background
-// @description  Youtube background player, port from https://github.com/alkisqwe/Youtube-Background
-// @namespace    http://tampermonkey.net/
+// @namespace    0x-jerry
+// @description  Youtube background player, port from [Youtube-Background](https://github.com/alkisqwe/Youtube-Background)
 // @version      1.0.0
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/ytb-bg.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/ytb-bg.user.js
-// @author       x.jerry.wang@gmail.com
+// @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/ytb-bg.user.js
+// @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/ytb-bg.user.js
+// @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\ytb-bg.user.ts
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @match        https://*.youtube.com/*
 // @match        https://*.youtube-nocookie.com/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @run-at       document-end
-// @grant        none
 // ==/UserScript==
-(function() {
+(function(exports) {
 
 
+//#region src/utils/config.ts
+/**
+	* Define tamper monkey headers, only used by build process
+	* @param config
+	* @returns
+	*/
+	function defineHeader(config$1) {
+		return config$1;
+	}
+
+//#endregion
 //#region src/utils/utils.ts
 /**
 	* @param {() => any} fn
@@ -29,6 +39,13 @@
 
 //#endregion
 //#region src/ytb-bg.user.ts
+	const config = defineHeader({
+		name: "Youtube Background",
+		version: "1.0.0",
+		description: "Youtube background player, port from [Youtube-Background](https://github.com/alkisqwe/Youtube-Background)",
+		matches: ["https://*.youtube.com/*", "https://*.youtube-nocookie.com/*"],
+		icon: "https://www.google.com/s2/favicons?sz=64&domain=youtube.com"
+	});
 	run(async () => {
 		const IS_YOUTUBE = window.location.hostname.search(/(?:^|.+\.)youtube\.com/) > -1 || window.location.hostname.search(/(?:^|.+\.)youtube-nocookie\.com/) > -1;
 		const IS_MOBILE_YOUTUBE = window.location.hostname === "m.youtube.com";
@@ -70,4 +87,6 @@
 	});
 
 //#endregion
-})();
+exports.config = config;
+return exports;
+})({});

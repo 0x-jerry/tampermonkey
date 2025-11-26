@@ -5,5 +5,5 @@
     "strict": true,
     "outDir": "out"
   },
-  "include": ["src", "scripts", "env.d.ts"]
+  "include": ["src", "scripts", "types"]
 }

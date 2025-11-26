@@ -1,19 +1,29 @@
 // ==UserScript==
 // @name         Happymh Quick Nav
-// @namespace    http://tampermonkey.net/
-// @version      1.0.4
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js
+// @namespace    0x-jerry
 // @description  Add convenient buttons to switch chapters
-// @author       x.jerry.wang@gmail.com
-// @match        https://m.happymh.com/**
+// @version      1.0.4
+// @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/happymh.user.js
+// @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/happymh.user.js
+// @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\happymh.user.ts
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=m.happymh.com
+// @match        https://m.happymh.com/*
 // @run-at       document-end
-// @grant        none
 // ==/UserScript==
-(function() {
+(function(exports) {
 
 
+//#region src/utils/config.ts
+/**
+	* Define tamper monkey headers, only used by build process
+	* @param config
+	* @returns
+	*/
+	function defineHeader(config$1) {
+		return config$1;
+	}
+
+//#endregion
 //#region src/utils/utils.ts
 	function sleep(ts = 100) {
 		return new Promise((resolve) => setTimeout(resolve, ts));
@@ -47,6 +57,14 @@
 
 //#endregion
 //#region src/happymh.user.ts
+	const config = defineHeader({
+		name: "Happymh Quick Nav",
+		version: "1.0.4",
+		description: "Add convenient buttons to switch chapters",
+		matches: ["https://m.happymh.com/*"],
+		icon: "https://www.google.com/s2/favicons?sz=64&domain=m.happymh.com",
+		runAt: "document-end"
+	});
 	run(async () => {
 		await when(() => document.body);
 		const container = document.createElement("div");
@@ -96,4 +114,6 @@
 	});
 
 //#endregion
-})();
+exports.config = config;
+return exports;
+})({});

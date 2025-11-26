@@ -1,19 +1,13 @@
-// ==UserScript==
-// @name         Toggle Theme
-// @namespace    http://tampermonkey.net/
-// @version      1.1.3
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/toggle-theme.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/toggle-theme.user.js
-// @description  Very lightweight solution to toggle dark/light theme.
-// @author       x.jerry.wang@gmail.com
-// @match        https://*/**
-// @match        http://*/**
-// @run-at       document-end
-// @grant        GM_addStyle
-// @grant        GM_registerMenuCommand
-// ==/UserScript==
+import { defineHeader, run, storage } from './utils'
 
-import { run, storage } from './utils'
+export const config = defineHeader({
+  name: 'Toggle Theme',
+  version: '1.1.3',
+  description: 'Very lightweight solution to toggle dark/light theme.',
+  matches: ['https://*/**', 'http://*/**'],
+  grants: ['GM_addStyle', 'GM_registerMenuCommand'],
+  runAt: 'document-end',
+})
 
 run(async () => {
   'use strict'

@@ -113,6 +113,10 @@ export function stringMatcher(str: string, configs: MatcherConfig[]) {
  * @param {() => any} fn
  */
 export async function run(fn: () => any) {
+  if (_ENV_DISABLE_RUN_) {
+    return
+  }
+
   try {
     await fn()
   } catch (error) {

@@ -1,16 +1,15 @@
 // ==UserScript==
-// @name         Eruda devtool
-// @namespace    http://tampermonkey.net/
-// @version      1.0.3
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/eruda.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/eruda.user.js
+// @name         Eruda
+// @namespace    0x-jerry
 // @description  Eruda devtool for mobile browser
-// @author       x.jerry.wang@gmail.com
+// @version      1.0.3
+// @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/eruda.user.js
+// @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/eruda.user.js
+// @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\eruda.user.ts
 // @match        https://*/*
 // @run-at       document-end
-// @grant        none
 // ==/UserScript==
-(function() {
+(function(exports) {
 
 //#region rolldown:runtime
 	var __create = Object.create;
@@ -39,6 +38,17 @@
 
 //#endregion
 
+//#region src/utils/config.ts
+/**
+	* Define tamper monkey headers, only used by build process
+	* @param config
+	* @returns
+	*/
+	function defineHeader(config$1) {
+		return config$1;
+	}
+
+//#endregion
 //#region src/utils/utils.ts
 /**
 	* @param {() => any} fn
@@ -15468,6 +15478,13 @@
 
 //#endregion
 //#region src/eruda.user.ts
+	const config = defineHeader({
+		name: "Eruda",
+		version: "1.0.3",
+		description: "Eruda devtool for mobile browser",
+		matches: ["https://*/*"],
+		runAt: "document-end"
+	});
 	run(async () => {
 		(await Promise.resolve().then(() => /* @__PURE__ */ __toESM(require_eruda(), 1))).default.init({
 			useShadowDom: true,
@@ -15480,4 +15497,6 @@
 	});
 
 //#endregion
-})();
+exports.config = config;
+return exports;
+})({});

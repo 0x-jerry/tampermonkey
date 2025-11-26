@@ -1,19 +1,35 @@
 // ==UserScript==
 // @name         WeRead Solarized Theme
-// @namespace    http://tampermonkey.net/
-// @version      1.0.6
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/weread.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/weread.user.js
+// @namespace    0x-jerry
 // @description  Change the theme of WeRead
-// @author       x.jerry.wang@gmail.com
-// @match        https://weread.qq.com/**
+// @version      1.0.6
+// @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/weread.user.js
+// @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/weread.user.js
+// @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\weread.user.ts
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=weread.qq.com
+// @match        https://weread.qq.com/**
 // @run-at       document-end
-// @grant        none
 // ==/UserScript==
-(function() {
+(function(exports) {
 
 
+//#region src/utils/config.ts
+/**
+	* Define tamper monkey headers, only used by build process
+	* @param config
+	* @returns
+	*/
+	function defineHeader(config$1) {
+		return config$1;
+	}
+
+//#endregion
+//#region src/utils/helper.ts
+	function css(template, ...substitutions) {
+		return String.raw(template, ...substitutions);
+	}
+
+//#endregion
 //#region src/utils/utils.ts
 /**
 	* @param {() => any} fn
@@ -33,13 +49,14 @@
 	}
 
 //#endregion
-//#region src/utils/index.ts
-	function css(template, ...substitutions) {
-		return String.raw(template, ...substitutions);
-	}
-
-//#endregion
 //#region src/weread.user.ts
+	const config = defineHeader({
+		name: "WeRead Solarized Theme",
+		version: "1.0.6",
+		description: "Change the theme of WeRead",
+		icon: "https://www.google.com/s2/favicons?sz=64&domain=weread.qq.com",
+		matches: ["https://weread.qq.com/**"]
+	});
 	run(async () => {
 		injectStyle(css`
 /* https://www.wikiwand.com/en/articles/Solarized#Colors */
@@ -101,4 +118,6 @@
 	});
 
 //#endregion
-})();
+exports.config = config;
+return exports;
+})({});

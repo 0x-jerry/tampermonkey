@@ -1,24 +1,34 @@
 // ==UserScript==
 // @name         Un Redirect
-// @namespace    http://tampermonkey.net/
+// @namespace    0x-jerry
+// @description  Skip redirect at some search result page.
 // @version      1.3.2
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js
-// @description  Skip redirect at some search result page, support google/bing/zhihu/csdn/sspai.
-// @author       x.jerry.wang@gmail.com
+// @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/un-redirect.user.js
+// @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/un-redirect.user.js
+// @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\un-redirect.user.ts
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @match        https://www.google.com/*
 // @match        https://*.bing.com/*
 // @match        https://*.zhihu.com/*
 // @match        https://sspai.com/*
 // @match        https://blog.csdn.net/*
 // @match        https://x.com/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @run-at       document-end
-// @grant        none
 // ==/UserScript==
-(function() {
+(function(exports) {
 
 
+//#region src/utils/config.ts
+/**
+	* Define tamper monkey headers, only used by build process
+	* @param config
+	* @returns
+	*/
+	function defineHeader(config$1) {
+		return config$1;
+	}
+
+//#endregion
 //#region src/utils/utils.ts
 /**
 	* @param {MatcherConfig[]} configs
@@ -40,6 +50,20 @@
 
 //#endregion
 //#region src/un-redirect.user.ts
+	const config = defineHeader({
+		name: "Un Redirect",
+		version: "1.3.2",
+		description: "Skip redirect at some search result page.",
+		matches: [
+			"https://www.google.com/*",
+			"https://*.bing.com/*",
+			"https://*.zhihu.com/*",
+			"https://sspai.com/*",
+			"https://blog.csdn.net/*",
+			"https://x.com/*"
+		],
+		icon: "https://www.google.com/s2/favicons?sz=64&domain=google.com"
+	});
 	run(async () => {
 		console.debug("Un redirect loaded!");
 		stringMatcher(location.href, [
@@ -171,4 +195,6 @@
 	});
 
 //#endregion
-})();
+exports.config = config;
+return exports;
+})({});

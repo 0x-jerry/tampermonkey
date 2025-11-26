@@ -1,18 +1,12 @@
-// ==UserScript==
-// @name         WeRead Solarized Theme
-// @namespace    http://tampermonkey.net/
-// @version      1.0.6
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/weread.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/weread.user.js
-// @description  Change the theme of WeRead
-// @author       x.jerry.wang@gmail.com
-// @match        https://weread.qq.com/**
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=weread.qq.com
-// @run-at       document-end
-// @grant        none
-// ==/UserScript==
+import { css, defineHeader, injectStyle, run } from './utils'
 
-import { css, injectStyle, run } from './utils'
+export const config = defineHeader({
+  name: 'WeRead Solarized Theme',
+  version: '1.0.6',
+  description: 'Change the theme of WeRead',
+  icon: 'https://www.google.com/s2/favicons?sz=64&domain=weread.qq.com',
+  matches: ['https://weread.qq.com/**'],
+})
 
 run(async () => {
   injectStyle(css`

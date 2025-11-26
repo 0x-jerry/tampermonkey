@@ -1,23 +1,19 @@
-// ==UserScript==
-// @name         Un Redirect
-// @namespace    http://tampermonkey.net/
-// @version      1.3.2
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/un-redirect.user.js
-// @description  Skip redirect at some search result page, support google/bing/zhihu/csdn/sspai.
-// @author       x.jerry.wang@gmail.com
-// @match        https://www.google.com/*
-// @match        https://*.bing.com/*
-// @match        https://*.zhihu.com/*
-// @match        https://sspai.com/*
-// @match        https://blog.csdn.net/*
-// @match        https://x.com/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
-// @run-at       document-end
-// @grant        none
-// ==/UserScript==
+import { defineHeader, run, stringMatcher } from './utils'
 
-import { run, stringMatcher } from './utils'
+export const config = defineHeader({
+  name: 'Un Redirect',
+  version: '1.3.2',
+  description: 'Skip redirect at some search result page.',
+  matches: [
+    'https://www.google.com/*',
+    'https://*.bing.com/*',
+    'https://*.zhihu.com/*',
+    'https://sspai.com/*',
+    'https://blog.csdn.net/*',
+    'https://x.com/*',
+  ],
+  icon: 'https://www.google.com/s2/favicons?sz=64&domain=google.com',
+})
 
 run(async () => {
   console.debug('Un redirect loaded!')

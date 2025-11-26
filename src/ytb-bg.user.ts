@@ -1,19 +1,13 @@
-// ==UserScript==
-// @name         Youtube Background
-// @description  Youtube background player, port from https://github.com/alkisqwe/Youtube-Background
-// @namespace    http://tampermonkey.net/
-// @version      1.0.0
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/ytb-bg.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/ytb-bg.user.js
-// @author       x.jerry.wang@gmail.com
-// @match        https://*.youtube.com/*
-// @match        https://*.youtube-nocookie.com/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
-// @run-at       document-end
-// @grant        none
-// ==/UserScript==
+import { defineHeader, run } from './utils'
 
-import { run } from './utils'
+export const config = defineHeader({
+  name: 'Youtube Background',
+  version: '1.0.0',
+  description:
+    'Youtube background player, port from [Youtube-Background](https://github.com/alkisqwe/Youtube-Background)',
+  matches: ['https://*.youtube.com/*', 'https://*.youtube-nocookie.com/*'],
+  icon: 'https://www.google.com/s2/favicons?sz=64&domain=youtube.com',
+})
 
 run(async () => {
   const IS_YOUTUBE =

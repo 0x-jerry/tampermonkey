@@ -1,19 +1,29 @@
 // ==UserScript==
 // @name         Un Login
-// @namespace    http://tampermonkey.net/
-// @version      1.0.1
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/un-login.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/un-login.user.js
+// @namespace    0x-jerry
 // @description  Auto close login dialog at some site, support zhihu.
-// @author       x.jerry.wang@gmail.com
-// @match        https://*.zhihu.com/*
+// @version      1.0.1
+// @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/un-login.user.js
+// @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/un-login.user.js
+// @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\un-login.user.ts
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=zhihu.com
+// @match        https://*.zhihu.com/*
 // @run-at       document-end
-// @grant        none
 // ==/UserScript==
-(function() {
+(function(exports) {
 
 
+//#region src/utils/config.ts
+/**
+	* Define tamper monkey headers, only used by build process
+	* @param config
+	* @returns
+	*/
+	function defineHeader(config$1) {
+		return config$1;
+	}
+
+//#endregion
 //#region src/utils/utils.ts
 	function sleep(ts = 100) {
 		return new Promise((resolve) => setTimeout(resolve, ts));
@@ -57,6 +67,14 @@
 
 //#endregion
 //#region src/un-login.user.ts
+	const config = defineHeader({
+		name: "Un Login",
+		version: "1.0.1",
+		description: "Auto close login dialog at some site, support zhihu.",
+		matches: ["https://*.zhihu.com/*"],
+		icon: "https://www.google.com/s2/favicons?sz=64&domain=zhihu.com",
+		runAt: "document-end"
+	});
 	run(() => {
 		stringMatcher(location.href, [{
 			test: /zhihu\.com/,
@@ -69,4 +87,6 @@
 	});
 
 //#endregion
-})();
+exports.config = config;
+return exports;
+})({});

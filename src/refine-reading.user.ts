@@ -1,18 +1,13 @@
-// ==UserScript==
-// @name         Refine Reading
-// @namespace    http://tampermonkey.net/
-// @version      1.0.0
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/refine-reading.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/refine-reading.user.js
-// @description  Refine style of hetushu.com
-// @author       x.jerry.wang@gmail.com
-// @match        https://*.hetushu.com/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=hetushu.com
-// @run-at       document-end
-// @grant        none
-// ==/UserScript==
+import { defineHeader, run, stringMatcher } from './utils'
 
-import { run, stringMatcher } from './utils'
+export const config = defineHeader({
+  name: 'Refine Reading',
+  version: '1.0.0',
+  description: 'Refine style of hetushu.com',
+  matches: ['https://*.hetushu.com/*'],
+  icon: 'https://www.google.com/s2/favicons?sz=64&domain=hetushu.com',
+  runAt: 'document-end',
+})
 
 run(() => {
   stringMatcher(location.href, [

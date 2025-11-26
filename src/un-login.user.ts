@@ -1,18 +1,13 @@
-// ==UserScript==
-// @name         Un Login
-// @namespace    http://tampermonkey.net/
-// @version      1.0.1
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/un-login.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/un-login.user.js
-// @description  Auto close login dialog at some site, support zhihu.
-// @author       x.jerry.wang@gmail.com
-// @match        https://*.zhihu.com/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=zhihu.com
-// @run-at       document-end
-// @grant        none
-// ==/UserScript==
+import { defineHeader, run, stringMatcher, waitElement } from './utils'
 
-import { run, stringMatcher, waitElement } from './utils'
+export const config = defineHeader({
+  name: 'Un Login',
+  version: '1.0.1',
+  description: 'Auto close login dialog at some site, support zhihu.',
+  matches: ['https://*.zhihu.com/*'],
+  icon: 'https://www.google.com/s2/favicons?sz=64&domain=zhihu.com',
+  runAt: 'document-end',
+})
 
 run(() => {
   stringMatcher(location.href, [

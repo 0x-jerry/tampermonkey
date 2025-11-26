@@ -1,18 +1,13 @@
-// ==UserScript==
-// @name         Happymh Quick Nav
-// @namespace    http://tampermonkey.net/
-// @version      1.0.4
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/happymh.user.js
-// @description  Add convenient buttons to switch chapters
-// @author       x.jerry.wang@gmail.com
-// @match        https://m.happymh.com/**
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=m.happymh.com
-// @run-at       document-end
-// @grant        none
-// ==/UserScript==
+import { defineHeader, run, when } from './utils'
 
-import { run, when } from './utils'
+export const config = defineHeader({
+  name: 'Happymh Quick Nav',
+  version: '1.0.4',
+  description: 'Add convenient buttons to switch chapters',
+  matches: ['https://m.happymh.com/*'],
+  icon: 'https://www.google.com/s2/favicons?sz=64&domain=m.happymh.com',
+  runAt: 'document-end',
+})
 
 run(async () => {
   await when(() => document.body)

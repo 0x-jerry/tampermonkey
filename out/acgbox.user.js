@@ -1,19 +1,29 @@
 // ==UserScript==
 // @name         No redirect
-// @namespace    http://tampermonkey.net/
+// @namespace    0x-jerry
+// @description  No redirect
 // @version      1.0.0
-// @updateURL    https://github.com/0x-jerry/tampermonkey/raw/main/out/acgbox.user.js
-// @downloadURL  https://github.com/0x-jerry/tampermonkey/raw/main/out/acgbox.user.js
-// @description  try to save the world!
-// @author       x.jerry.wang@gmail.com
-// @match        https://www.acgbox.link/*
+// @updateURL    https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/acgbox.user.js
+// @downloadURL  https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/acgbox.user.js
+// @source       https://github.com/0x-jerry/tampermonkey/blob/main/src\acgbox.user.ts
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=acgbox.link
+// @match        https://www.acgbox.link/*
 // @run-at       document-end
-// @grant        none
 // ==/UserScript==
-(function() {
+(function(exports) {
 
 
+//#region src/utils/config.ts
+/**
+	* Define tamper monkey headers, only used by build process
+	* @param config
+	* @returns
+	*/
+	function defineHeader(config$1) {
+		return config$1;
+	}
+
+//#endregion
 //#region src/utils/utils.ts
 /**
 	* @param {() => any} fn
@@ -28,6 +38,14 @@
 
 //#endregion
 //#region src/acgbox.user.ts
+	const config = defineHeader({
+		name: "No redirect",
+		version: "1.0.0",
+		description: "No redirect",
+		matches: ["https://www.acgbox.link/*"],
+		icon: "https://www.google.com/s2/favicons?sz=64&domain=acgbox.link",
+		runAt: "document-end"
+	});
 	run(async () => {
 		document.querySelectorAll("a[data-url]").forEach((anchor) => {
 			anchor.addEventListener("click", (evt) => {
@@ -40,4 +58,6 @@
 	});
 
 //#endregion
-})();
+exports.config = config;
+return exports;
+})({});
