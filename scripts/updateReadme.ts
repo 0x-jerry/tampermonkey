@@ -19,7 +19,7 @@ export async function generateReadme() {
 
     const url = `https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/${filename}.js`
 
-    return `- ${name}: ${description} [install](${url})`
+    return `- **${name}**: ${description} [install](${url})`
   })
 
   const descriptions = await Promise.all(p)
