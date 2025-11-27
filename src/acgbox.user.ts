@@ -2,7 +2,7 @@ import { defineHeader, run } from './utils'
 
 defineHeader({
   name: 'No redirect',
-  version: '1.0.1',
+  version: '1.0.2',
   description: 'No redirect',
   matches: ['https://www.acgbox.link/*'],
   icon: 'https://www.google.com/s2/favicons?sz=64&domain=acgbox.link',

@@ -2,7 +2,7 @@ import { css, defineHeader, injectStyle, run } from './utils'
 
 defineHeader({
   name: 'Unlock Selection',
-  version: '1.0.2',
+  version: '1.0.3',
   description: 'Unlock text selection',
   matches: ['https://*/*', 'http://*/*'],
 })

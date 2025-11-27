@@ -2,7 +2,7 @@ import { defineHeader, run, stringMatcher, waitElement } from './utils'
 
 defineHeader({
   name: 'Un Login',
-  version: '1.0.4',
+  version: '1.0.5',
   description: 'Auto close login dialog at some site.',
   matches: [
     //

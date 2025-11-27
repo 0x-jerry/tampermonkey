@@ -2,7 +2,7 @@ import { defineHeader, run } from './utils'
 
 defineHeader({
   name: 'Eruda',
-  version: '1.0.4',
+  version: '1.0.5',
   description: 'Eruda devtool for mobile browser',
   matches: ['https://*/*'],
   runAt: 'document-end',

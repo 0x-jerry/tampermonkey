@@ -2,7 +2,7 @@ import { defineHeader, run } from './utils'
 
 defineHeader({
   name: 'Youtube Background',
-  version: '1.0.1',
+  version: '1.0.2',
   description:
     'Youtube background player, port from [Youtube-Background](https://github.com/alkisqwe/Youtube-Background)',
   matches: ['https://*.youtube.com/*', 'https://*.youtube-nocookie.com/*'],
