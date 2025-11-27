@@ -1,7 +1,7 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { getScriptHeaderConfig } from './utils'
+import { getScriptHeaderConfig, getUpdateUrl } from './utils'
 
 export async function generateReadme() {
   const sourceDir = path.join(fileURLToPath(import.meta.url), '../../src')
@@ -18,7 +18,7 @@ export async function generateReadme() {
     const name = config.name
     const description = config.description || 'Try to save the world!'
 
-    const url = `https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/${filename}.js`
+    const url = getUpdateUrl(filename)
 
     const desc = `- **${name}**: ${description} [install](${url})`
 

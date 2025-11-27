@@ -12,3 +12,11 @@ export async function getScriptHeaderConfig(filepath: string) {
 
   return config
 }
+
+export function getUpdateUrl(filename: string) {
+  return `https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/${filename}.js`
+}
+
+export function getSourceUrl(filename: string) {
+  return `https://github.com/0x-jerry/tampermonkey/blob/main/src/${filename}.ts`
+}

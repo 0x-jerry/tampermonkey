@@ -2,7 +2,7 @@ import path from 'node:path'
 import { build, type InlineConfig } from 'tsdown'
 import type { ITamperMonkeyHeader } from '../types'
 import { tampermonkey } from './plugin'
-import { getScriptHeaderConfig } from './utils'
+import { getScriptHeaderConfig, getSourceUrl, getUpdateUrl } from './utils'
 
 export async function buildSingleFile(file: string, opt?: { dev?: boolean }) {
   const outputFile = path.join('dist', `${path.basename(file, '.ts')}.js`)
@@ -43,8 +43,8 @@ async function extractBannerConfig(file: string) {
 function generateBanner(config: ITamperMonkeyHeader, file: string) {
   const name = path.basename(file, '.ts')
 
-  const url = `https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/${name}.js`
-  const sourceUrl = `https://github.com/0x-jerry/tampermonkey/blob/main/${file}`
+  const url = getUpdateUrl(name)
+  const sourceUrl = getSourceUrl(name)
 
   const banner: string[] = []
 
