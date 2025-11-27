@@ -8,7 +8,8 @@ export async function generateReadme() {
 
   const files = (await readdir(sourceDir)).filter((n) => n.endsWith('.user.ts'))
 
-  const p = files.map(async (file) => {
+  const descriptions: string[] = []
+  for (const file of files) {
     const filepath = path.join(sourceDir, file)
     const filename = path.basename(file, '.ts')
 
@@ -19,10 +20,10 @@ export async function generateReadme() {
 
     const url = `https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/main/out/${filename}.js`
 
-    return `- **${name}**: ${description} [install](${url})`
-  })
+    const desc = `- **${name}**: ${description} [install](${url})`
 
-  const descriptions = await Promise.all(p)
+    descriptions.push(desc)
+  }
 
   const generatedContent = descriptions.filter(Boolean).join('\n')
 

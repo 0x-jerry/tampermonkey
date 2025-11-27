@@ -1,12 +1,14 @@
-import { pathToFileURL } from 'url'
-import type { ITamperMonkeyHeader } from '../types'
+let count = 0
 
 export async function getScriptHeaderConfig(filepath: string) {
-  globalThis._ENV_DISABLE_RUN_ = true
+  globalThis.__ENV_DISABLE_RUN__ = true
 
-  const config: ITamperMonkeyHeader = (
-    await import(pathToFileURL(filepath).toString())
-  ).config
+  // @ts-expect-error
+  globalThis.__TAMPER_HEADER_CONFIG__ = undefined
+
+  await import(`${filepath}?key=${count++}`)
+
+  const config = globalThis.__TAMPER_HEADER_CONFIG__
 
   return config
 }

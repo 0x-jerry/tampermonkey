@@ -1,6 +1,6 @@
 import { css, defineHeader, injectStyle, run } from './utils'
 
-export const config = defineHeader({
+defineHeader({
   name: 'WeRead Solarized Theme',
   version: '1.0.7',
   description: 'Change the theme of WeRead',

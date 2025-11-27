@@ -6,5 +6,5 @@ import type { ITamperMonkeyHeader } from '../../types'
  * @returns
  */
 export function defineHeader(config: ITamperMonkeyHeader) {
-  return config
+  globalThis.__TAMPER_HEADER_CONFIG__ = config
 }

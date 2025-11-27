@@ -1,6 +1,6 @@
 import { defineHeader, run, when } from './utils'
 
-export const config = defineHeader({
+defineHeader({
   name: 'ColaManga Quick Nav',
   version: '1.0.1',
   description: 'Add convenient buttons to switch chapters',

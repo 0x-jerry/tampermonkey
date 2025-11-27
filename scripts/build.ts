@@ -1,10 +1,11 @@
 import path from 'node:path'
 import { build, type InlineConfig } from 'tsdown'
 import type { ITamperMonkeyHeader } from '../types'
+import { tampermonkey } from './plugin'
 import { getScriptHeaderConfig } from './utils'
 
 export async function buildSingleFile(file: string, opt?: { dev?: boolean }) {
-  const outputFile = path.join('out', `${path.basename(file, '.ts')}.js`)
+  const outputFile = path.join('dist', `${path.basename(file, '.ts')}.js`)
 
   const banner = await extractBannerConfig(file)
 
@@ -17,10 +18,11 @@ export async function buildSingleFile(file: string, opt?: { dev?: boolean }) {
     format: 'iife',
     watch: opt?.dev ? [file] : false,
     define: {
-      _ENV_DISABLE_RUN_: JSON.stringify(false),
+      __ENV_DISABLE_RUN__: JSON.stringify(false),
     },
     banner,
     logLevel: opt?.dev ? 'info' : 'error',
+    plugins: [tampermonkey()],
   }
 
   await build(conf)

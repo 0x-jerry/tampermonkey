@@ -1,6 +1,6 @@
 import { defineHeader, run, stringMatcher, waitElement } from './utils'
 
-export const config = defineHeader({
+defineHeader({
   name: 'Un Login',
   version: '1.0.4',
   description: 'Auto close login dialog at some site.',

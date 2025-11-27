@@ -1,6 +1,6 @@
 import { defineHeader, run, stringMatcher } from './utils'
 
-export const config = defineHeader({
+defineHeader({
   name: 'Un Redirect',
   version: '1.3.3',
   description: 'Skip redirect at some search result page.',
@@ -178,13 +178,15 @@ run(async () => {
 
   // ---------- utils ---------
 
+  type FilterFn<T> = (el: T) => boolean
+
   /**
    *
    * @param filter filter with tagname or use a custom function
    * @param getMatchedResult
    */
   function captureRedirectLinks<T extends HTMLElement>(
-    filter: string | ((el: T) => boolean),
+    filter: string | FilterFn<T>,
     getMatchedResult: (
       el: T,
     ) =>

@@ -1,6 +1,6 @@
 import { css, defineHeader, injectStyle, run } from './utils'
 
-export const config = defineHeader({
+defineHeader({
   name: 'Unlock Selection',
   version: '1.0.2',
   description: 'Unlock text selection',

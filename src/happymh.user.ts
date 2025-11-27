@@ -1,6 +1,6 @@
 import { defineHeader, run, when } from './utils'
 
-export const config = defineHeader({
+defineHeader({
   name: 'Happymh Quick Nav',
   version: '1.0.5',
   description: 'Add convenient buttons to switch chapters',

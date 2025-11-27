@@ -1,6 +1,6 @@
 import { defineHeader, run } from './utils'
 
-export const config = defineHeader({
+defineHeader({
   name: 'No redirect',
   version: '1.0.1',
   description: 'No redirect',

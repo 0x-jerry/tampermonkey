@@ -1,6 +1,6 @@
 import { defineHeader, run, stringMatcher } from './utils'
 
-export const config = defineHeader({
+defineHeader({
   name: 'Refine Reading',
   version: '1.0.1',
   description: 'Refine style of hetushu.com',

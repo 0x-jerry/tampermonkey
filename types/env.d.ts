@@ -1,10 +1,12 @@
 /// <reference types="@types/tampermonkey" />
 
+import type { ITamperMonkeyHeader } from './tampermonkey'
+
 declare global {
   /**
    * Used by build script, avoid to run the entire script when read config.
    */
-  var _ENV_DISABLE_RUN_: boolean
-}
+  var __ENV_DISABLE_RUN__: boolean
 
-export {}
+  var __TAMPER_HEADER_CONFIG__: ITamperMonkeyHeader
+}

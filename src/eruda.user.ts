@@ -1,6 +1,6 @@
 import { defineHeader, run } from './utils'
 
-export const config = defineHeader({
+defineHeader({
   name: 'Eruda',
   version: '1.0.4',
   description: 'Eruda devtool for mobile browser',

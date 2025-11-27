@@ -1,6 +1,6 @@
 import { defineHeader, random, run, sleepRandom } from './utils'
 
-export const config = defineHeader({
+defineHeader({
   name: 'Simple MMO',
   version: '1.0.2',
   description: 'Try to save the simple mmo world!',

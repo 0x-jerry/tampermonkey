@@ -1,6 +1,6 @@
 import { defineHeader, run, storage } from './utils'
 
-export const config = defineHeader({
+defineHeader({
   name: 'Toggle Theme',
   version: '1.1.4',
   description: 'Very lightweight solution to toggle dark/light theme.',

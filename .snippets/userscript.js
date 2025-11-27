@@ -1,6 +1,6 @@
 const initScript = `import { defineHeader, run } from './utils'
 
-export const config = defineHeader({
+defineHeader({
   name: 'Script',
   version: '1.0.0',
   description: 'Try to save the world',
