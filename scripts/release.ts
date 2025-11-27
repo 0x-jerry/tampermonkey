@@ -6,8 +6,8 @@ import prompts from 'prompts'
 import type { ReleaseType } from 'semver'
 import semver from 'semver'
 import yc from 'yoctocolors'
-import { DEFINE_HEADER_FN_NAME } from './utils'
 import { generateReadme } from './updateReadme'
+import { DEFINE_HEADER_FN_NAME } from './utils'
 
 const prompt = prompts
 
@@ -47,6 +47,7 @@ for (const file of data.files) {
   const bumpResult = bumpVersion(result.program, code, data.versionType)
 
   if (!bumpResult) {
+    console.log(yc.bgRed(' Error '), yc.cyan(filename), 'Bump version faield!')
     continue
   }
 
