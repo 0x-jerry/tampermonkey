@@ -1,15 +1,12 @@
 import { glob } from 'node:fs/promises'
 import yoctoSpinner from 'yocto-spinner'
 import { buildSingleFile } from './build'
-import { generateReadme } from './updateReadme'
 
 main()
 
 async function main() {
   const spinner = yoctoSpinner()
   spinner.text = 'Generating readme'
-
-  await generateReadme()
 
   const entryFiles = glob('src/*.ts', {})
 

@@ -7,6 +7,7 @@ import type { ReleaseType } from 'semver'
 import semver from 'semver'
 import yc from 'yoctocolors'
 import { DEFINE_HEADER_FN_NAME } from './utils'
+import { generateReadme } from './updateReadme'
 
 const prompt = prompts
 
@@ -62,6 +63,7 @@ for (const file of data.files) {
 }
 
 if (successFiles.length) {
+  await generateReadme()
   await exec(`git add .`)
 
   const msg = `chore: release with ${successFiles.join(', ')}`

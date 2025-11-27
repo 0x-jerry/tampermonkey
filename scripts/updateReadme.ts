@@ -20,7 +20,7 @@ export async function generateReadme() {
 
     const url = getUpdateUrl(filename)
 
-    const desc = `- **${name}**: ${description} [install](${url})`
+    const desc = `- **${name}<sup>${config.version}</sup>**: ${description} [install](${url})`
 
     descriptions.push(desc)
   }
