@@ -11,12 +11,12 @@ defineHeader({
     'https://sspai.com/*',
     'https://blog.csdn.net/*',
     'https://x.com/*',
+    'https://www.acgbox.link/*'
   ],
   icon: 'https://www.google.com/s2/favicons?sz=64&domain=google.com',
 })
 
 run(async () => {
-  console.debug('Un redirect loaded!')
 
   stringMatcher(location.href, [
     {
@@ -43,7 +43,22 @@ run(async () => {
       test: /sspai\.com/,
       handler: handleSspaiLinks,
     },
+    {
+      test: /acgbox\.link/,
+      handler: handleAcgboxLinks,
+    },
   ])
+
+  function handleAcgboxLinks() {
+    captureRedirectLinks<HTMLLinkElement>('A', (el) => {
+        const realUrl = el.dataset.url
+        if (!realUrl) {
+          return
+        }
+
+      return realUrl
+    })
+  }
 
   function handleSspaiLinks() {
     captureRedirectLinks<HTMLLinkElement>('A', (el) => {
