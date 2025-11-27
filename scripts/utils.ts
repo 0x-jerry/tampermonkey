@@ -1,3 +1,5 @@
+export const DEFINE_HEADER_FN_NAME = 'defineHeader'
+
 let count = 0
 
 export async function getScriptHeaderConfig(filepath: string) {

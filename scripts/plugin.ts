@@ -2,6 +2,7 @@ import type { ExpressionStatement, Program } from '@oxc-project/types'
 import * as esrap from 'esrap'
 import ts from 'esrap/languages/ts'
 import type { Plugin } from 'rolldown'
+import { DEFINE_HEADER_FN_NAME } from './utils'
 
 export function tampermonkey(): Plugin<void> {
   return {
@@ -31,7 +32,7 @@ export function tampermonkey(): Plugin<void> {
 function removeDefineFunction(ast: Program) {
   const idx = ast.body.findIndex((node) => {
     if (node.type === 'ExpressionStatement') {
-      return isCallable(node, 'defineHeader')
+      return isCallable(node, DEFINE_HEADER_FN_NAME)
     }
 
     return false
