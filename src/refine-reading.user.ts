@@ -1,4 +1,4 @@
-import { defineHeader, run, stringMatcher } from './utils'
+import { css, defineHeader, run, stringMatcher } from './utils'
 
 defineHeader({
   name: 'Refine Reading',
@@ -6,22 +6,19 @@ defineHeader({
   description: 'Refine style of hetushu.com',
   matches: ['https://*.hetushu.com/*'],
   icon: 'https://www.google.com/s2/favicons?sz=64&domain=hetushu.com',
-  runAt: 'document-end',
+  runAt: 'document-start',
 })
 
 run(() => {
   stringMatcher(location.href, [
     {
       test: /hetushu\.com/,
-      handler: injectStyle,
+      handler: handleHetushu,
     },
   ])
 
-  async function injectStyle() {
-    const $style = document.createElement('style')
-    const css = String.raw
-
-    $style.innerHTML = css`
+  async function handleHetushu() {
+    const _style = GM_addStyle(css`
       body {
         display: flex;
       }
@@ -48,7 +45,6 @@ run(() => {
       #center {
         flex: 1;
       }
-    `
-    document.body.append($style)
+    `)
   }
 })

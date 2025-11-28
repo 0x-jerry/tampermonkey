@@ -6,7 +6,7 @@ defineHeader({
   description: 'Very lightweight solution to toggle dark/light theme.',
   matches: ['https://*/**', 'http://*/**'],
   grants: ['GM_addStyle', 'GM_registerMenuCommand'],
-  runAt: 'document-end',
+  runAt: 'document-start',
 })
 
 run(async () => {

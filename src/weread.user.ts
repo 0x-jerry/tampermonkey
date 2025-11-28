@@ -1,4 +1,4 @@
-import { css, defineHeader, injectStyle, run } from './utils'
+import { css, defineHeader, run } from './utils'
 
 defineHeader({
   name: 'WeRead Solarized Theme',
@@ -6,10 +6,11 @@ defineHeader({
   description: 'Change the theme of WeRead',
   icon: 'https://www.google.com/s2/favicons?sz=64&domain=weread.qq.com',
   matches: ['https://weread.qq.com/**'],
+  runAt: 'document-start'
 })
 
 run(async () => {
-  injectStyle(css`
+  GM_addStyle(css`
 /* https://www.wikiwand.com/en/articles/Solarized#Colors */
 :root {
   --s-base03: #002b36;
