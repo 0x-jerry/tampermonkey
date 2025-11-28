@@ -2,7 +2,7 @@ import { defineHeader, run, storage } from './utils'
 
 defineHeader({
   name: 'Toggle Theme',
-  version: '1.1.5',
+  version: '1.1.6',
   description: 'Very lightweight solution to toggle dark/light theme.',
   matches: ['https://*/**', 'http://*/**'],
   grants: ['GM_addStyle', 'GM_registerMenuCommand'],
