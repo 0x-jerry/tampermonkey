@@ -1,3 +1,5 @@
+import { pathToFileURL } from 'node:url'
+
 export const DEFINE_HEADER_FN_NAME = 'defineHeader'
 
 let count = 0
@@ -8,7 +10,9 @@ export async function getScriptHeaderConfig(filepath: string) {
   // @ts-expect-error
   globalThis.__TAMPER_HEADER_CONFIG__ = undefined
 
-  await import(`${filepath}?key=${count++}`)
+  const u = pathToFileURL(filepath)
+  u.searchParams.set('key', `${count++}`)
+  await import(u.toString())
 
   const config = globalThis.__TAMPER_HEADER_CONFIG__
 

@@ -2,7 +2,7 @@ import { css, defineHeader, run, stringMatcher } from './utils'
 
 defineHeader({
   name: 'Refine Reading',
-  version: '1.0.3',
+  version: '1.0.4',
   description: 'Refine style of hetushu.com',
   matches: ['https://*.hetushu.com/*'],
   icon: 'https://www.google.com/s2/favicons?sz=64&domain=hetushu.com',
