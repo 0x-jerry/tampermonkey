@@ -5,7 +5,8 @@ defineHeader({
   version: '1.0.4',
   description: 'Unlock text selection',
   matches: ['https://*/*', 'http://*/*'],
-  runAt: 'document-start'
+  runAt: 'document-start',
+  grants: ['GM_addStyle'],
 })
 
 run(async () => {

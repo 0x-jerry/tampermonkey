@@ -6,7 +6,8 @@ defineHeader({
   description: 'Change the theme of WeRead',
   icon: 'https://www.google.com/s2/favicons?sz=64&domain=weread.qq.com',
   matches: ['https://weread.qq.com/**'],
-  runAt: 'document-start'
+  runAt: 'document-start',
+  grants: ['GM_addStyle'],
 })
 
 run(async () => {

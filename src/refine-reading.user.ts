@@ -7,6 +7,7 @@ defineHeader({
   matches: ['https://*.hetushu.com/*'],
   icon: 'https://www.google.com/s2/favicons?sz=64&domain=hetushu.com',
   runAt: 'document-start',
+  grants: ['GM_addStyle'],
 })
 
 run(() => {
