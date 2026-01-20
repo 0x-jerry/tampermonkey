@@ -25,7 +25,7 @@ class Xorshift {
   }
 }
 
-function Random(seed = 0) {
+function Random(seed = Date.now()) {
   const x = new Xorshift(seed)
 
   return (min = 0, max = 1) => {
@@ -35,7 +35,7 @@ function Random(seed = 0) {
   }
 }
 
-export const random = /* @__PURE__ */ (() => Random(Date.now()))()
+export const random = /*@__PURE__*/ Random()
 
 const storagePrefix = '_0x_monkey:'
 
