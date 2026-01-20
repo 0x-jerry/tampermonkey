@@ -1,14 +1,22 @@
 import path from 'node:path'
 import { build, type InlineConfig } from 'tsdown'
+import yc from 'yoctocolors'
 import type { ITamperMonkeyHeader } from '../types'
+import { checkPermission } from './checkPermission'
 import { tampermonkey } from './plugin'
 import { getScriptHeaderConfig, getSourceUrl, getUpdateUrl } from './utils'
 
 export async function buildSingleFile(file: string, opt?: { dev?: boolean }) {
+  const filepath = path.resolve(file)
+  const config = await getScriptHeaderConfig(filepath)
+
+  if (!config) {
+    throw new Error(`No config found in ${file}`)
+  }
+
+  const banner = generateBanner(config, file)
+
   const outputFile = path.join('dist', `${path.basename(file, '.ts')}.js`)
-
-  const banner = await extractBannerConfig(file)
-
   const conf: InlineConfig = {
     entry: file,
     outputOptions: {
@@ -26,18 +34,21 @@ export async function buildSingleFile(file: string, opt?: { dev?: boolean }) {
   }
 
   await build(conf)
-}
 
-async function extractBannerConfig(file: string) {
-  const filepath = path.resolve(file)
+  const missing = await checkPermission(config, outputFile)
 
-  const config = await getScriptHeaderConfig(filepath)
+  if (missing.length) {
+    console.log()
 
-  if (!config) {
-    throw new Error(`No config found in ${file}`)
+    console.error(
+      yc.bgRed(yc.white(' Permission Missing ')),
+      `${yc.cyan(file)}:`,
+      'is missing the following permissions:',
+      missing.map((s) => yc.bold(s)).join(', '),
+    )
+
+    process.exit(1)
   }
-
-  return generateBanner(config, file)
 }
 
 function generateBanner(config: ITamperMonkeyHeader, file: string) {
