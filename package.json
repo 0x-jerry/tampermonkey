@@ -12,6 +12,7 @@
     "release": "tsx scripts/release.ts"
   },
   "devDependencies": {
+    "@0x-jerry/utils": "^6.0.0",
     "@biomejs/biome": "^2.3.11",
     "@oxc-project/types": "^0.110.0",
     "@types/node": "^25.0.9",
@@ -29,8 +30,5 @@
     "typescript": "^5.9.3",
     "yocto-spinner": "^1.0.0",
     "yoctocolors": "^2.1.2"
-  },
-  "dependencies": {
-    "@0x-jerry/utils": "^6.0.0"
   }
 }
