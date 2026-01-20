@@ -1,4 +1,4 @@
-import { defineHeader, run, storage } from './utils'
+import { defineHeader, registerMenuCommand, run, storage } from './utils'
 
 defineHeader({
   name: 'Toggle Theme',
@@ -15,8 +15,12 @@ run(async () => {
   const storageKey = 'toggle-theme:enabled'
   let styleElement: HTMLElement | null = null
 
-  GM_registerMenuCommand('Toggle Theme', () => {
+  const getMenuName = () => `Toggle Theme: ${storage.get(storageKey, false)}`
+
+  const toggleThemeCommand = registerMenuCommand(getMenuName(), () => {
     toggleTheme()
+
+    toggleThemeCommand.updateName(getMenuName())
   })
 
   doEffect()

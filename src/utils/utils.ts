@@ -136,3 +136,23 @@ export function tag<Key extends keyof HTMLElementTagNameMap>(
 
   return $el
 }
+
+type IRegisterMenuCommandParameters = Parameters<typeof GM_registerMenuCommand>
+
+/**
+ * This function requires GM_registerMenuCommand permission.
+ */
+export function registerMenuCommand(...args: IRegisterMenuCommandParameters) {
+  const [name, commandFunc, accessKyeOroptions] = args
+
+  let menuCommandId = GM_registerMenuCommand(name, commandFunc, accessKyeOroptions)
+
+  return {
+    updateName
+  }
+
+  function updateName(newName: string) {
+    GM_unregisterMenuCommand(menuCommandId)
+    menuCommandId = GM_registerMenuCommand(newName, commandFunc, accessKyeOroptions)
+  }
+}
