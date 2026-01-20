@@ -140,7 +140,9 @@ export function tag<Key extends keyof HTMLElementTagNameMap>(
 type IRegisterMenuCommandParameters = Parameters<typeof GM_registerMenuCommand>
 
 /**
- * This function requires GM_registerMenuCommand permission.
+ * 
+ * @requires GM_registerMenuCommand
+ * @requires GM_unregisterMenuCommand
  */
 export function registerMenuCommand(...args: IRegisterMenuCommandParameters) {
   const [name, commandFunc, accessKyeOroptions] = args
