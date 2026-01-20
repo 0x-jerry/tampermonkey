@@ -2,7 +2,7 @@ import { defineHeader, run, stringMatcher } from './utils'
 
 defineHeader({
   name: 'Un Redirect',
-  version: '1.3.5',
+  version: '1.3.6',
   description: 'Skip redirect at some search result page.',
   matches: [
     'https://www.google.com/*',

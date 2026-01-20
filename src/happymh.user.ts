@@ -2,7 +2,7 @@ import { defineHeader, run, when } from './utils'
 
 defineHeader({
   name: 'Happymh Quick Nav',
-  version: '1.0.6',
+  version: '1.0.7',
   description: 'Add convenient buttons to switch chapters',
   matches: ['https://m.happymh.com/*'],
   icon: 'https://www.google.com/s2/favicons?sz=64&domain=m.happymh.com',

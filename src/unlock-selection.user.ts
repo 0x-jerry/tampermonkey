@@ -2,7 +2,7 @@ import { css, defineHeader, registerMenuCommand, run, storage } from './utils'
 
 defineHeader({
   name: 'Unlock Selection',
-  version: '1.0.6',
+  version: '1.0.7',
   description: 'Unlock text selection',
   matches: ['https://*/*', 'http://*/*'],
   runAt: 'document-start',

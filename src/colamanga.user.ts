@@ -2,7 +2,7 @@ import { defineHeader, run, when } from './utils'
 
 defineHeader({
   name: 'ColaManga Quick Nav',
-  version: '1.0.2',
+  version: '1.0.3',
   description: 'Add convenient buttons to switch chapters',
   matches: ['https://www.colamanga.com/*'],
   runAt: 'document-end',
