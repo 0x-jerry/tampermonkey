@@ -17,11 +17,7 @@ run(async () => {
 
   const getMenuName = () => `Toggle Theme: ${storage.get(storageKey, false)}`
 
-  const toggleThemeCommand = registerMenuCommand(getMenuName(), () => {
-    toggleTheme()
-
-    toggleThemeCommand.updateName(getMenuName())
-  })
+  registerMenuCommand(getMenuName, toggleTheme)
 
   doEffect()
 

@@ -1,3 +1,5 @@
+import { toValue, type Value } from '@0x-jerry/utils'
+
 export interface MatcherConfig {
   test: RegExp
   handler: () => any
@@ -140,21 +142,28 @@ export function tag<Key extends keyof HTMLElementTagNameMap>(
 type IRegisterMenuCommandParameters = Parameters<typeof GM_registerMenuCommand>
 
 /**
- * 
+ *
  * @requires GM_registerMenuCommand
  * @requires GM_unregisterMenuCommand
  */
-export function registerMenuCommand(...args: IRegisterMenuCommandParameters) {
-  const [name, commandFunc, accessKyeOroptions] = args
+export function registerMenuCommand(
+  name: Value<string>,
+  onClick: IRegisterMenuCommandParameters[1],
+  optionsOrAccessKey?: IRegisterMenuCommandParameters[2],
+) {
+  let menuCommandId = GM_registerMenuCommand(
+    toValue(name),
+    (evt) => {
+      onClick(evt)
+      update()
+    },
+    optionsOrAccessKey,
+  )
 
-  let menuCommandId = GM_registerMenuCommand(name, commandFunc, accessKyeOroptions)
 
-  return {
-    updateName
-  }
-
-  function updateName(newName: string) {
+  function update() {
     GM_unregisterMenuCommand(menuCommandId)
-    menuCommandId = GM_registerMenuCommand(newName, commandFunc, accessKyeOroptions)
+
+    menuCommandId = GM_registerMenuCommand(toValue(name), onClick, optionsOrAccessKey)
   }
 }

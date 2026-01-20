@@ -1,4 +1,4 @@
-import { css, defineHeader, run } from './utils'
+import { css, defineHeader, registerMenuCommand, run, storage } from './utils'
 
 defineHeader({
   name: 'Unlock Selection',
@@ -6,13 +6,27 @@ defineHeader({
   description: 'Unlock text selection',
   matches: ['https://*/*', 'http://*/*'],
   runAt: 'document-start',
-  grants: ['GM_addStyle'],
+  grants: ['GM_addStyle', 'GM_registerMenuCommand', 'GM_unregisterMenuCommand'],
 })
 
 run(async () => {
-  GM_addStyle(css`
-    * {
-      user-select: auto !important;
+  const storageKey = 'unlock-selection:enabled'
+  let styleElement: HTMLElement | null = null
+
+  const getMenuName = () => `Unlock Selection: ${storage.get(storageKey, false)}`
+
+  registerMenuCommand(getMenuName, () => {
+    const enabled = storage.get(storageKey, false)
+
+    if (enabled) {
+      styleElement = GM_addStyle(css`
+        * {
+          user-select: auto !important;
+        }
+      `)
+    } else {
+      styleElement?.remove()
+      styleElement = null
     }
-  `)
+  })
 })
