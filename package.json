@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "tsx scripts/dev.ts",
     "build": "tsx scripts/buildAll.ts",
+    "check": "tsc --noEmit",
     "release": "tsx scripts/release.ts"
   },
   "devDependencies": {

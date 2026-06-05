@@ -2,8 +2,10 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "Preserve",
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
     "strict": true,
-    "outDir": "out"
+    "outDir": "out",
   },
-  "include": ["src", "scripts", "types"]
+  "include": ["src", "scripts", "types"],
 }
