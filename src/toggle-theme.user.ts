@@ -10,8 +10,6 @@ defineHeader({
 })
 
 run(async () => {
-  'use strict'
-
   const storageKey = 'toggle-theme:enabled'
   let styleElement: HTMLElement | null = null
 

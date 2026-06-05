@@ -5,12 +5,10 @@ defineHeader({
   version: '1.0.0',
   description: 'Enhance GitHub with useful features like displaying repository size',
   matches: ['https://github.com/*/*'],
-  grants: ['GM_xmlHttpRequest'],
+  grants: ['GM_xmlhttpRequest'],
 })
 
 run(async () => {
-  'use strict'
-
   const pathParts = location.pathname.split('/').filter(Boolean)
   if (pathParts.length < 2) return
 
