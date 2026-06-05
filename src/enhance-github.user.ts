@@ -1,4 +1,5 @@
 import { defineHeader, run, waitElement } from './utils'
+import { dataIcon } from './assets/icons-svg'
 
 defineHeader({
   name: 'Enhance GitHub',
@@ -17,21 +18,21 @@ run(async () => {
   const sidebar = await waitElement('.BorderGrid')
   if (!sidebar) return
 
-  const row = document.createElement('div')
-  row.className = 'BorderGrid-row'
+  const sizeEl = document.createElement('div')
+  sizeEl.className = 'mt-2'
 
-  row.innerHTML = `
-    <div class="BorderGrid-cell">
-      <h2 class="h4 mb-3">Repository size</h2>
-      <span id="repo-size-value">Loading...</span>
+  sizeEl.innerHTML = `
+    <div class="mt-2">
+      <span class="Link--muted">
+        <img src="${dataIcon}" class="octicon octicon-people mr-2 tmp-mr-2" style="width: 16px; height: 16px;" />
+        <span id="repo-size-value">Loading...</span>
+      </span>
     </div>
   `
 
-  const firstRow = sidebar.querySelector('.BorderGrid-row')
-  if (firstRow) {
-    firstRow.insertAdjacentElement('beforebegin', row)
-  } else {
-    sidebar.appendChild(row)
+  const readmeEl = sidebar.querySelector('[href="/jsdom/jsdom/forks"]')?.parentElement
+  if (readmeEl) {
+    readmeEl.insertAdjacentElement('afterend', sizeEl)
   }
 
   GM_xmlhttpRequest({
@@ -39,24 +40,22 @@ run(async () => {
     url: `https://api.github.com/repos/${owner}/${repo}`,
     headers: { Accept: 'application/vnd.github.v3+json' },
     onload(res) {
-      const sizeEl = document.getElementById('repo-size-value')
-      if (!sizeEl) return
+      const el = document.getElementById('repo-size-value')
+      if (!el) return
 
       try {
         const data = JSON.parse(res.responseText)
         const sizeKB = data.size as number
-        const display = sizeKB > 1024
-          ? `${(sizeKB / 1024).toFixed(1)} MB`
-          : `${sizeKB} KB`
+        const display = sizeKB > 1024 ? `${(sizeKB / 1024).toFixed(1)} MB` : `${sizeKB} KB`
 
-        sizeEl.textContent = display
+        el.textContent = display
       } catch {
-        sizeEl.textContent = 'Unavailable'
+        el.textContent = 'Unavailable'
       }
     },
     onerror() {
-      const sizeEl = document.getElementById('repo-size-value')
-      if (sizeEl) sizeEl.textContent = 'Unavailable'
+      const el = document.getElementById('repo-size-value')
+      if (el) el.textContent = 'Unavailable'
     },
   })
 })
