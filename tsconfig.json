@@ -4,6 +4,7 @@
     "module": "Preserve",
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "verbatimModuleSyntax": true,
     "strict": true,
     "outDir": "out",
   },

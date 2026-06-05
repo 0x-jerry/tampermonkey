@@ -1,4 +1,4 @@
-import { toValue, type Value } from '@0x-jerry/utils'
+import { toValue, type Factory } from "@0x-jerry/utils"
 
 export interface MatcherConfig {
   test: RegExp
@@ -39,7 +39,7 @@ function Random(seed = Date.now()) {
 
 export const random = /*@__PURE__*/ Random()
 
-const storagePrefix = '_0x_monkey:'
+const storagePrefix = "_0x_monkey:"
 
 export const storage = {
   get<T>(key: string, defaultValue?: T) {
@@ -98,7 +98,7 @@ export async function when<T>(
     await sleep(100)
   }
 
-  throw new Error('Timeout')
+  throw new Error("Timeout")
 }
 
 /**
@@ -122,7 +122,7 @@ export async function run(fn: () => any) {
   try {
     await fn()
   } catch (error) {
-    console.error('Running error', error)
+    console.error("Running error", error)
   }
 }
 
@@ -147,7 +147,7 @@ type IRegisterMenuCommandParameters = Parameters<typeof GM_registerMenuCommand>
  * @requires GM_unregisterMenuCommand
  */
 export function registerMenuCommand(
-  name: Value<string>,
+  name: Factory<string>,
   onClick: IRegisterMenuCommandParameters[1],
   optionsOrAccessKey?: IRegisterMenuCommandParameters[2],
 ) {
@@ -159,7 +159,6 @@ export function registerMenuCommand(
     },
     optionsOrAccessKey,
   )
-
 
   function update() {
     GM_unregisterMenuCommand(menuCommandId)
