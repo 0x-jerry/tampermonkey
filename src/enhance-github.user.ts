@@ -2,7 +2,7 @@ import { defineHeader, run, waitElement } from './utils'
 
 defineHeader({
   name: 'Enhance GitHub',
-  version: '1.0.0',
+  version: '1.0.1',
   description: 'Enhance GitHub with useful features like displaying repository size',
   matches: ['https://github.com/*/*'],
   grants: ['GM_xmlhttpRequest'],
