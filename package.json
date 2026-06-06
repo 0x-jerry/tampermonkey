@@ -7,10 +7,10 @@
   "author": "Jerry Wang <x.jerry.wang@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "tsx scripts/dev.ts",
-    "build": "tsx scripts/buildAll.ts",
+    "dev": "bun run scripts/dev.ts",
+    "build": "bun run scripts/buildAll.ts",
     "check": "tsc --noEmit",
-    "release": "tsx scripts/release.ts"
+    "release": "bun run scripts/release.ts"
   },
   "devDependencies": {
     "@0x-jerry/utils": "^6.4.2",

@@ -30,7 +30,8 @@ run(async () => {
     </div>
   `
 
-  const readmeEl = sidebar.querySelector('[href="/jsdom/jsdom/forks"]')?.parentElement
+  const readmeEl = sidebar.querySelector('.BorderGrid-cell .hide-sm')?.querySelectorAll('.mt-2').values().find(el => el.textContent.trim().endsWith("forks"))
+
   if (readmeEl) {
     readmeEl.insertAdjacentElement('afterend', sizeEl)
   }
