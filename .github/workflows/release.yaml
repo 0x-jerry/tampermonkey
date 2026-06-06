@@ -15,21 +15,14 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
-          submodules: true
+          fetch-depth: 0
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
+      - uses: oven-sh/setup-bun@v2
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: latest
-          cache: "pnpm"
-
-      - run: pnpm i
-      - run: pnpm run build
+      - run: bun i
+      - run: bun run build
 
       - name: deploy
         uses: peaceiris/actions-gh-pages@v4
