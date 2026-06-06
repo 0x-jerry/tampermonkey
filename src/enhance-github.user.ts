@@ -3,7 +3,7 @@ import { dataIcon } from './assets/icons-svg'
 
 defineHeader({
   name: 'Enhance GitHub',
-  version: '1.0.1',
+  version: '1.0.2',
   description: 'Enhance GitHub with useful features like displaying repository size',
   matches: ['https://github.com/*/*'],
   grants: ['GM_xmlhttpRequest'],
