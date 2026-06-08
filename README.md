@@ -16,7 +16,7 @@ npm run dev -- src/xxx.user.ts
 - **ColaManga Quick Nav<sup>1.0.3</sup>**: Add convenient buttons to switch chapters [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/colamanga.user.js)
 - **Unlock Selection<sup>1.0.7</sup>**: Unlock text selection [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/unlock-selection.user.js)
 - **Happymh Quick Nav<sup>1.0.7</sup>**: Add convenient buttons to switch chapters [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/happymh.user.js)
-- **Enhance GitHub<sup>1.0.3</sup>**: Enhance GitHub with useful features like displaying repository size [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/enhance-github.user.js)
+- **Enhance GitHub<sup>1.0.4</sup>**: Enhance GitHub with useful features like displaying repository size [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/enhance-github.user.js)
 - **Toggle Theme<sup>1.1.9</sup>**: Very lightweight solution to toggle dark/light theme. [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/toggle-theme.user.js)
 - **Simple MMO<sup>1.0.4</sup>**: Try to save the simple mmo world! [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/smmo.user.js)
 - **Un Login<sup>1.0.6</sup>**: Auto close login dialog at some site. [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/un-login.user.js)
