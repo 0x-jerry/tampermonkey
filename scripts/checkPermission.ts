@@ -3,7 +3,7 @@ import type { ITamperMonkeyHeader } from '../types'
 
 const JS_LINE_COMMENT_RE = /\/\/[^\n]*/g
 const JS_MULTI_LINE_COMMENT_RE = /\/\*[\s\S]*?\*\//g
-const GM_PERMISSION_RE = /\bGM_[a-zA-Z0-9_]+\b/g
+const GM_PERMISSION_RE = /\bGM[._][a-zA-Z0-9_]+\b/g
 
 export async function scanPermissions(file: string) {
   const code = await readFile(file, 'utf-8')
