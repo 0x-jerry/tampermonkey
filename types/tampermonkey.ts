@@ -1,4 +1,4 @@
-export type IGrantPermission = `GM_${keyof typeof GM}` | 'GM_xmlhttpRequest'
+export type IGrantPermission = `GM_${keyof typeof GM}` | `GM.${keyof typeof GM}` | 'GM_xmlhttpRequest'
 
 export enum RunAt {
   documentStart = 'document-start',

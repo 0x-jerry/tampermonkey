@@ -19,6 +19,7 @@
     "@types/prompts": "^2.4.9",
     "@types/semver": "^7.7.1",
     "@types/tampermonkey": "^5.0.5",
+    "dayjs": "^1.11.21",
     "eruda": "^3.4.3",
     "esrap": "^2.2.11",
     "oxc-parser": "^0.134.0",

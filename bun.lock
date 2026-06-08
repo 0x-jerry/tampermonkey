@@ -11,6 +11,7 @@
         "@types/prompts": "^2.4.9",
         "@types/semver": "^7.7.1",
         "@types/tampermonkey": "^5.0.5",
+        "dayjs": "^1.11.21",
         "eruda": "^3.4.3",
         "esrap": "^2.2.11",
         "oxc-parser": "^0.134.0",
@@ -203,6 +204,8 @@
     "birpc": ["birpc@4.0.0", "https://registry.npmmirror.com/birpc/-/birpc-4.0.0.tgz", {}, "sha512-LShSxJP0KTmd101b6DRyGBj57LZxSDYWKitQNW/mi8GRMvZb078Uf9+pveax1DrVL89vm7mWe+TovdI/UDOuPw=="],
 
     "cac": ["cac@7.0.0", "https://registry.npmmirror.com/cac/-/cac-7.0.0.tgz", {}, "sha512-tixWYgm5ZoOD+3g6UTea91eow5z6AAHaho3g0V9CNSNb45gM8SmflpAc+GRd1InC4AqN/07Unrgp56Y94N9hJQ=="],
+
+    "dayjs": ["dayjs@1.11.21", "https://registry.npmmirror.com/dayjs/-/dayjs-1.11.21.tgz", {}, "sha512-98IT+HOahAisibz/yjKbzuOBwYcjJ7BCLPzARyHiyEBmRz4fatF+KPJszEHXsGYjUG234aH/cOjW1wwTbKUZlA=="],
 
     "defu": ["defu@6.1.7", "https://registry.npmmirror.com/defu/-/defu-6.1.7.tgz", {}, "sha512-7z22QmUWiQ/2d0KkdYmANbRUVABpZ9SNYyH5vx6PZ+nE5bcC0l7uFvEfHlyld/HcGBFTL536ClDt3DEcSlEJAQ=="],
 
