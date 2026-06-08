@@ -99,7 +99,7 @@ async function updateFirstCommitDate(repoInfo: RepoInfo) {
 
         const data = lastCommitResp.response
 
-        const date = data.at(0)?.commit.author.date as string
+        const date = data.at(0)?.commit.committer.date as string
 
         if (date) {
           el.textContent = dayjs(date).format('YYYY-MM-DD HH:mm:ss')
