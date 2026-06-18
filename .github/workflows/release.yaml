@@ -1,4 +1,4 @@
-name: Release
+name: GH Pages
 
 on:
   push:
@@ -7,26 +7,9 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-
+    uses: 0x-jerry/workflows/.github/workflows/gh-pages.yml@main
     permissions:
       contents: write
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - uses: oven-sh/setup-bun@v2
-
-      - run: bun i
-      - run: bun run build
-
-      - name: deploy
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          force_orphan: true
+    with:
+      build-cmd: bun run build
+      uplaod-folder: ./dist
