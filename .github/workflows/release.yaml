@@ -12,4 +12,4 @@ jobs:
       contents: write
     with:
       build-cmd: bun run build
-      uplaod-folder: ./dist
+      upload-folder: ./dist
