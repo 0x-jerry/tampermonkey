@@ -12,190 +12,189 @@ defineHeader({
 })
 
 interface RepoInfo {
-  repo: string
   owner: string
+  repo: string
 }
 
+const SIDEBAR_SELECTOR = '.SidebarSection-module__sidebarSection__e8jFN'
 const ENHANCE_MARKER = '[data-enhance-github]'
 
+const REPO_SIZE_ID = 'repo-size-value'
+const FIRST_COMMIT_DATE_ID = 'first-commit-date'
+
+const INFO_ROWS = [
+  { icon: dataIcon, id: REPO_SIZE_ID, title: 'Repository Size' },
+  { icon: sendIcon, id: FIRST_COMMIT_DATE_ID, title: 'First Commit Datetime' },
+] as const
+
 run(async () => {
-  // GitHub uses client-side navigation (Turbo), so the page content is replaced
-  // dynamically. Track which repo we've enhanced and re-apply the enhancement
-  // via a MutationObserver whenever the repo changes.
-  let currentRepo = ''
-  let enhancing = false
+  const context = createContext()
 
-  function getRepoInfo(): RepoInfo | null {
-    const pathParts = location.pathname.split('/').filter(Boolean)
-    if (pathParts.length < 2) return null
-
-    return { owner: pathParts[0], repo: pathParts[1] }
-  }
-
-  function repoKey(info: RepoInfo) {
-    return `${info.owner}/${info.repo}`
-  }
-
-  async function enhance() {
-    if (enhancing) return
-    enhancing = true
-
-    try {
-      const repoInfo = getRepoInfo()
-      if (!repoInfo) return
-
-      const key = repoKey(repoInfo)
-
-      // Skip if this repo is already enhanced
-      if (key === currentRepo && document.querySelector(ENHANCE_MARKER)) return
-
-      const sidebarClassName = '.SidebarSection-module__sidebarSection__e8jFN'
-
-      const sidebar = await waitElement(sidebarClassName).catch(() => null)
-      if (!sidebar) return
-
-      const readmeEl = sidebar.querySelector(`${sidebarClassName} .mt-2`)
-      if (!readmeEl) return
-
-      // The user may have navigated again while we were waiting
-      const now = getRepoInfo()
-      if (!now || repoKey(now) !== key) return
-
-      currentRepo = key
-
-      // Remove leftovers from the previous repo page
-      document.querySelectorAll(ENHANCE_MARKER).forEach((el) => el.remove())
-
-      const sizeEl = html`
-        <div class="mt-2" data-enhance-github>
-          <span class="Link--muted" title="Repository Size">
-            <img
-              src="${dataIcon}"
-              class="octicon octicon-people mr-2 tmp-mr-2"
-              style="width: 16px; height: 16px;"
-            />
-            <span id="repo-size-value">Loading...</span>
-          </span>
-        </div>
-        <div class="mt-2" data-enhance-github>
-          <span class="Link--muted" title="First Commit Datetime">
-            <img
-              src="${sendIcon}"
-              class="octicon octicon-people mr-2 tmp-mr-2"
-              style="width: 16px; height: 16px;"
-            />
-            <span id="first-commit-date">Loading...</span>
-          </span>
-        </div>
-      `
-
-      readmeEl.parentElement?.insertBefore(sizeEl, readmeEl)
-
-      await updateRepoSize(repoInfo)
-      await updateFirstCommitDate(repoInfo)
-    } catch (err) {
-      console.error(err)
-    } finally {
-      enhancing = false
-    }
-  }
-
-  await enhance()
+  await enhance(context)
 
   let timer: number | undefined
   const observer = new MutationObserver(() => {
     clearTimeout(timer)
-    timer = window.setTimeout(() => {
-      const repoInfo = getRepoInfo()
-
-      if (!repoInfo) {
-        // Navigated away from a repo page; allow re-enhance on return
-        currentRepo = ''
-        return
-      }
-
-      const key = repoKey(repoInfo)
-      const missing = !document.querySelector(ENHANCE_MARKER)
-
-      // Re-enhance when the repo changed, or when our elements were wiped
-      // out by a re-render. Skip when the repo layout isn't present yet.
-      if (key !== currentRepo || missing) {
-        enhance()
-      }
-    }, 300)
+    timer = window.setTimeout(() => enhance(context), 300)
   })
 
   observer.observe(document.body, { childList: true, subtree: true })
 })
 
-async function updateFirstCommitDate(repoInfo: RepoInfo) {
-  const el = document.getElementById('first-commit-date')
+interface EnhanceContext {
+  enhancedRepo: string
+  enhancing: boolean
+}
+
+function createContext(): EnhanceContext {
+  return { enhancedRepo: '', enhancing: false }
+}
+
+async function enhance(ctx: EnhanceContext) {
+  if (ctx.enhancing) return
+  ctx.enhancing = true
+
+  try {
+    const repoInfo = getRepoInfo()
+    if (!repoInfo) return
+
+    const key = repoKey(repoInfo)
+
+    // Skip if this repo is already enhanced
+    if (key === ctx.enhancedRepo && document.querySelector(ENHANCE_MARKER)) return
+
+    const sidebar = await waitElement(SIDEBAR_SELECTOR).catch(() => null)
+    if (!sidebar) return
+
+    const readmeEl = sidebar.querySelector(`${SIDEBAR_SELECTOR} .mt-2`)
+    if (!readmeEl) return
+
+    // The user may have navigated again while we were waiting
+    const now = getRepoInfo()
+    if (!now || repoKey(now) !== key) return
+
+    ctx.enhancedRepo = key
+
+    // Remove leftovers from the previous repo page
+    removeEnhancements()
+
+    readmeEl.parentElement?.insertBefore(createInfoRows(), readmeEl)
+
+    await Promise.all([
+      fillInfo(REPO_SIZE_ID, () => fetchRepoSize(repoInfo)),
+      fillInfo(FIRST_COMMIT_DATE_ID, () => fetchFirstCommitDate(repoInfo)),
+    ])
+  } catch (err) {
+    console.error(err)
+  } finally {
+    ctx.enhancing = false
+  }
+}
+
+function getRepoInfo(): RepoInfo | null {
+  const [owner, repo] = location.pathname.split('/').filter(Boolean)
+
+  return owner && repo ? { owner, repo } : null
+}
+
+function repoKey(info: RepoInfo) {
+  return `${info.owner}/${info.repo}`
+}
+
+function removeEnhancements() {
+  document.querySelectorAll(ENHANCE_MARKER).forEach((el) => el.remove())
+}
+
+function createInfoRows() {
+  const frag = document.createDocumentFragment()
+
+  for (const { icon, id, title } of INFO_ROWS) {
+    frag.append(html`
+      <div class="mt-2" data-enhance-github>
+        <span class="Link--muted" title="${title}">
+          <img
+            src="${icon}"
+            class="octicon octicon-people mr-2 tmp-mr-2"
+            style="width: 16px; height: 16px;"
+          />
+          <span id="${id}">Loading...</span>
+        </span>
+      </div>
+    `)
+  }
+
+  return frag
+}
+
+async function fillInfo(id: string, fetcher: () => Promise<string>) {
+  const el = document.getElementById(id)
   if (!el) return
 
   try {
-    const resp = await GM.xmlHttpRequest({
-      method: 'GET',
-      url: `https://api.github.com/repos/${repoInfo.owner}/${repoInfo.repo}/commits?per_page=1`,
-      headers: { Accept: 'application/vnd.github.v3+json' },
-      responseType: 'json',
-    })
-
-    const headers = parseRawHeadersString(resp.responseHeaders)
-
-    // <https://api.github.com/repositories/65899476/commits?per_page=1&page=52989>; rel="next", <https://api.github.com/repositories/65899476/commits?per_page=1&page=52988>; rel="last", <https://api.github.com/repositories/65899476/commits?per_page=1&page=1>; rel="first", <https://api.github.com/repositories/65899476/commits?per_page=1&page=52987>; rel="prev"
-    const linkStr = headers.get('link')
-    const links = linkStr?.split(',') || []
-
-    for (const link of links) {
-      let [url, rel] = link.split(';')
-      url = (url || '').trim().slice(1, -1)
-      rel = (rel || '').trim().slice(5, -1)
-
-      if (rel === 'last') {
-        const lastCommitResp = await GM.xmlHttpRequest({
-          method: 'GET',
-          url,
-          headers: { Accept: 'application/vnd.github.v3+json' },
-          responseType: 'json',
-        })
-
-        const data = lastCommitResp.response
-
-        const date = data.at(0)?.commit.committer.date as string
-
-        if (date) {
-          el.textContent = dayjs(date).format('YYYY-MM-DD HH:mm:ss')
-          return
-        }
-      }
-    }
-
-    el.textContent = 'Unavailable'
+    el.textContent = await fetcher()
   } catch (err) {
     console.error(err)
     el.textContent = 'Unavailable'
   }
 }
 
-async function updateRepoSize(repoInfo: RepoInfo) {
-  const el = document.getElementById('repo-size-value')
-  if (!el) return
+interface GitHubResponse<T> {
+  headers: Headers
+  data: T
+}
 
-  try {
-    const resp = await GM.xmlHttpRequest({
-      method: 'GET',
-      url: `https://api.github.com/repos/${repoInfo.owner}/${repoInfo.repo}`,
-      headers: { Accept: 'application/vnd.github.v3+json' },
-      responseType: 'json',
-    })
+async function fetchGitHub<T>(url: string): Promise<GitHubResponse<T>> {
+  const resp = await GM.xmlHttpRequest({
+    method: 'GET',
+    url,
+    headers: { Accept: 'application/vnd.github.v3+json' },
+    responseType: 'json',
+  })
 
-    const data = resp.response
-    const sizeKB = data.size as number
-    const display = sizeKB > 1024 ? `${(sizeKB / 1024).toFixed(1)} MB` : `${sizeKB} KB`
+  return {
+    headers: parseRawHeadersString(resp.responseHeaders),
+    data: resp.response as T,
+  }
+}
 
-    el.textContent = display
-  } catch (err) {
-    console.error(err)
-    el.textContent = 'Unavailable'
+async function fetchRepoSize(repoInfo: RepoInfo) {
+  const { data } = await fetchGitHub<{ size: number }>(
+    `https://api.github.com/repos/${repoInfo.owner}/${repoInfo.repo}`,
+  )
+
+  const sizeKB = data.size
+
+  return sizeKB > 1024 ? `${(sizeKB / 1024).toFixed(1)} MB` : `${sizeKB} KB`
+}
+
+interface Commit {
+  commit: { committer: { date: string } }
+}
+
+async function fetchFirstCommitDate(repoInfo: RepoInfo) {
+  const { headers } = await fetchGitHub<Commit[]>(
+    `https://api.github.com/repos/${repoInfo.owner}/${repoInfo.repo}/commits?per_page=1`,
+  )
+
+  // <https://api.github.com/repositories/65899476/commits?per_page=1&page=52989>; rel="next", <https://api.github.com/repositories/65899476/commits?per_page=1&page=52988>; rel="last", <https://api.github.com/repositories/65899476/commits?per_page=1&page=1>; rel="first", <https://api.github.com/repositories/65899476/commits?per_page=1&page=52987>; rel="prev"
+  const lastPageUrl = getLastPageUrl(headers)
+  if (!lastPageUrl) return 'Unavailable'
+
+  const { data } = await fetchGitHub<Commit[]>(lastPageUrl)
+  const date = data.at(0)?.commit.committer.date
+
+  return date ? dayjs(date).format('YYYY-MM-DD HH:mm:ss') : 'Unavailable'
+}
+
+function getLastPageUrl(headers: Headers) {
+  const link = headers.get('link')
+  if (!link) return
+
+  for (const part of link.split(',')) {
+    const [url, rel] = part.split(';')
+
+    if (rel?.includes('rel="last"')) {
+      return url.trim().slice(1, -1)
+    }
   }
 }
