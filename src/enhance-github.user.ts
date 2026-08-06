@@ -49,10 +49,12 @@ run(async () => {
       // Skip if this repo is already enhanced
       if (key === currentRepo && document.querySelector(ENHANCE_MARKER)) return
 
-      const sidebar = await waitElement('.BorderGrid').catch(() => null)
+      const sidebarClassName = '.SidebarSection-module__sidebarSection__e8jFN'
+
+      const sidebar = await waitElement(sidebarClassName).catch(() => null)
       if (!sidebar) return
 
-      const readmeEl = sidebar.querySelector('.BorderGrid-cell .hide-sm')?.querySelector('.mt-2')
+      const readmeEl = sidebar.querySelector(`${sidebarClassName} .mt-2`)
       if (!readmeEl) return
 
       // The user may have navigated again while we were waiting
@@ -117,7 +119,7 @@ run(async () => {
 
       // Re-enhance when the repo changed, or when our elements were wiped
       // out by a re-render. Skip when the repo layout isn't present yet.
-      if ((key !== currentRepo || missing) && document.querySelector('.BorderGrid')) {
+      if (key !== currentRepo || missing) {
         enhance()
       }
     }, 300)
