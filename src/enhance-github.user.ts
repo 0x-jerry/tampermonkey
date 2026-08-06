@@ -111,10 +111,10 @@ function createInfoRows() {
   for (const { icon, id, title } of INFO_ROWS) {
     frag.append(html`
       <div class="mt-2" data-enhance-github>
-        <span class="Link--muted" title="${title}">
+        <span title="${title}" style="display: flex; align-items: center;">
           <img
             src="${icon}"
-            class="octicon octicon-people mr-2 tmp-mr-2"
+            class="octicon octicon-people mr-2"
             style="width: 16px; height: 16px;"
           />
           <span id="${id}">Loading...</span>
