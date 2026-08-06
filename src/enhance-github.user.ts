@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 
 defineHeader({
   name: 'Enhance GitHub',
-  version: '1.0.6',
+  version: '1.0.7',
   description: 'Enhance GitHub with useful features like displaying repository size',
   matches: ['https://github.com/*/*'],
   runAt: 'document-idle',
