@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 
 defineHeader({
   name: 'Enhance GitHub',
-  version: '1.0.4',
+  version: '1.0.5',
   description: 'Enhance GitHub with useful features like displaying repository size',
   matches: ['https://github.com/*/*'],
   runAt: 'document-idle',
@@ -16,54 +16,114 @@ interface RepoInfo {
   owner: string
 }
 
+const ENHANCE_MARKER = '[data-enhance-github]'
+
 run(async () => {
-  const pathParts = location.pathname.split('/').filter(Boolean)
-  if (pathParts.length < 2) return
+  // GitHub uses client-side navigation (Turbo), so the page content is replaced
+  // dynamically. Track which repo we've enhanced and re-apply the enhancement
+  // via a MutationObserver whenever the repo changes.
+  let currentRepo = ''
+  let enhancing = false
 
-  const [owner, repo] = pathParts
+  function getRepoInfo(): RepoInfo | null {
+    const pathParts = location.pathname.split('/').filter(Boolean)
+    if (pathParts.length < 2) return null
 
-  const repoInfo: RepoInfo = {
-    owner,
-    repo,
+    return { owner: pathParts[0], repo: pathParts[1] }
   }
 
-  const sidebar = await waitElement('.BorderGrid')
-  if (!sidebar) return
-
-  const sizeEl = html`
-    <div class="mt-2">
-      <span class="Link--muted" title="Repository Size">
-        <img
-          src="${dataIcon}"
-          class="octicon octicon-people mr-2 tmp-mr-2"
-          style="width: 16px; height: 16px;"
-        />
-        <span id="repo-size-value">Loading...</span>
-      </span>
-    </div>
-    <div class="mt-2">
-      <span class="Link--muted" title="First Commit Datetime">
-        <img
-          src="${sendIcon}"
-          class="octicon octicon-people mr-2 tmp-mr-2"
-          style="width: 16px; height: 16px;"
-        />
-        <span id="first-commit-date">Loading...</span>
-      </span>
-    </div>
-  `
-
-  const readmeEl = sidebar.querySelector('.BorderGrid-cell .hide-sm')?.querySelector('.mt-2')
-
-  if (!readmeEl) {
-    return
+  function repoKey(info: RepoInfo) {
+    return `${info.owner}/${info.repo}`
   }
 
-  readmeEl?.parentElement?.insertBefore(sizeEl, readmeEl)
+  async function enhance() {
+    if (enhancing) return
+    enhancing = true
 
-  await updateRepoSize(repoInfo)
+    try {
+      const repoInfo = getRepoInfo()
+      if (!repoInfo) return
 
-  await updateFirstCommitDate(repoInfo)
+      const key = repoKey(repoInfo)
+
+      // Skip if this repo is already enhanced
+      if (key === currentRepo && document.querySelector(ENHANCE_MARKER)) return
+
+      const sidebar = await waitElement('.BorderGrid').catch(() => null)
+      if (!sidebar) return
+
+      const readmeEl = sidebar.querySelector('.BorderGrid-cell .hide-sm')?.querySelector('.mt-2')
+      if (!readmeEl) return
+
+      // The user may have navigated again while we were waiting
+      const now = getRepoInfo()
+      if (!now || repoKey(now) !== key) return
+
+      currentRepo = key
+
+      // Remove leftovers from the previous repo page
+      document.querySelectorAll(ENHANCE_MARKER).forEach((el) => el.remove())
+
+      const sizeEl = html`
+        <div class="mt-2" data-enhance-github>
+          <span class="Link--muted" title="Repository Size">
+            <img
+              src="${dataIcon}"
+              class="octicon octicon-people mr-2 tmp-mr-2"
+              style="width: 16px; height: 16px;"
+            />
+            <span id="repo-size-value">Loading...</span>
+          </span>
+        </div>
+        <div class="mt-2" data-enhance-github>
+          <span class="Link--muted" title="First Commit Datetime">
+            <img
+              src="${sendIcon}"
+              class="octicon octicon-people mr-2 tmp-mr-2"
+              style="width: 16px; height: 16px;"
+            />
+            <span id="first-commit-date">Loading...</span>
+          </span>
+        </div>
+      `
+
+      readmeEl.parentElement?.insertBefore(sizeEl, readmeEl)
+
+      await updateRepoSize(repoInfo)
+      await updateFirstCommitDate(repoInfo)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      enhancing = false
+    }
+  }
+
+  await enhance()
+
+  let timer: number | undefined
+  const observer = new MutationObserver(() => {
+    clearTimeout(timer)
+    timer = window.setTimeout(() => {
+      const repoInfo = getRepoInfo()
+
+      if (!repoInfo) {
+        // Navigated away from a repo page; allow re-enhance on return
+        currentRepo = ''
+        return
+      }
+
+      const key = repoKey(repoInfo)
+      const missing = !document.querySelector(ENHANCE_MARKER)
+
+      // Re-enhance when the repo changed, or when our elements were wiped
+      // out by a re-render. Skip when the repo layout isn't present yet.
+      if ((key !== currentRepo || missing) && document.querySelector('.BorderGrid')) {
+        enhance()
+      }
+    }, 300)
+  })
+
+  observer.observe(document.body, { childList: true, subtree: true })
 })
 
 async function updateFirstCommitDate(repoInfo: RepoInfo) {
