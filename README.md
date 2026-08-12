@@ -11,6 +11,7 @@ npm run dev -- src/xxx.user.ts
 
 - **ColaManga Quick Nav<sup>1.0.3</sup>**: Add convenient buttons to switch chapters [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/colamanga.user.js)
 - **Enhance GitHub<sup>1.0.8</sup>**: Enhance GitHub with useful features like displaying repository size [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/enhance-github.user.js)
+- **Enhance GitHub Mermaid Preview<sup>1.0.0</sup>**: Enhance GitHub Mermaid diagrams with drag-to-pan and wheel / pinch zoom gestures [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/github-mermaid-preview.user.js)
 - **Eruda<sup>1.0.6</sup>**: Eruda devtool for mobile browser [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/eruda.user.js)
 - **Happymh Quick Nav<sup>1.0.7</sup>**: Add convenient buttons to switch chapters [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/happymh.user.js)
 - **Refine Reading<sup>1.0.5</sup>**: Refine style of hetushu.com [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/refine-reading.user.js)
