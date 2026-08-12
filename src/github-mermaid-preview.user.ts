@@ -2,7 +2,7 @@ import { applyStyle, css, defineHeader, html, run } from './utils'
 
 defineHeader({
   name: 'Enhance GitHub Mermaid Preview',
-  version: '0.0.0',
+  version: '0.0.1',
   description: 'Enhance GitHub Mermaid diagrams with drag-to-pan and wheel / pinch zoom gestures',
   matches: [
     'https://viewscreen.githubusercontent.com/*',
