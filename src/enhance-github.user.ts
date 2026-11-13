@@ -16,16 +16,19 @@ interface RepoInfo {
   repo: string
 }
 
-const SIDEBAR_SELECTOR = '.SidebarSection-module__sidebarSection__e8jFN'
+// Readme row, rendered in every copy of the repo sidebar (narrow and desktop)
+const README_LINK_SELECTOR = 'a[href="#readme-ov-file"]'
 const ENHANCE_MARKER = '[data-enhance-github]'
 
-const REPO_SIZE_ID = 'repo-size-value'
-const FIRST_COMMIT_DATE_ID = 'first-commit-date'
+const REPO_SIZE_FIELD = 'repo-size'
+const FIRST_COMMIT_DATE_FIELD = 'first-commit-date'
 
 const INFO_ROWS = [
-  { icon: dataIcon, id: REPO_SIZE_ID, title: 'Repository Size' },
-  { icon: sendIcon, id: FIRST_COMMIT_DATE_ID, title: 'First Commit Datetime' },
+  { icon: dataIcon, field: REPO_SIZE_FIELD, title: 'Repository Size' },
+  { icon: sendIcon, field: FIRST_COMMIT_DATE_FIELD, title: 'First Commit Datetime' },
 ] as const
+
+const apiCache = new Map<string, Promise<string>>()
 
 run(async () => {
   const context = createContext()
@@ -60,29 +63,28 @@ async function enhance(ctx: EnhanceContext) {
 
     const key = repoKey(repoInfo)
 
-    // Skip if this repo is already enhanced
-    if (key === ctx.enhancedRepo && document.querySelector(ENHANCE_MARKER)) return
-
-    const sidebar = await waitElement(SIDEBAR_SELECTOR).catch(() => null)
-    if (!sidebar) return
-
-    const readmeEl = sidebar.querySelector(`${SIDEBAR_SELECTOR} .mt-2`)
-    if (!readmeEl) return
+    const readmeLink = await waitElement(README_LINK_SELECTOR).catch(() => null)
+    if (!readmeLink) return
 
     // The user may have navigated again while we were waiting
     const now = getRepoInfo()
     if (!now || repoKey(now) !== key) return
 
-    ctx.enhancedRepo = key
-
     // Remove leftovers from the previous repo page
-    removeEnhancements()
+    if (key !== ctx.enhancedRepo) {
+      removeEnhancements()
+      ctx.enhancedRepo = key
+    }
 
-    readmeEl.parentElement?.insertBefore(createInfoRows(), readmeEl)
+    if (!insertInfoRows()) return
 
     await Promise.all([
-      fillInfo(REPO_SIZE_ID, () => fetchRepoSize(repoInfo)),
-      fillInfo(FIRST_COMMIT_DATE_ID, () => fetchFirstCommitDate(repoInfo)),
+      fillInfo(REPO_SIZE_FIELD, () =>
+        cached(`${key}/${REPO_SIZE_FIELD}`, () => fetchRepoSize(repoInfo)),
+      ),
+      fillInfo(FIRST_COMMIT_DATE_FIELD, () =>
+        cached(`${key}/${FIRST_COMMIT_DATE_FIELD}`, () => fetchFirstCommitDate(repoInfo)),
+      ),
     ])
   } catch (err) {
     console.error(err)
@@ -105,10 +107,24 @@ function removeEnhancements() {
   document.querySelectorAll(ENHANCE_MARKER).forEach((el) => el.remove())
 }
 
+function insertInfoRows() {
+  let inserted = false
+
+  for (const link of document.querySelectorAll(README_LINK_SELECTOR)) {
+    const row = link.closest('.mt-2')
+    if (!row || row.previousElementSibling?.matches(ENHANCE_MARKER)) continue
+
+    row.parentElement?.insertBefore(createInfoRows(), row)
+    inserted = true
+  }
+
+  return inserted
+}
+
 function createInfoRows() {
   const frag = document.createDocumentFragment()
 
-  for (const { icon, id, title } of INFO_ROWS) {
+  for (const { icon, field, title } of INFO_ROWS) {
     frag.append(html`
       <div class="mt-2" data-enhance-github>
         <span title="${title}" style="display: flex; align-items: center;">
@@ -117,7 +133,7 @@ function createInfoRows() {
             class="octicon octicon-people mr-2"
             style="width: 16px; height: 16px;"
           />
-          <span id="${id}">Loading...</span>
+          <span data-enhance-field="${field}">Loading...</span>
         </span>
       </div>
     `)
@@ -126,16 +142,33 @@ function createInfoRows() {
   return frag
 }
 
-async function fillInfo(id: string, fetcher: () => Promise<string>) {
-  const el = document.getElementById(id)
-  if (!el) return
+async function fillInfo(field: string, fetcher: () => Promise<string>) {
+  const els = document.querySelectorAll(`[data-enhance-field="${field}"]`)
+  if (!els.length) return
+
+  let text = 'Unavailable'
 
   try {
-    el.textContent = await fetcher()
+    text = await fetcher()
   } catch (err) {
     console.error(err)
-    el.textContent = 'Unavailable'
   }
+
+  els.forEach((el) => (el.textContent = text))
+}
+
+function cached(key: string, fetcher: () => Promise<string>) {
+  let task = apiCache.get(key)
+
+  if (!task) {
+    task = fetcher().catch((err) => {
+      apiCache.delete(key)
+      throw err
+    })
+    apiCache.set(key, task)
+  }
+
+  return task
 }
 
 interface GitHubResponse<T> {
