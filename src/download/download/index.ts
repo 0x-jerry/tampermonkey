@@ -6,7 +6,8 @@ import { sizeFormat } from '../format'
 import type { DownloadMode, DownloadResult, Provider } from '../types'
 import { loading, plain, showModal, toast } from '../ui/modal'
 import { toAria2, toBitcomet, toCurl } from './convert'
-import { sendToAbdm, sendToAria2, sendToIdm } from './send-to'
+import { sendTo } from './send-to'
+import type { SendTarget } from './send-to/types'
 
 export async function startDownload(provider: Provider, mode: DownloadMode) {
   context.page = provider.detectPage()
@@ -150,14 +151,15 @@ function renderDownloads(result: DownloadResult, mode: DownloadMode) {
         if (allLinks.length) await copyWithFeedback(target, allLinks.join('\r\n'))
         break
       case 'send-idm':
-        if (link) await sendWithFeedback(target, () => sendToIdm(link, name, size, result.headers))
-        break
       case 'send-aria2':
-        if (link) await sendWithFeedback(target, () => sendToAria2(link, name, result.headers))
+      case 'send-abdm': {
+        const sender = action.slice('send-'.length) as SendTarget
+        if (link)
+          await sendWithFeedback(target, () =>
+            sendTo(sender, { link, filename: name, filesize: size, headers: result.headers }),
+          )
         break
-      case 'send-abdm':
-        if (link) await sendWithFeedback(target, () => sendToAbdm(link, name, result.headers))
-        break
+      }
     }
   })
 }
