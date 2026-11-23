@@ -8,7 +8,7 @@ export const gmStore = {
       return fallback as T
     }
   },
-  set<T>(key: string, value: T) {
+  set(key: string, value: Tampermonkey.StorageValue) {
     GM_setValue(prefix + key, value)
   },
   del(key: string) {
