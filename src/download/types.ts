@@ -1,6 +1,6 @@
 export type PageKind = 'home' | 'main' | 'youth' | 'share' | ''
 
-export type DownloadMode = 'api' | 'curl' | 'aria2' | 'bitcomet' | 'abdm'
+export type DownloadMode = 'api' | 'aria2' | 'abdm'
 
 export interface FileAccessor<T = any> {
   dir: (file: T) => unknown

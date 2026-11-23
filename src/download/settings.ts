@@ -1,9 +1,4 @@
-import {
-  defaultAbdmRpc,
-  defaultAria2Rpc,
-  defaultCurlTerminal,
-  defaultIdmRpc,
-} from './config'
+import { defaultAbdmRpc, defaultAria2Rpc, defaultIdmRpc } from './config'
 import { gmStore } from './store'
 import type { RpcConfig } from './types'
 
@@ -60,13 +55,4 @@ export function getIdmClient() {
 
 export function setIdmClient(value: string) {
   gmStore.set('setting_idm_rpc', value)
-}
-
-export function getCurlTerminal() {
-  const value = String(gmStore.get('setting_curl_terminal', defaultCurlTerminal))
-  return value === 'wp' ? 'wp' : 'wc'
-}
-
-export function setCurlTerminal(value: string) {
-  gmStore.set('setting_curl_terminal', value)
 }

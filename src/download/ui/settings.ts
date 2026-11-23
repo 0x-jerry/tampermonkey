@@ -1,11 +1,9 @@
 import { defaultAbdmRpc, defaultAria2Rpc } from '../config'
 import { el } from '../dom'
 import {
-  getCurlTerminal,
   getIdmClient,
   getRpcList,
   saveRpcList,
-  setCurlTerminal,
   setIdmClient,
   type RpcKind,
 } from '../settings'
@@ -168,22 +166,9 @@ export function openSettings() {
   const generalTitle = el('<h4>通用</h4>')
 
   const idm = textInput(getIdmClient(), '1')
-  const terminal = el<HTMLSelectElement>('<select class="nd-input"></select>')
-
-  for (const [value, label] of [
-    ['wc', 'Windows CMD（curl）'],
-    ['wp', 'Windows PowerShell（curl.exe）'],
-  ]) {
-    const option = document.createElement('option')
-    option.value = value
-    option.textContent = label
-    terminal.append(option)
-  }
-
-  terminal.value = getCurlTerminal() === 'wp' ? 'wp' : 'wc'
 
   const grid = el('<div class="nd-grid"></div>')
-  grid.append(labeled('IDM 客户端编号', idm), labeled('cURL 终端', terminal))
+  grid.append(labeled('IDM 客户端编号', idm))
   general.append(generalTitle, grid)
 
   const aria2 = createRpcSection('aria2')
@@ -209,7 +194,6 @@ export function openSettings() {
       saveRpcList('aria2', aria2List)
       saveRpcList('abdm', abdmList)
       setIdmClient(idm.value.trim() || '1')
-      setCurlTerminal(terminal.value)
 
       closeModal()
       toast('设置已保存', 'success')

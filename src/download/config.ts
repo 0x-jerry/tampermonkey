@@ -111,13 +111,9 @@ export const siteConfig = {
 
 export const methodLabels: Record<DownloadMode, string> = {
   api: 'API 下载',
-  curl: 'cURL 下载',
   aria2: 'Aria2 下载',
-  bitcomet: '彗星下载',
   abdm: 'ABDM 下载',
 }
-
-export const defaultCurlTerminal: string = 'wc'
 
 export const defaultAria2Rpc: RpcConfig = {
   domain: 'http://localhost',

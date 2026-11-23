@@ -5,7 +5,7 @@ import { iframeDownload, el } from '../dom'
 import { sizeFormat } from '../format'
 import type { DownloadMode, DownloadResult, Provider } from '../types'
 import { loading, plain, showModal, toast } from '../ui/modal'
-import { toAria2, toBitcomet, toCurl } from './convert'
+import { toAria2 } from './convert'
 import { sendTo } from './send-to'
 import type { SendTarget } from './send-to/types'
 
@@ -80,12 +80,6 @@ function renderDownloads(result: DownloadResult, mode: DownloadMode) {
       addButton('复制地址', 'copy-link')
       addButton('复制名称', 'copy-name')
       addButton('推送至 IDM', 'send-idm')
-    } else if (mode === 'curl') {
-      const command = toCurl(link, name, result.headers)
-      const code = el(`<pre class="nd-code"></pre>`)
-      code.textContent = command
-      item.append(code)
-      addButton('复制命令', 'copy-curl')
     } else if (mode === 'aria2') {
       const command = toAria2(link, name, result.headers)
       addButton('推送至 Aria2', 'send-aria2')
@@ -93,12 +87,6 @@ function renderDownloads(result: DownloadResult, mode: DownloadMode) {
       const code = el(`<pre class="nd-code"></pre>`)
       code.textContent = command
       item.append(code)
-    } else if (mode === 'bitcomet') {
-      const command = toBitcomet(link, name, result.headers)
-      const code = el(`<pre class="nd-code"></pre>`)
-      code.textContent = command
-      item.append(code)
-      addButton('复制 BC 地址', 'copy-bitcomet')
     } else if (mode === 'abdm') {
       addButton('推送至 ABDM', 'send-abdm')
     }
@@ -138,14 +126,8 @@ function renderDownloads(result: DownloadResult, mode: DownloadMode) {
       case 'copy-name':
         if (name) await copyWithFeedback(target, name)
         break
-      case 'copy-curl':
-        if (link) await copyWithFeedback(target, toCurl(link, name, result.headers))
-        break
       case 'copy-aria2':
         if (link) await copyWithFeedback(target, toAria2(link, name, result.headers))
-        break
-      case 'copy-bitcomet':
-        if (link) await copyWithFeedback(target, toBitcomet(link, name, result.headers))
         break
       case 'copy-all':
         if (allLinks.length) await copyWithFeedback(target, allLinks.join('\r\n'))
