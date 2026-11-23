@@ -133,7 +133,6 @@ export const defaultAbdmRpc: RpcConfig = {
   port: '15151',
   path: '',
   key: '',
-  dir: '',
   default: true,
 }
 

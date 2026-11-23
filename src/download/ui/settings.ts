@@ -30,7 +30,6 @@ const rpcFields: Record<RpcKind, RpcField[]> = {
     { key: 'domain', label: '地址', placeholder: 'http://localhost' },
     { key: 'port', label: '端口', placeholder: '15151' },
     { key: 'key', label: 'API Key', placeholder: '可选' },
-    { key: 'dir', label: '下载目录', placeholder: '可选' },
   ],
 }
 

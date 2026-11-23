@@ -1,5 +1,5 @@
 import { getExtension } from '../format'
-import { post, standHeaders } from '../request'
+import { post, standHeaders, toRequestHeaders } from '../request'
 import { getDefaultRpc, getIdmClient } from '../settings'
 
 const idmState: { lock: Promise<any>; seq: number } = { lock: Promise.resolve(), seq: 1 }
@@ -110,33 +110,27 @@ export function sendToAbdm(
   headers?: Record<string, string | string[]>,
 ) {
   abdmLock.lock = abdmLock.lock.catch(() => {}).then(async () => {
-    const normalized = standHeaders(headers)
+    const normalized = toRequestHeaders(standHeaders(headers))
     const rpc = getDefaultRpc('abdm')
-    const url = `${rpc.domain}:${rpc.port}/start-headless-download`
+    const url = `${rpc.domain}:${rpc.port}/add`
 
-    const data: any = {
-      downloadSource: {
-        name: filename,
-        description: 'netdisk-download',
-        link,
-        headers: normalized,
-      },
-      name: filename,
-      startDownload: true,
+    const item: Record<string, unknown> = {
+      link,
+      headers: normalized,
+      suggestedName: filename,
     }
 
-    if (normalized.Referer) data.downloadSource.downloadPage = normalized.Referer
-    if (rpc.dir) data.folder = rpc.dir
+    if (normalized.Referer) item.downloadPage = normalized.Referer
 
     const response = await post<string>(
       url,
-      data,
+      [item],
       { 'Content-Type': 'application/json;charset=UTF-8', 'X-Api-Key': rpc.key || '' },
       'text',
       false,
     )
 
-    return response === 'OK' ? ('success' as const) : ('fail' as const)
+    return String(response).trim() === 'OK' ? ('success' as const) : ('fail' as const)
   })
 
   return abdmLock.lock
