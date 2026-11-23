@@ -1,4 +1,9 @@
-export type IGrantPermission = `GM_${keyof typeof GM}` | `GM.${keyof typeof GM}` | 'GM_xmlhttpRequest'
+export type IGrantPermission =
+  | `GM_${keyof typeof GM}`
+  | `GM.${keyof typeof GM}`
+  | 'GM_xmlhttpRequest'
+  | 'unsafeWindow'
+  | 'window.close'
 
 export enum RunAt {
   documentStart = 'document-start',
@@ -17,6 +22,7 @@ export interface ITamperMonkeyHeader {
   tags?: string[]
   description?: string
   matches?: string[]
+  connects?: string[]
   icon?: string
   runAt?: `${RunAt}`
   grants?: IGrantPermission[]

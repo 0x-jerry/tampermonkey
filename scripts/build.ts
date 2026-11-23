@@ -87,6 +87,10 @@ function generateBanner(config: ITamperMonkeyHeader, file: string) {
     banner.push(`@match ${match}`)
   })
 
+  config.connects?.forEach((connect) => {
+    banner.push(`@connect ${connect}`)
+  })
+
   banner.push(`@run-at ${config.runAt || 'document-end'}`)
 
   config.grants?.forEach((grant) => {
