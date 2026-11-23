@@ -1,21 +1,10 @@
-import {
-  defaultAbdmRpc,
-  defaultAria2Rpc,
-  defaultIdmRpc,
-} from '../config'
 import { getExtension } from '../format'
 import { post, standHeaders } from '../request'
-import { gmStore } from '../store'
-import type { RpcConfig } from '../types'
+import { getDefaultRpc, getIdmClient } from '../settings'
 
 const idmState: { lock: Promise<any>; seq: number } = { lock: Promise.resolve(), seq: 1 }
 const aria2Lock: { lock: Promise<any> } = { lock: Promise.resolve() }
 const abdmLock: { lock: Promise<any> } = { lock: Promise.resolve() }
-
-function selectedRpc(key: string, fallback: RpcConfig) {
-  const list = gmStore.get<RpcConfig[]>(key, [fallback]) || [fallback]
-  return list.find((item) => item.default) || list[0] || fallback
-}
 
 export function sendToIdm(
   link: string,
@@ -23,7 +12,7 @@ export function sendToIdm(
   filesize: number,
   headers: Record<string, string | string[]> = {},
 ) {
-  const rpc = gmStore.get('setting_idm_rpc', defaultIdmRpc)
+  const rpc = getIdmClient()
 
   idmState.lock = idmState.lock.catch(() => {}).then(async () => {
     const normalized = standHeaders(headers)
@@ -79,7 +68,7 @@ export function sendToAria2(
   aria2Lock.lock = aria2Lock.lock.catch(() => {}).then(async () => {
     const normalized = standHeaders(headers)
     const headerParts = Object.entries(normalized).map(([key, value]) => `${key}: ${value}`)
-    const rpc = selectedRpc('setting_aria2_rpc', defaultAria2Rpc)
+    const rpc = getDefaultRpc('aria2')
     const url = `${rpc.domain}:${rpc.port}${rpc.path}`
     const dir = rpc.dir !== null && rpc.dir !== '' ? rpc.dir : undefined
 
@@ -122,7 +111,7 @@ export function sendToAbdm(
 ) {
   abdmLock.lock = abdmLock.lock.catch(() => {}).then(async () => {
     const normalized = standHeaders(headers)
-    const rpc = selectedRpc('setting_abdm_rpc', defaultAbdmRpc)
+    const rpc = getDefaultRpc('abdm')
     const url = `${rpc.domain}:${rpc.port}/start-headless-download`
 
     const data: any = {

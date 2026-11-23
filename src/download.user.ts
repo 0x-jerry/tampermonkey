@@ -37,6 +37,7 @@ defineHeader({
     'GM_getValue',
     'GM_deleteValue',
     'GM_openInTab',
+    'GM_registerMenuCommand',
   ],
   runAt: 'document-start',
 })

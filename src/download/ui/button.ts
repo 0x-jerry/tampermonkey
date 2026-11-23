@@ -2,6 +2,7 @@ import { startDownload } from '../download'
 import { el, waitForKeyElements } from '../dom'
 import { methodLabels } from '../config'
 import type { DownloadMode, Provider } from '../types'
+import { openSettings } from './settings'
 
 function createButton(onSelect: (mode: DownloadMode) => void) {
   ensureGlobalCloseListener()
@@ -19,6 +20,12 @@ function createButton(onSelect: (mode: DownloadMode) => void) {
     menu.append(item)
   }
 
+  const separator = el(`<li class="nd-menu-sep"></li>`)
+  const settings = el(`<li class="nd-menu-item"></li>`)
+  settings.dataset.settings = '1'
+  settings.textContent = '设置'
+  menu.append(separator, settings)
+
   wrap.querySelector('.nd-trigger')!.addEventListener('click', (event) => {
     event.preventDefault()
     event.stopPropagation()
@@ -26,12 +33,15 @@ function createButton(onSelect: (mode: DownloadMode) => void) {
   })
 
   menu.addEventListener('click', (event) => {
-    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-mode]')
+    const target = (event.target as HTMLElement).closest<HTMLElement>(
+      '[data-mode], [data-settings]',
+    )
     if (!target) return
 
-    const mode = target.dataset.mode as DownloadMode
     wrap.classList.remove('open')
-    onSelect(mode)
+
+    if (target.dataset.settings) openSettings()
+    else onSelect(target.dataset.mode as DownloadMode)
   })
 
   return wrap

@@ -1,8 +1,7 @@
-import { defaultCurlTerminal } from '../config'
 import { fixFilename } from '../format'
 import { standHeaders } from '../request'
 import { encodeBase } from '../serialize'
-import { gmStore } from '../store'
+import { getCurlTerminal } from '../settings'
 
 function headerParts(headers: Record<string, string | string[]> | undefined, style: 'curl' | 'aria2') {
   const normalized = standHeaders(headers, true, false)
@@ -22,7 +21,7 @@ export function toCurl(
   filename: string,
   headers?: Record<string, string | string[]>,
 ) {
-  const terminal = gmStore.get('setting_curl_terminal', defaultCurlTerminal)
+  const terminal = getCurlTerminal()
   const name = fixFilename(filename)
   const command = terminal !== 'wp' ? 'curl' : 'curl.exe'
 

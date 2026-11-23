@@ -1,5 +1,6 @@
 import { addStyle } from './dom'
 import { resolveProvider } from './providers'
+import { openSettings } from './ui/settings'
 import { STYLE } from './ui/style'
 
 export function main() {
@@ -13,6 +14,7 @@ export function main() {
   addStyle('netdisk-download-style', STYLE)
 
   provider.addButton()
+  GM_registerMenuCommand('下载设置', openSettings)
 
   console.info(
     `[netdisk-download] ${location.host}${location.pathname} · ${provider.detectPage() || 'unknown'}`,

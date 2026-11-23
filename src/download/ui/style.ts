@@ -7,6 +7,7 @@ export const STYLE = `
   --nd-border: #e5e7eb;
   --nd-danger: #cc3235;
   --nd-success: #2f9e44;
+  color-scheme: light dark;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -57,6 +58,12 @@ export const STYLE = `
 
 .nd-menu-item:hover {
   background: rgba(87, 74, 184, 0.1);
+}
+
+.nd-menu-sep {
+  height: 1px;
+  margin: 4px 2px;
+  background: var(--nd-border);
 }
 
 .nd-overlay {
@@ -200,6 +207,110 @@ export const STYLE = `
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+.nd-settings {
+  display: flex;
+  flex-direction: column;
+}
+
+.nd-section {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--nd-border);
+}
+
+.nd-section:last-of-type {
+  border-bottom: 0;
+}
+
+.nd-section h4 {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.nd-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.nd-section-head h4 {
+  margin: 0;
+}
+
+.nd-rpc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nd-rpc {
+  padding: 10px;
+  border: 1px solid var(--nd-border);
+  border-radius: 8px;
+}
+
+.nd-rpc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.nd-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.nd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px 12px;
+}
+
+.nd-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--nd-muted);
+  font-size: 12px;
+}
+
+.nd-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border: 1px solid var(--nd-border);
+  border-radius: 6px;
+  background: var(--nd-bg);
+  color: var(--nd-fg);
+  font: inherit;
+  font-size: 13px;
+}
+
+.nd-input:focus {
+  border-color: var(--nd-primary);
+  outline: 2px solid rgba(87, 74, 184, 0.35);
+  outline-offset: 1px;
+}
+
+.nd-settings-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 12px 0 4px;
+}
+
+.nd-settings-error {
+  flex: 1;
+  color: var(--nd-danger);
+  font-size: 13px;
 }
 
 .nd-loading-overlay {
