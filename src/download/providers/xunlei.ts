@@ -1,5 +1,4 @@
 import { sleep } from '../../utils'
-import { siteConfig } from '../config'
 import { md5 } from '../md5'
 import { get, post } from '../request'
 import { localStore } from '../store'
@@ -7,8 +6,15 @@ import type { DownloadResult, PageKind, Provider } from '../types'
 import { mountProviderButton } from '../ui/button'
 import { loading } from '../ui/modal'
 
-const mount = siteConfig.xunlei.mount
-const api = siteConfig.xunlei.api
+const mount = {
+  home: '[class*="FileMenu__menus--"], [class*="FileMenu__menu--"]',
+}
+
+const api = {
+  getLink: 'https://api-pan.xunlei.com/drive/v1/files/',
+  getCaptchaToken: 'https://xluser-ssl.xunlei.com/v1/shield/captcha/init',
+  getAccessToken: 'https://xluser-ssl.xunlei.com/v1/auth/token',
+}
 
 const salts = [
   'o6b11ImBwJA1KSNMTALjL0xMkMjTP',

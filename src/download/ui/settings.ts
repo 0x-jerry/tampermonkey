@@ -1,4 +1,5 @@
-import { defaultAbdmRpc, defaultAria2Rpc } from '../config'
+import { defaultAbdmRpc } from '../download/send-to/abdm'
+import { defaultAria2Rpc } from '../download/send-to/aria2'
 import { el } from '../dom'
 import {
   getIdmClient,

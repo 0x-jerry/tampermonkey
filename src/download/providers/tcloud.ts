@@ -1,5 +1,4 @@
 import { sleep } from '../../utils'
-import { siteConfig } from '../config'
 import { md5 } from '../md5'
 import { get, getFinal } from '../request'
 import { localStore } from '../store'
@@ -7,8 +6,15 @@ import type { DownloadResult, PageKind, Provider } from '../types'
 import { mountProviderButton } from '../ui/button'
 import { loading } from '../ui/modal'
 
-const mount = siteConfig.tcloud.mount
-const api = siteConfig.tcloud.api
+const mount = {
+  home: '[class*="FileHead_file-head-left"]',
+  share: '.nav-opea',
+}
+
+const api = {
+  getAccessToken: 'https://api.cloud.189.cn/open/oauth2/ssoH5.action',
+  getLink: 'https://api.cloud.189.cn/open/file/getFileDownloadUrl.action',
+}
 
 async function getToken() {
   loading.title('令牌获取中')

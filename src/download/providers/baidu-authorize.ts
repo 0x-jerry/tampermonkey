@@ -1,11 +1,11 @@
-import { siteConfig } from '../config'
+import { baiduApi } from './baidu'
 import { waitForKeyElements } from '../dom'
 import { gmStore } from '../store'
 import type { PageKind, Provider } from '../types'
 import { toast } from '../ui/modal'
 
 const allowedClientIds = [
-  new URL(siteConfig.baidu.api.getAccessToken).searchParams.get('client_id'),
+  new URL(baiduApi.getAccessToken).searchParams.get('client_id'),
   'L6g70tBRRIXLsY0Z3HwKqlRE',
   'NqOMXF6XGhGRIGemsQ9nG0Na',
   'fSds3K4w43rw37tOqlQmTa2kDwaczK4U',

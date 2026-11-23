@@ -1,5 +1,4 @@
 import { setClipboard } from '../clipboard'
-import { methodLabels } from '../config'
 import { context } from '../context'
 import { iframeDownload, el } from '../dom'
 import { sizeFormat } from '../format'
@@ -8,6 +7,12 @@ import { loading, plain, showModal, toast } from '../ui/modal'
 import { toAria2 } from './convert'
 import { sendTo } from './send-to'
 import type { SendTarget } from './send-to/types'
+
+export const methodLabels: Record<DownloadMode, string> = {
+  api: 'API 下载',
+  aria2: 'Aria2 下载',
+  abdm: 'ABDM 下载',
+}
 
 export async function startDownload(provider: Provider, mode: DownloadMode) {
   context.page = provider.detectPage()

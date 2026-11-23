@@ -1,5 +1,4 @@
 import { sleep } from '../../utils'
-import { siteConfig } from '../config'
 import { context } from '../context'
 import { findReact } from '../framework'
 import { post } from '../request'
@@ -9,7 +8,12 @@ import type { DownloadResult, PageKind, Provider } from '../types'
 import { mountProviderButton } from '../ui/button'
 import { loading, toast } from '../ui/modal'
 
-const mount = siteConfig.aliyun.mount
+const mount = {
+  home: '[class^="header--"]>[class^="actions--"]',
+  list: '[class^="node-list-table-view--"]',
+  grid: '[class^="node-list-grid-view--"]',
+  switch: '[class^="switch-wrapper--"]',
+}
 
 function apiBase() {
   return location.host.replace('www', 'api')

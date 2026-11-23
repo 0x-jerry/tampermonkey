@@ -1,5 +1,4 @@
 import { sleep } from '../../utils'
-import { siteConfig } from '../config'
 import { waitForKeyElements } from '../dom'
 import { findReact } from '../framework'
 import { post } from '../request'
@@ -8,8 +7,17 @@ import type { DownloadResult, PageKind, Provider } from '../types'
 import { mountProviderButton } from '../ui/button'
 import { loading } from '../ui/modal'
 
-const mount = siteConfig.guangya.mount
-const api = siteConfig.guangya.api
+const mount = {
+  home: '#root #app div > div:has(> .ant-btn.ant-btn-primary.ant-btn-color-primary .ant-btn-icon > .swangpan-icon-upload):has(> .ant-btn.ant-btn-default.ant-btn-color-default .ant-btn-icon > .swangpan-icon-addfolder)',
+  share:
+    '#root #app div > div:has(> .ant-btn.ant-btn-lg .ant-btn-icon > .swangpan-icon-download)',
+}
+
+const api = {
+  getLink: 'https://api.guangyapan.com/nd.bizuserres.s/v1/get_res_download_url',
+  getShareLink: 'https://api.guangyapan.com/nd.bizuserres.s/v1/get_share_download_url',
+  getShareToken: 'https://api.guangyapan.com/nd.bizuserres.s/v1/get_share_access_token',
+}
 
 const shareCode = { value: '' }
 

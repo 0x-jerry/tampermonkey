@@ -1,13 +1,21 @@
 import { sleep } from '../../utils'
-import { siteConfig } from '../config'
 import { findReact } from '../framework'
 import { post } from '../request'
 import type { DownloadResult, PageKind, Provider } from '../types'
 import { mountProviderButton } from '../ui/button'
 import { loading } from '../ui/modal'
 
-const mount = siteConfig.uc.mount
-const api = siteConfig.uc.api
+const mount = {
+  home: '.btn-operate .btn-main',
+  share: '.file-info-share-buttom',
+}
+
+const api = {
+  ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) uc-cloud-drive/1.8.8 Chrome/100.0.4896.160 Electron/18.3.5.16-b62cf9c50d Safari/537.36 Channel/ucpan_other_ch',
+  secCh: '"Not=A?Brand";v="99", "Chromium";v="100", "Google Chrome";v="100"',
+  getLink:
+    'https://pc-api.uc.cn/1/clouddrive/file/download?pr=UCBrowser&fr=pc&sys=win32&ve=1.8.8',
+}
 
 function getSelectedList(): any[] {
   try {

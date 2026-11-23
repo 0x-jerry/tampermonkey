@@ -1,4 +1,6 @@
-import { defaultAbdmRpc, defaultAria2Rpc, defaultIdmRpc } from './config'
+import { defaultAbdmRpc } from './download/send-to/abdm'
+import { defaultAria2Rpc } from './download/send-to/aria2'
+import { defaultIdmRpc } from './download/send-to/idm'
 import { gmStore } from './store'
 import type { RpcConfig } from './types'
 
@@ -9,9 +11,9 @@ const rpcKeys: Record<RpcKind, string> = {
   abdm: 'setting_abdm_rpc',
 }
 
-const rpcDefaults: Record<RpcKind, RpcConfig> = {
-  aria2: defaultAria2Rpc,
-  abdm: defaultAbdmRpc,
+// 惰性取值，避免与 send-to 适配器循环引用时读到未初始化的默认值
+function rpcDefault(kind: RpcKind) {
+  return kind === 'aria2' ? defaultAria2Rpc : defaultAbdmRpc
 }
 
 function normalizeRpcList(raw: unknown, fallback: RpcConfig): RpcConfig[] {
@@ -36,7 +38,7 @@ function normalizeRpcList(raw: unknown, fallback: RpcConfig): RpcConfig[] {
 }
 
 export function getRpcList(kind: RpcKind) {
-  return normalizeRpcList(gmStore.get(rpcKeys[kind], [rpcDefaults[kind]]), rpcDefaults[kind])
+  return normalizeRpcList(gmStore.get(rpcKeys[kind], [rpcDefault(kind)]), rpcDefault(kind))
 }
 
 export function saveRpcList(kind: RpcKind, list: RpcConfig[]) {
@@ -45,7 +47,7 @@ export function saveRpcList(kind: RpcKind, list: RpcConfig[]) {
 
 export function getDefaultRpc(kind: RpcKind) {
   const list = getRpcList(kind)
-  return list.find((item) => item.default) || list[0] || { ...rpcDefaults[kind] }
+  return list.find((item) => item.default) || list[0] || { ...rpcDefault(kind) }
 }
 
 export function getIdmClient() {

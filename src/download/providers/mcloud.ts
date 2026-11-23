@@ -1,5 +1,4 @@
 import { sleep } from '../../utils'
-import { siteConfig } from '../config'
 import { md5 } from '../md5'
 import { post } from '../request'
 import { encodeBase } from '../serialize'
@@ -7,8 +6,13 @@ import type { DownloadResult, PageKind, Provider } from '../types'
 import { mountProviderButton } from '../ui/button'
 import { loading } from '../ui/modal'
 
-const mount = siteConfig.mcloud.mount
-const api = siteConfig.mcloud.api
+const mount = {
+  home: '.top_button',
+}
+
+const api = {
+  getLink: 'https://personal-kd-njs.yun.139.com/hcy/file/getDownloadUrl',
+}
 
 function randomString(length = 16) {
   const chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'

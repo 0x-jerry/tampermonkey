@@ -1,9 +1,19 @@
 import { post, standHeaders } from '../../request'
 import { getDefaultRpc } from '../../settings'
+import type { RpcConfig } from '../../types'
 import { createQueue } from './queue'
 import type { SendAdapter } from './types'
 
 const queue = createQueue()
+
+export const defaultAria2Rpc: RpcConfig = {
+  domain: 'http://localhost',
+  port: '16800',
+  path: '/jsonrpc',
+  token: '',
+  dir: '',
+  default: true,
+}
 
 export const aria2Adapter: SendAdapter = {
   send({ link, filename, headers }) {

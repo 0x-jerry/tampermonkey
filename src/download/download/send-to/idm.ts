@@ -7,6 +7,8 @@ import type { SendAdapter } from './types'
 const queue = createQueue()
 let seq = 1
 
+export const defaultIdmRpc = '1'
+
 function encodeField(key: number, value: unknown) {
   if (value === undefined || value === null) return ''
   const str = String(value)

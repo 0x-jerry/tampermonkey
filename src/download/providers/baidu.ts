@@ -1,5 +1,4 @@
 import { sleep } from '../../utils'
-import { siteConfig } from '../config'
 import { context } from '../context'
 import { findVueComponent } from '../framework'
 import { get, getFinal, post } from '../request'
@@ -9,24 +8,34 @@ import type { DownloadResult, PageKind, Provider } from '../types'
 import { mountProviderButton } from '../ui/button'
 import { loading, toast } from '../ui/modal'
 
-const api = siteConfig.baidu.api
+export const baiduApi = {
+  getAccessToken:
+    'https://openapi.baidu.com/oauth/2.0/authorize?response_type=token&scope=basic,netdisk&client_id=omiOnr2tYnN9vSyDErcVFWpPU2mZA7YO&redirect_uri=oob&confirm_login=0',
+  getLink: 'https://pan.baidu.com/rest/2.0/xpan/multimedia?method=filemetas&dlink=1',
+  getFiles: 'https://pan.baidu.com/rest/2.0/xpan/file?method=list&showempty=1',
+  getShareLink:
+    'https://pan.baidu.com/api/sharedownload?channel=chunlei&clienttype=0&web=1&app_id=250528',
+  getShareSign:
+    'https://pan.baidu.com/share/tplconfig?fields=sign,timestamp&channel=chunlei&web=1&app_id=250528&clienttype=0&view_mode=1',
+  ua: 'pan.baidu.com',
+}
 
 async function getToken() {
   loading.title('令牌获取中')
   loading.update('正在获取授权状态~')
 
-  const authorize: string = await getFinal(api.getAccessToken, { Origin: '', Referer: '' }, true)
+  const authorize: string = await getFinal(baiduApi.getAccessToken, { Origin: '', Referer: '' }, true)
   let accessToken = ''
 
   if (authorize.includes('authorize')) {
     loading.update('正在获取授权页面~')
-    const html = await get<string>(api.getAccessToken, {}, 'text', false)
+    const html = await get<string>(baiduApi.getAccessToken, {}, 'text', false)
     const bdstoken = html.match(/name="bdstoken"\s+value="([^"]+)"/)?.[1]
     const clientId = html.match(/name="client_id"\s+value="([^"]+)"/)?.[1]
 
     loading.update('正在自动确认授权~')
     await post(
-      api.getAccessToken,
+      baiduApi.getAccessToken,
       stringify({
         grant_permissions_arr: 'netdisk',
         bdstoken,
@@ -38,7 +47,7 @@ async function getToken() {
       { Origin: '', Referer: '', 'Content-Type': 'application/x-www-form-urlencoded' },
     )
 
-    const retry: string = await getFinal(api.getAccessToken, { Origin: '', Referer: '' }, true)
+    const retry: string = await getFinal(baiduApi.getAccessToken, { Origin: '', Referer: '' }, true)
     accessToken = retry.match(/access_token=([^&]+)/)?.[1] || ''
   } else if (authorize.includes('access_token=')) {
     accessToken = authorize.match(/access_token=([^&]+)/)?.[1] || ''
@@ -102,11 +111,11 @@ async function getFilesUrl(items: any[], token: string) {
 
   for (let i = 0; i < pending.length; i += batchSize) {
     const batch = pending.slice(i, i + batchSize)
-    const url = new URL(api.getLink)
+    const url = new URL(baiduApi.getLink)
     url.searchParams.set('fsids', JSON.stringify(batch.map((item) => item.fs_id)))
     url.searchParams.set('access_token', token)
 
-    const response: any = await get(url.toString(), { 'User-Agent': api.ua })
+    const response: any = await get(url.toString(), { 'User-Agent': baiduApi.ua })
 
     if (!response || response.errno !== 0 || !response.list) {
       if (response?.errno === 112) throw new Error('提示：<br/>页面已过期，请刷新后重试~')
@@ -168,7 +177,7 @@ async function getShareFilesUrl(items: any[], shareData: any) {
   })
 
   for (const item of pending) {
-    const url = new URL(api.getShareLink)
+    const url = new URL(baiduApi.getShareLink)
     url.searchParams.set('sign', shareData.sign)
     url.searchParams.set('timestamp', shareData.timestamp)
     url.searchParams.set('bdstoken', shareData.baidu.token)
@@ -231,8 +240,8 @@ async function getFilesList(dirs: any[], accessToken: string, processed = 0) {
 
     for (const dir of targets) {
       loading.title('文件获取中')
-      const url = `${api.getFiles}&dir=${encodeURIComponent(dir.path)}&access_token=${accessToken}`
-      const response: any = await get(url.toString(), { 'User-Agent': api.ua })
+      const url = `${baiduApi.getFiles}&dir=${encodeURIComponent(dir.path)}&access_token=${accessToken}`
+      const response: any = await get(url.toString(), { 'User-Agent': baiduApi.ua })
       count++
 
       if (response.list?.length && (response.errno === 0 || response.errmsg === 'succ')) {
@@ -349,7 +358,7 @@ async function getLink(): Promise<DownloadResult> {
   if (!token) {
     gmStore.del('baidu_access_token')
     toast('请在新标签页中完成授权后，重新点击下载助手~', 'info')
-    GM_openInTab(api.getAccessToken, { active: true, insert: true, setParent: true })
+    GM_openInTab(baiduApi.getAccessToken, { active: true, insert: true, setParent: true })
     throw new Error('提示：<br/>请在新标签页授权后再获取一次~')
   }
 
@@ -375,7 +384,7 @@ async function getLink(): Promise<DownloadResult> {
 
     const shareData = getShareData()
     const sign: any = await get(
-      `${api.getShareSign}&surl=1${shareData.share.url}&bdstoken=${shareData.baidu.token}&logid=${encodeBase(
+      `${baiduApi.getShareSign}&surl=1${shareData.share.url}&bdstoken=${shareData.baidu.token}&logid=${encodeBase(
         shareData.baidu.id,
       )}`,
     )
@@ -403,14 +412,19 @@ async function getLink(): Promise<DownloadResult> {
         return url.href
       },
     },
-    headers: { 'User-Agent': api.ua },
+    headers: { 'User-Agent': baiduApi.ua },
   }
 }
 
 export const baidu: Provider = {
   detectPage,
   addButton() {
-    const mount = siteConfig.baidu.mount
+    const mount = {
+      home: '.frame-main>div>div>div>div:has(.g-dropdown-button.g-new-create)',
+      main: '.wp-s-agile-tool-bar__header',
+      share: '.module-share-top-bar .x-button-box .g-dropdown-button.tools-more',
+      share_v2: '.module-share-bottom-bar.share-bottom-btns > .bar > .x-button-box',
+    }
     mountProviderButton(this, [mount.home, mount.main, mount.share, mount.share_v2])
   },
   getLink,

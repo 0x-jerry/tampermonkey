@@ -1,6 +1,5 @@
-import { startDownload } from '../download'
+import { methodLabels, startDownload } from '../download'
 import { el, waitForKeyElements } from '../dom'
-import { methodLabels } from '../config'
 import type { DownloadMode, Provider } from '../types'
 import { openSettings } from './settings'
 

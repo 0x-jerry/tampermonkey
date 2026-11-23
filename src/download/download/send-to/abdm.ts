@@ -1,9 +1,18 @@
 import { post, standHeaders, toRequestHeaders } from '../../request'
 import { getDefaultRpc } from '../../settings'
+import type { RpcConfig } from '../../types'
 import { createQueue } from './queue'
 import type { SendAdapter } from './types'
 
 const queue = createQueue()
+
+export const defaultAbdmRpc: RpcConfig = {
+  domain: 'http://localhost',
+  port: '15151',
+  path: '',
+  key: '',
+  default: true,
+}
 
 export const abdmAdapter: SendAdapter = {
   send({ link, filename, headers }) {

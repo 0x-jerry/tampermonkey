@@ -1,5 +1,4 @@
 import { sleep } from '../../utils'
-import { siteConfig } from '../config'
 import { findReact } from '../framework'
 import { post } from '../request'
 import { decodeBase } from '../serialize'
@@ -8,8 +7,20 @@ import type { DownloadResult, PageKind, Provider } from '../types'
 import { mountProviderButton } from '../ui/button'
 import { loading } from '../ui/modal'
 
-const mount = siteConfig.pan123.mount
-const api = siteConfig.pan123.api
+const mount = {
+  home: '.home-operator .home-operator-button-group',
+  share:
+    '.content .content-header-container-wrap .rightInfo, .single-file-sharing-container-content-file-operate',
+}
+
+const api = {
+  ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) 123pan/3.2.3 Chrome/108.0.5359.215 Electron/22.3.27 Safari/537.36 WebView/1.0',
+  os: '123pan/v323(Windows10.0.26200)',
+  version: '323',
+  secCh: '"Not?A_Brand";v="8", "Chromium";v="108"',
+  getLink: 'https://api.123pan.cn/api/v2/file/download_info',
+  getShareLink: 'https://api.123pan.cn/api/v2/share/download/info',
+}
 
 function getToken() {
   loading.title('令牌获取中')
