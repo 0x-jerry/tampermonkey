@@ -3,7 +3,7 @@ import { main } from './download/main'
 
 defineHeader({
   name: 'Netdisk Download',
-  version: '0.1.0',
+  version: '0.1.1',
   description:
     'Get direct download links from netdisk sites (Baidu, Aliyun, 139, 189, Xunlei, Guangya, Quark, UC, 123pan).',
   matches: [

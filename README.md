@@ -10,7 +10,7 @@ npm run dev -- src/xxx.user.ts
 **Scripts:**
 
 - **ColaManga Quick Nav<sup>1.0.3</sup>**: Add convenient buttons to switch chapters [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/colamanga.user.js)
-- **Netdisk Download<sup>0.1.0</sup>**: Get direct download links from netdisk sites (Baidu, Aliyun, 139, 189, Xunlei, Guangya, Quark, UC, 123pan). [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/download.user.js)
+- **Netdisk Download<sup>0.1.1</sup>**: Get direct download links from netdisk sites (Baidu, Aliyun, 139, 189, Xunlei, Guangya, Quark, UC, 123pan). [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/download.user.js)
 - **Enhance GitHub<sup>1.0.9</sup>**: Enhance GitHub with useful features like displaying repository size [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/enhance-github.user.js)
 - **Eruda<sup>1.0.6</sup>**: Eruda devtool for mobile browser [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/eruda.user.js)
 - **Enhance GitHub Mermaid Preview<sup>0.0.1</sup>**: Enhance GitHub Mermaid diagrams with drag-to-pan and wheel / pinch zoom gestures [install](https://raw.githubusercontent.com/0x-jerry/tampermonkey/refs/heads/gh-pages/github-mermaid-preview.user.js)
